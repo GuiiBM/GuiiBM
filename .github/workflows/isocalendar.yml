@@ -1,0 +1,32 @@
+name: Isometric Contribution Calendar
+ 
+on:
+  schedule:
+    - cron: "0 4 * * *"   # atualiza todo dia às 04:00 UTC
+  workflow_dispatch:        # permite rodar manualmente pela aba Actions
+  push:
+    branches:
+      - main
+ 
+permissions:
+  contents: write
+ 
+jobs:
+  isocalendar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gerar calendário isométrico + hábitos de commit
+        uses: lowlighter/metrics@latest
+        with:
+          filename: assets/isocalendar.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          base: ""
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          plugin_habits: yes
+          plugin_habits_from: 100
+          plugin_habits_days: 14
+          plugin_habits_charts: yes
+          config_timezone: America/Sao_Paulo
+ 

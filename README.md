@@ -17,6 +17,9 @@
     <a href="https://gbm-mkt.netlify.app"><img src="https://img.shields.io/badge/Portf%C3%B3lio-7e22ce?style=for-the-badge&logo=netlify&logoColor=white" alt="Portfólio" /></a>
     <a href="https://mypersonallinks.netlify.app"><img src="https://img.shields.io/badge/Links-ef4444?style=for-the-badge&logo=linktree&logoColor=white" alt="Central de links" /></a>
     <a href="https://instagram.com/gbm_clicks"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" /></a>
+    <br />
+    <a href="http://lattes.cnpq.br/9693803343170549"><img src="https://img.shields.io/badge/Curr%C3%ADculo_Lattes-1F4E79?style=for-the-badge&logo=bookstack&logoColor=white" alt="Currículo Lattes" /></a>
+    <a href="https://orcid.org/0009-0007-4614-9029"><img src="https://img.shields.io/badge/ORCID-A6CE39?style=for-the-badge&logo=orcid&logoColor=white" alt="ORCID" /></a>
   </p>
   <p>
     <img src="https://komarev.com/ghpvc/?username=GuiiBM&style=flat-square&color=7e22ce&label=visualiza%C3%A7%C3%B5es" alt="Visualizações do perfil" />
@@ -41,24 +44,45 @@
 ```json
 {
   "nome": "Guilherme Batistela Machado",
-  "formacao": "Análise e Desenvolvimento de Sistemas @ FATEC",
+  "graduacao": "Análise e Desenvolvimento de Sistemas @ Fatec São Sebastião",
+  "tecnico": "Técnico em Informática",
+  "pesquisa": "Bolsista PIBICT-CEETEPS: integração segura do e-SUS PEC via API Meta",
   "foco_carreira": "Segurança da Informação / Red Team",
   "stack_desenvolvimento": ["Python", "C++", "C", "PHP", "JavaScript", "Bash"],
-  "domínios": ["Segurança Ofensiva", "Desenvolvimento Web", "Automação & Scripts"],
+  "domínios": ["Segurança Ofensiva", "Desenvolvimento Web", "Automação & Scripts", "Integração de APIs"],
+  "idiomas": ["Português (nativo)", "Inglês (B1)"],
   "daily_driver": "Linux Mint",
-  "local": "Ubatuba, SP, Brasil",
   "hobby": "Fotografia (@gbm_clicks)"
 }
 ```
+
+Graduando em Análise e Desenvolvimento de Sistemas na Fatec, bolsista de Iniciação Científica e Tecnológica (PIBICT-CEETEPS) e Técnico em Informática. Atuo com desenvolvimento web, suporte e consultoria em TI, com experiência no setor público em automação e na elaboração de ETP, Termo de Referência e avaliação de Prova de Conceito para contratação de software SaaS. Medalhista e menção honrosa na OBMEP, fui bolsista do PIC-OBMEP (IMPA) e hoje pesquiso a modernização e a integração de sistemas na Atenção Primária à Saúde via APIs.
 
 > **Diretório Operacional:**
 > - 🎯 **Alvo**: Dominar técnicas de Segurança Ofensiva (Red Team), análise de vulnerabilidades e exploração web.
 > - ⚡ **Mentalidade**: Entender como os sistemas são construídos (C, C++, PHP, JS, Python) para entender exatamente como quebrá-los e blindá-los.
 > - 🤖 **Automação**: Scripts em Python e Bash para tirar do caminho todo trabalho repetitivo.
+> - 🔬 **Pesquisa**: Integrações seguras entre sistemas públicos de saúde e APIs, com contingência automatizada.
 > - 🌐 **Onde me achar**: portfólio em [gbm-mkt.netlify.app](https://gbm-mkt.netlify.app) e todos os links em [mypersonallinks.netlify.app](https://mypersonallinks.netlify.app).
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/02.svg" width="100%" alt="[0x02] Arsenal Tecnológico" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/02.svg" width="100%" alt="[0x02] Trajetória" />
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/trajetoria.svg" width="100%" alt="Experiência e pesquisa: bolsista PIBICT na Fatec São Sebastião (2026, atual), extensão em inclusão digital (2026, atual), estágio em TI na FUNDART (2024 a 2025) e Iniciação Científica Júnior no PIC-OBMEP/IMPA (2022 a 2025)" />
+</div>
+
+<br />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/03.svg" width="100%" alt="[0x03] Formação & Prêmios" />
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/formacao.svg" width="100%" alt="Formação: Análise e Desenvolvimento de Sistemas na Fatec São Sebastião e Técnico em Informática. Certificações em cibersegurança pela Cisco, USP e CEETEPS" />
+  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/premios.svg" width="100%" alt="Prêmios: 1º lugar na 1ª Litoral Game Jam, Medalha de Bronze e três Menções Honrosas na OBMEP, Menção Honrosa na Olimpíada Mandacaru, resumo publicado no SICLN 2026" />
+</div>
+<p align="center"><sub>Currículo completo no <a href="http://lattes.cnpq.br/9693803343170549">Lattes</a>.</sub></p>
+
+<br />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/04.svg" width="100%" alt="[0x04] Arsenal Tecnológico" />
 
 <div align="center">
   <img src="https://skillicons.dev/icons?i=python,cpp,c,php,js,html,css,mysql&theme=dark&perline=8" alt="Python, C++, C, PHP, JavaScript, HTML, CSS, MySQL" />
@@ -75,7 +99,7 @@
 </div>
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/03.svg" width="100%" alt="[0x03] Projetos" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/05.svg" width="100%" alt="[0x05] Projetos" />
 
 <div align="center">
   <a href="https://github.com/GuiiBM?tab=repositories&amp;sort=updated"><img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/repos/1.svg" width="49%" alt="Repositório recente 1" /></a>
@@ -93,7 +117,7 @@
 <p align="center"><sub>Os cards acima mostram os repositórios com commits mais recentes e são atualizados todos os dias. Clique para ver a lista completa.</sub></p>
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/04.svg" width="100%" alt="[0x04] Métricas de Código" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/06.svg" width="100%" alt="[0x06] Métricas de Código" />
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/stats.svg" width="57%" alt="Estatísticas do GitHub" />
@@ -102,7 +126,7 @@
 </div>
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/05.svg" width="100%" alt="[0x05] Atividade em Tempo Real" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/07.svg" width="100%" alt="[0x07] Atividade em Tempo Real" />
 
 <div align="center">
   <picture>
@@ -114,7 +138,7 @@
 </div>
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/06.svg" width="100%" alt="[0x06] Calendário 3D de Contribuições" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/08.svg" width="100%" alt="[0x08] Calendário 3D de Contribuições" />
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/perfil-3d.svg" alt="Gráfico 3D de contribuições" width="100%" />
@@ -122,7 +146,7 @@
 </div>
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/07.svg" width="100%" alt="[0x07] Conquistas no GitHub" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/09.svg" width="100%" alt="[0x09] Conquistas no GitHub" />
 
 <div align="center">
   <img src="https://github-profile-trophies.vercel.app/?username=GuiiBM&theme=dracula&column=-1&rank=-%3F&margin-w=12&margin-h=12&no-bg=true&no-frame=true" alt="Troféus do GitHub" />

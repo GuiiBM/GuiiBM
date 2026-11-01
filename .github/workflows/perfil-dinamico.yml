@@ -37,6 +37,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Instalar o Pillow (reduz a foto do banner)
+        run: pip install --quiet pillow
+
       - name: Recuperar os dados da última coleta
         env:
           REPO: ${{ github.repository }}

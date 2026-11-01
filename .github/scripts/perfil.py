@@ -16,6 +16,8 @@ Actions evita o limite de requisições e libera o calendário via GraphQL.
 """
 
 import argparse
+import base64
+import io
 import html
 import json
 import os
@@ -27,6 +29,7 @@ import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
+import curriculo
 from banner import banner
 from temas import PADRAO, TEMAS, Tema, legivel, misturar, tema_do_dia
 
@@ -38,11 +41,15 @@ BRASILIA = timezone(timedelta(hours=-3))
 # Textos do banner do topo.
 NOME = "Guilherme Batistela"
 COMANDO = "root@guiibm:~$ whoami"
-CHIPS = ["ADS @ FATEC", "Red Team", "Ubatuba · SP", "Linux Mint"]
+CHIPS = ["ADS @ Fatec", "Pesquisador PIBICT", "Red Team", "Linux Mint"]
+# Foto do banner: se existir, este arquivo substitui a foto de perfil do GitHub.
+FOTO_LOCAL = Path(__file__).with_name("foto.jpg")
 
 # Cabeçalhos das seções (assets/secoes/01.svg, 02.svg...): título e comando.
 SECOES = [
     ("Sobre Mim", "whoami --verbose"),
+    ("Trajetória", "cat ~/trajetoria.log"),
+    ("Formação & Prêmios", "ls ~/certificados ~/premios"),
     ("Arsenal Tecnológico", "ls -la ~/arsenal"),
     ("Projetos", "git log --oneline --recent"),
     ("Métricas de Código", "gh stats --last-12-months"),
@@ -84,6 +91,7 @@ CORES_LINGUAGENS = {
 }
 
 FONTE = "'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+MONO = "'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"
 FUNDO, TEXTO, APAGADO = "0d1117", "e2e8f0", "8b949e"
 
 
@@ -160,6 +168,37 @@ def resumo_readme(repo: dict) -> str | None:
     return None
 
 
+def comprimir_foto(bruto: bytes, lado: int = 280) -> bytes | None:
+    """Reduz a foto para JPEG com o Pillow, se ele estiver instalado."""
+    try:
+        from PIL import Image
+    except ImportError:
+        return None
+    imagem = Image.open(io.BytesIO(bruto)).convert("RGB")
+    imagem.thumbnail((lado, lado))
+    saida = io.BytesIO()
+    imagem.save(saida, "JPEG", quality=85, optimize=True)
+    return saida.getvalue()
+
+
+def data_uri_foto(bruto: bytes) -> str:
+    jpeg = comprimir_foto(bruto)
+    if jpeg:
+        return f"data:image/jpeg;base64,{base64.b64encode(jpeg).decode()}"
+    tipo = "image/png" if bruto[:4] == b"\x89PNG" else "image/jpeg"
+    return f"data:{tipo};base64,{base64.b64encode(bruto).decode()}"
+
+
+def avatar() -> str:
+    """Foto de perfil do GitHub como data URI, para embutir no banner."""
+    tamanho = 280
+    try:
+        import PIL  # noqa: F401
+    except ImportError:
+        tamanho = 140  # sem Pillow, baixa menor para o banner não ficar pesado
+    return data_uri_foto(requisitar(f"https://avatars.githubusercontent.com/{USUARIO}?s={tamanho}&v=4"))
+
+
 def sequencias(dias: dict[date, int], hoje: date) -> tuple[int, int]:
     """(sequência atual, maior sequência). Hoje sem commit não quebra a atual."""
     maior = corrente = 0
@@ -195,6 +234,7 @@ def coletar(hoje: date) -> dict:
                    "linguagem": r["language"], "estrelas": r["stargazers_count"],
                    "atualizado": r["pushed_at"][:10]} for r in recentes],
         "linguagens": linguagens,
+        "avatar": avatar(),
         "dias": {d.isoformat(): n for d, n in dias.items()},
         "stats": {
             "contribuicoes": sum(dias.values()),
@@ -417,7 +457,6 @@ def card_repo(t: Tema, r: dict, hoje: date) -> str:
 
 def card_secao(t: Tema, numero: int, titulo: str, comando: str) -> str:
     largura, altura, total = 1000, 72, len(SECOES)
-    mono = "'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"
     c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
     pontos = "".join(
         f'<circle cx="{largura - 30 - (total - 1 - i) * 14}" cy="47" r="4" '
@@ -448,14 +487,80 @@ def card_secao(t: Tema, numero: int, titulo: str, comando: str) -> str:
   <rect x=".5" y=".5" width="{largura - 1}" height="{altura - 1}" rx="12" fill="none" stroke="#{c1}" stroke-opacity=".5"/>
 
   <rect x="26" y="19" width="78" height="34" rx="8" fill="#{c1}" fill-opacity=".16" stroke="#{c1}" stroke-opacity=".75"/>
-  <text x="65" y="41" text-anchor="middle" style="font:700 15px {mono};fill:#{acento}">0x{numero:02X}</text>
+  <text x="65" y="41" text-anchor="middle" style="font:700 15px {MONO};fill:#{acento}">0x{numero:02X}</text>
   <text x="124" y="34" style="font:700 22px {FONTE};fill:#ffffff">{esc(titulo)}</text>
-  <text x="124" y="56" style="font:500 12.5px {mono};fill:#{APAGADO}"><tspan fill="#{c2}">$</tspan> {esc(comando)}<tspan class="cursor" fill="#{acento}"> ▌</tspan></text>
+  <text x="124" y="56" style="font:500 12.5px {MONO};fill:#{APAGADO}"><tspan fill="#{c2}">$</tspan> {esc(comando)}<tspan class="cursor" fill="#{acento}"> ▌</tspan></text>
 
-  <text x="{largura - 26}" y="30" text-anchor="end" style="font:600 12px {mono};fill:#{APAGADO};letter-spacing:1px">{numero:02d} / {total:02d}</text>
+  <text x="{largura - 26}" y="30" text-anchor="end" style="font:600 12px {MONO};fill:#{APAGADO};letter-spacing:1px">{numero:02d} / {total:02d}</text>
   {pontos}
 </svg>
 """
+
+
+def card_trajetoria(t: Tema) -> str:
+    itens, passo = curriculo.TRAJETORIA, 92
+    altura = 70 + passo * len(itens) - 4
+    c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
+    corpo = [f'  <line x1="150" y1="78" x2="150" y2="{70 + passo * (len(itens) - 1) + 8}" stroke="url(#grad)" stroke-width="2" opacity=".6"/>']
+    for i, (periodo, cargo, instituicao, descricao) in enumerate(itens):
+        y = 70 + i * passo
+        cor = c1 if i % 2 == 0 else c2
+        linhas = "".join(f'<text x="175" y="{y + 54 + k * 17}" class="apagado" style="font-size:12.5px">{esc(l)}</text>'
+                         for k, l in enumerate(quebrar(descricao, 118, 2)))
+        corpo.append(
+            f'  <g class="surge" style="animation-delay:{150 + i * 120}ms">'
+            f'<text x="128" y="{y + 13}" text-anchor="end" style="font:600 12px {MONO};fill:#{acento}">{esc(periodo)}</text>'
+            f'<circle cx="150" cy="{y + 8}" r="9" fill="#{cor}" fill-opacity=".2"/><circle cx="150" cy="{y + 8}" r="5" fill="#{cor}"/>'
+            f'<text x="175" y="{y + 14}" style="font:700 16px {FONTE};fill:#ffffff">{esc(cargo)}</text>'
+            f'<text x="175" y="{y + 33}" style="font:600 13px {FONTE};fill:#{cor}">{esc(instituicao)}</text>'
+            f"{linhas}</g>")
+    return moldura(t, 1000, altura, "Experiência & Pesquisa", "\n".join(corpo))
+
+
+def card_formacao(t: Tema) -> str:
+    c2, acento = legivel(t.c2), legivel(t.acento)
+    subtitulo = lambda x, y, texto: (f'<text x="{x}" y="{y}" style="font:700 11.5px {MONO};fill:#{APAGADO};'
+                                     f'letter-spacing:2px">{esc(texto)}</text>')
+    corpo = [subtitulo(25, 74, "FORMAÇÃO"), subtitulo(520, 74, "CERTIFICAÇÕES")]
+    y = 102
+    for periodo, curso, instituicao in curriculo.FORMACAO:
+        corpo.append(f'<g class="surge"><text x="25" y="{y}" style="font:700 15px {FONTE};fill:#ffffff">{esc(curso)}</text>'
+                     f'<text x="25" y="{y + 20}" class="apagado" style="font-size:12.5px">'
+                     f'<tspan fill="#{acento}">{esc(periodo)}</tspan>  ·  {esc(instituicao)}</text></g>')
+        y += 54
+    corpo.append(subtitulo(25, y + 8, "IDIOMAS"))
+    corpo.append(f'<text x="25" y="{y + 36}" class="rotulo">Português <tspan class="apagado">nativo</tspan>'
+                 f'   ·   Inglês <tspan class="apagado">intermediário (B1)</tspan></text>')
+    for i, (ano, nome, instituicao) in enumerate(curriculo.CERTIFICACOES):
+        cy = 102 + i * 44
+        corpo.append(f'<g class="surge" style="animation-delay:{200 + i * 80}ms">'
+                     f'<rect x="520" y="{cy - 12}" width="3" height="32" rx="1.5" fill="#{c2}"/>'
+                     f'<text x="534" y="{cy}" style="font:600 14px {FONTE};fill:#ffffff">{esc(nome)}</text>'
+                     f'<text x="534" y="{cy + 18}" class="apagado" style="font-size:12px">{esc(instituicao)} · {ano}</text></g>')
+    altura = max(102 + 44 * len(curriculo.CERTIFICACOES), y + 56)
+    corpo.insert(0, f'<line x1="495" y1="62" x2="495" y2="{altura - 24}" stroke="#{APAGADO}" stroke-opacity=".2"/>')
+    return moldura(t, 1000, altura, "Formação & Certificações", "\n  ".join(corpo))
+
+
+def card_premios(t: Tema) -> str:
+    cores = {"ouro": "f5c542", "prata": "c0c7d1", "bronze": "cd7f32", "marca": legivel(t.acento)}
+    itens = []
+    for i, (ano, titulo, detalhe, nivel) in enumerate(curriculo.PREMIOS):
+        linha, coluna = divmod(i, 2)
+        x, y = 25 + coluna * 480, 60 + linha * 74
+        cor = cores[nivel]
+        icone = (f'<path d="M{x + 22} {y + 40} l-7 14 7-4 7 4z M{x + 34} {y + 40} l-7 14 7-4 7 4z" fill="#{cor}" opacity=".7"/>'
+                 f'<circle cx="{x + 28}" cy="{y + 31}" r="14" fill="#{cor}"/>'
+                 f'<circle cx="{x + 28}" cy="{y + 31}" r="9" fill="none" stroke="#{FUNDO}" stroke-opacity=".45" stroke-width="2"/>')
+        itens.append(
+            f'  <g class="surge" style="animation-delay:{150 + i * 70}ms">'
+            f'<rect x="{x}" y="{y}" width="470" height="62" rx="10" fill="#{cor}" fill-opacity=".07" stroke="#{cor}" stroke-opacity=".35"/>'
+            f"{icone}"
+            f'<text x="{x + 56}" y="{y + 27}" style="font:700 14.5px {FONTE};fill:#ffffff">{esc(titulo)}</text>'
+            f'<text x="{x + 56}" y="{y + 46}" class="apagado" style="font-size:12px">{esc(detalhe)}</text>'
+            f'<text x="{x + 456}" y="{y + 27}" text-anchor="end" style="font:600 11.5px {MONO};fill:#{cor}">{esc(ano)}</text></g>')
+    altura = 60 + 74 * ((len(curriculo.PREMIOS) + 1) // 2) + 12
+    return moldura(t, 1000, altura, "Prêmios & Destaques", "\n".join(itens))
 
 
 def card_repo_vazio(t: Tema) -> str:
@@ -564,10 +669,12 @@ def main() -> int:
 
     ano_novo = hoje.year + 1 if hoje.month == 12 else hoje.year
     subtitulo = tema.descricao.format(ano_novo=ano_novo).replace(" | ", " · ")
-    gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS))
     gravar("rodape.svg", card_rodape(tema, hoje, agora))
     for i, (titulo, comando) in enumerate(SECOES, 1):
         gravar(f"secoes/{i:02d}.svg", card_secao(tema, i, titulo, comando))
+    gravar("trajetoria.svg", card_trajetoria(tema))
+    gravar("formacao.svg", card_formacao(tema))
+    gravar("premios.svg", card_premios(tema))
 
     # Os dados coletados ficam em cache (dados.json, publicado junto com as
     # imagens): se a API falhar, os cards usam os números da última coleta.
@@ -580,6 +687,12 @@ def main() -> int:
             print(f"Aviso: não foi possível coletar os dados ({erro}).", file=sys.stderr)
         else:
             cache.write_text(json.dumps(dados, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+    if FOTO_LOCAL.exists():
+        foto = data_uri_foto(FOTO_LOCAL.read_bytes())
+    else:
+        foto = dados.get("avatar") if dados else None
+    gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS, foto))
 
     repos = dados["repos"] if dados else []
     for i in range(TOTAL_REPOS):

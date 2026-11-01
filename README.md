@@ -133,5 +133,5 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ef4444,100:7e22ce&height=110&section=footer&animation=twinkling" width="100%" alt="" />
   <p><code>"Security is not a product, but a process."</code></p>
   <p><sub>(Bruce Schneier)</sub></p>
-  <sub>Atualizado em 01/11/2026 às 12:50 (horário de Brasília)</sub>
+  <sub>Atualizado em 01/11/2026 às 12:51 (horário de Brasília)</sub>
 </div>

@@ -50,11 +50,17 @@
   }
  ],
  "linguagens": {
-  "Python": 780,
-  "HTML": 110,
-  "JavaScript": 48,
-  "PHP": 30,
-  "CSS": 29
+  "Python": 14647123,
+  "HTML": 2055653,
+  "JavaScript": 900844,
+  "CSS": 553390,
+  "Batchfile": 3342,
+  "Shell": 8265,
+  "Procfile": 21,
+  "PHP": 569214,
+  "Hack": 16698,
+  "PowerShell": 9033,
+  "C": 4327
  },
  "dias": {
   "2025-11-02": 0,
@@ -421,11 +427,11 @@
   "2026-10-29": 0,
   "2026-10-30": 0,
   "2026-10-31": 1,
-  "2026-11-01": 5
+  "2026-11-01": 6
  },
  "stats": {
-  "contribuicoes": 423,
-  "commits": 118,
+  "contribuicoes": 424,
+  "commits": 119,
   "prs": 4,
   "issues": 0,
   "repos": 14,

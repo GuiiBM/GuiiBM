@@ -23,7 +23,8 @@ import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from temas import PADRAO, TEMAS, Tema, proxima_data, tema_do_dia
+from banner import banner
+from temas import PADRAO, TEMAS, Tema, legivel, misturar, proxima_data, tema_do_dia
 
 USUARIO = "GuiiBM"
 RAIZ = Path(__file__).resolve().parents[2]
@@ -31,9 +32,16 @@ TEMPLATE = RAIZ / ".github" / "readme" / "template.md"
 ASSETS = RAIZ / "assets"
 BRASILIA = timezone(timedelta(hours=-3))
 
+# Textos do banner do topo.
+NOME = "Guilherme Batistela"
+COMANDO = "root@guiibm:~$ whoami"
+CHIPS = ["ADS @ FATEC", "Red Team", "Ubatuba · SP", "Linux Mint"]
+PORTFOLIO = "https://gbm-mkt.netlify.app"
+
 # Repositórios que não devem aparecer em "Repositórios recentes".
 REPOS_IGNORADOS = {USUARIO}
-# Descrições usadas quando o repositório não tem uma no GitHub.
+# Descrições usadas quando o repositório não tem uma no GitHub. Sem as
+# duas, o card usa o primeiro parágrafo do README do repositório.
 DESCRICOES: dict[str, str] = {
     # "tcc": "Trabalho de conclusão de curso em PHP.",
 }
@@ -124,6 +132,29 @@ def calendario() -> dict[date, int]:
     return dict(sorted(dias.items()))
 
 
+def resumo_readme(repo: dict) -> str | None:
+    """Primeiro parágrafo de texto do README, sem marcação."""
+    url = f"https://raw.githubusercontent.com/{USUARIO}/{repo['name']}/HEAD/README.md"
+    try:
+        texto = requisitar(url).decode("utf-8", "replace")
+    except (urllib.error.URLError, TimeoutError):
+        return None
+    em_codigo = False
+    for linha in texto.splitlines():
+        linha = linha.strip()
+        if linha.startswith("```"):
+            em_codigo = not em_codigo
+            continue
+        if em_codigo or not linha or linha.startswith(("#", "<", "!", "[!", "|", "---", "***", "- ", "* ")):
+            continue
+        linha = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", linha.lstrip("> "))
+        linha = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", linha)
+        linha = re.sub(r"[*_`]", "", linha).strip()
+        if len(linha) > 20:
+            return linha
+    return None
+
+
 def sequencias(dias: dict[date, int], hoje: date) -> tuple[int, int]:
     """(sequência atual, maior sequência). Hoje sem commit não quebra a atual."""
     maior = corrente = 0
@@ -150,15 +181,21 @@ def coletar(hoje: date) -> dict:
 
     dias = calendario()
     atual, maior = sequencias(dias, hoje)
+    desde = (hoje - timedelta(days=365)).isoformat()
+    recentes = [r for r in proprios if r["name"] not in REPOS_IGNORADOS and not r["archived"]][:6]
+    for r in recentes:
+        r["resumo"] = r["description"] or DESCRICOES.get(r["name"]) or resumo_readme(r)
     return {
-        "repos": proprios,
+        "repos": [{"nome": r["name"], "url": r["html_url"], "resumo": r["resumo"],
+                   "linguagem": r["language"], "estrelas": r["stargazers_count"],
+                   "atualizado": r["pushed_at"][:10]} for r in recentes],
         "linguagens": linguagens,
-        "dias": dias,
+        "dias": {d.isoformat(): n for d, n in dias.items()},
         "stats": {
             "contribuicoes": sum(dias.values()),
-            "commits": total_busca("commits", f"author:{USUARIO}"),
-            "prs": total_busca("issues", f"author:{USUARIO} type:pr"),
-            "issues": total_busca("issues", f"author:{USUARIO} type:issue"),
+            "commits": total_busca("commits", f"author:{USUARIO} author-date:>{desde}"),
+            "prs": total_busca("issues", f"author:{USUARIO} type:pr created:>{desde}"),
+            "issues": total_busca("issues", f"author:{USUARIO} type:issue created:>{desde}"),
             "repos": len(proprios),
             "estrelas": sum(r["stargazers_count"] for r in proprios),
             "seq_atual": atual,
@@ -170,17 +207,6 @@ def coletar(hoje: date) -> dict:
 # --------------------------------------------------------------------------
 # Cards SVG
 # --------------------------------------------------------------------------
-
-def misturar(a: str, b: str, f: float) -> str:
-    ca, cb = (tuple(int(x[i:i + 2], 16) for i in (0, 2, 4)) for x in (a, b))
-    return "".join(f"{round(x + (y - x) * f):02x}" for x, y in zip(ca, cb))
-
-
-def legivel(cor: str) -> str:
-    """Clareia cores escuras demais para aparecer sobre o fundo escuro."""
-    r, g, b = (int(cor[i:i + 2], 16) for i in (0, 2, 4))
-    return misturar(cor, "ffffff", 0.45) if 0.2126 * r + 0.7152 * g + 0.0722 * b < 60 else cor
-
 
 def esc(texto) -> str:
     return html.escape(str(texto), quote=True)
@@ -197,9 +223,9 @@ def estilo_base(t: Tema) -> str:
     .rotulo {{ font-size: 13.5px; fill: #{TEXTO}; }}
     .valor {{ font-size: 13.5px; font-weight: 700; fill: #ffffff; }}
     .apagado {{ font-size: 11.5px; fill: #{APAGADO}; }}
-    .surge {{ opacity: 0; animation: surgir .6s ease-out forwards; }}
+    .surge {{ animation: surgir .6s ease-out both; }}
     @keyframes surgir {{ from {{ opacity: 0; transform: translateX(-8px); }} to {{ opacity: 1; transform: none; }} }}
-    @media (prefers-reduced-motion: reduce) {{ .surge, .anima {{ animation: none !important; opacity: 1; }} }}
+    @media (prefers-reduced-motion: reduce) {{ .surge, .anima {{ animation: none !important; }} }}
   </style>"""
 
 
@@ -223,10 +249,10 @@ def moldura(t: Tema, largura: int, altura: int, titulo: str, corpo: str) -> str:
 
 def card_stats(t: Tema, s: dict) -> str:
     itens = [
-        ("Contribuições (último ano)", s["contribuicoes"]),
-        ("Commits", s["commits"]),
-        ("Pull requests", s["prs"]),
-        ("Issues", s["issues"]),
+        ("Contribuições (12 meses)", s["contribuicoes"]),
+        ("Commits (12 meses)", s["commits"]),
+        ("Pull requests (12 meses)", s["prs"]),
+        ("Issues (12 meses)", s["issues"]),
         ("Repositórios públicos", s["repos"]),
         ("Estrelas recebidas", s["estrelas"]),
     ]
@@ -246,9 +272,9 @@ def card_stats(t: Tema, s: dict) -> str:
     fracao = min(s["seq_atual"] / s["seq_maior"], 1) if s["seq_maior"] else 0
     cx, cy = 400, 118
     anel = f"""  <style>
-    .anel {{ stroke-dasharray: {volta:.1f}; stroke-dashoffset: {volta:.1f}; animation: encher 1.2s ease-out .3s forwards; }}
-    @keyframes encher {{ to {{ stroke-dashoffset: {volta * (1 - fracao):.1f}; }} }}
-    @media (prefers-reduced-motion: reduce) {{ .anel {{ animation: none; stroke-dashoffset: {volta * (1 - fracao):.1f}; }} }}
+    .anel {{ stroke-dasharray: {volta:.1f}; stroke-dashoffset: {volta * (1 - fracao):.1f}; animation: encher 1.2s ease-out .3s both; }}
+    @keyframes encher {{ from {{ stroke-dashoffset: {volta:.1f}; }} }}
+    @media (prefers-reduced-motion: reduce) {{ .anel {{ animation: none; }} }}
   </style>
   <circle cx="{cx}" cy="{cy}" r="{raio}" fill="none" stroke="#{t.c1}" stroke-opacity="0.18" stroke-width="7"/>
   <circle cx="{cx}" cy="{cy}" r="{raio}" fill="none" stroke="url(#grad)" stroke-width="7" stroke-linecap="round" class="anel" transform="rotate(-90 {cx} {cy})"/>
@@ -320,7 +346,7 @@ def card_atividade(t: Tema, dias: dict[date, int], hoje: date) -> str:
     <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#{t.c1}" stop-opacity="0.55"/><stop offset="100%" stop-color="#{t.c1}" stop-opacity="0.02"/>
     </linearGradient>
-    <clipPath id="revela"><rect x="0" y="0" width="0" height="{altura}" class="anima"><animate attributeName="width" from="0" to="{largura}" dur="1.4s" fill="freeze"/></rect></clipPath>
+    <clipPath id="revela"><rect x="0" y="0" width="{largura}" height="{altura}" class="anima"><animate attributeName="width" from="0" to="{largura}" dur="1.4s" fill="freeze"/></rect></clipPath>
   </defs>
 {chr(10).join(grade)}
 {resumo}
@@ -332,6 +358,58 @@ def card_atividade(t: Tema, dias: dict[date, int], hoje: date) -> str:
     return moldura(t, largura, altura, "Atividade nos últimos 30 dias", corpo)
 
 
+def quebrar(texto: str, largura: int, linhas: int) -> list[str]:
+    palavras, saida, atual = texto.split(), [], ""
+    for p in palavras:
+        if len(atual) + len(p) + 1 > largura:
+            saida.append(atual)
+            atual = p
+            if len(saida) == linhas:
+                break
+        else:
+            atual = f"{atual} {p}".strip()
+    else:
+        saida.append(atual)
+        return saida
+    saida[-1] = saida[-1][: largura - 1].rstrip(" ,.;:") + "…"
+    return saida
+
+
+def ha_quanto(quando: date, hoje: date) -> str:
+    dias = (hoje - quando).days
+    if dias <= 0:
+        return "atualizado hoje"
+    if dias == 1:
+        return "atualizado ontem"
+    if dias < 45:
+        return f"atualizado há {dias} dias"
+    meses = round(dias / 30)
+    return f"atualizado há {meses} meses" if meses < 12 else f"atualizado há {dias // 365} ano(s)"
+
+
+def card_repo(t: Tema, r: dict, hoje: date) -> str:
+    nome = r["nome"] if len(r["nome"]) <= 40 else r["nome"][:39] + "…"
+    resumo = r["resumo"] or "Sem descrição por enquanto. Abra o repositório para ver o código."
+    linhas = quebrar(resumo, 62, 2)
+    texto = "".join(f'<text x="25" y="{70 + i * 20}" class="rotulo" style="fill:#{APAGADO if not r["resumo"] else TEXTO}">'
+                    f"{esc(l)}</text>" for i, l in enumerate(linhas))
+    cor = CORES_LINGUAGENS.get(r["linguagem"] or "", legivel(t.c1))
+    rodape = []
+    x = 25
+    if r["linguagem"]:
+        rodape.append(f'<circle cx="{x + 6}" cy="125.5" r="6" fill="#{cor}"/>'
+                      f'<text x="{x + 18}" y="130" class="apagado" style="font-size:12.5px">{esc(r["linguagem"])}</text>')
+        x += 32 + 7 * len(r["linguagem"])
+    if r["estrelas"]:
+        rodape.append(f'<text x="{x}" y="130" class="apagado" style="font-size:12.5px">★ {r["estrelas"]}</text>')
+    rodape.append(f'<text x="435" y="130" class="apagado" text-anchor="end" style="font-size:12.5px">'
+                  f'{ha_quanto(date.fromisoformat(r["atualizado"]), hoje)}</text>')
+    icone = (f'<path transform="translate(435 22)" fill="#{legivel(t.acento)}" opacity=".45" '
+             'd="M-14 0h10a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2h-11zM2 0h10v13H1a2 2 0 0 0-2 2V3a3 3 0 0 1 3-3z"/>')
+    corpo = f'  <g class="surge">{texto}</g>\n  {"".join(rodape)}\n  {icone}'
+    return moldura(t, 460, 150, nome, corpo)
+
+
 # --------------------------------------------------------------------------
 # README
 # --------------------------------------------------------------------------
@@ -341,31 +419,18 @@ def q(texto: str) -> str:
 
 
 def bloco_repos(repos: list[dict]) -> str:
-    lista = [r for r in repos if r["name"] not in REPOS_IGNORADOS and not r["archived"]][:6]
-    if not lista:
+    if not repos:
         return (f'<p align="center"><a href="https://github.com/{USUARIO}?tab=repositories">'
                 "Ver todos os repositórios →</a></p>")
-    celulas = []
-    for r in lista:
-        descricao = r["description"] or DESCRICOES.get(r["name"]) or "<i>Sem descrição.</i>"
-        if r["description"] or r["name"] in DESCRICOES:
-            descricao = esc(descricao)
-        atualizado = datetime.fromisoformat(r["pushed_at"].replace("Z", "+00:00")).astimezone(BRASILIA)
-        detalhes = [f"<code>{esc(r['language'])}</code>" if r["language"] else None,
-                    f"⭐ {r['stargazers_count']}" if r["stargazers_count"] else None,
-                    f"atualizado em {atualizado:%d/%m/%Y}"]
-        celulas.append(
-            f'    <td width="50%" valign="top">\n'
-            f'      <a href="{esc(r["html_url"])}"><b>{esc(r["name"])}</b></a><br />\n'
-            f"      <sub>{descricao}</sub><br />\n"
-            f'      <sub>{" · ".join(d for d in detalhes if d)}</sub>\n'
-            f"    </td>"
-        )
-    linhas = ["  <tr>\n" + "\n".join(celulas[i:i + 2]) + "\n  </tr>" for i in range(0, len(celulas), 2)]
-    return '<table width="100%">\n' + "\n".join(linhas) + "\n</table>"
+    cards = [
+        f'<a href="{esc(r["url"])}"><img src="assets/repos/{i + 1}.svg" width="49%" '
+        f'alt="{esc(r["nome"])}: {esc(r["resumo"] or "repositório")}" /></a>'
+        for i, r in enumerate(repos)
+    ]
+    return '<div align="center">\n  ' + "\n  ".join(cards) + "\n</div>"
 
 
-def montar_readme(t: Tema, hoje: date, agora: datetime, repos: list[dict] | None) -> str:
+def montar_readme(t: Tema, hoje: date, agora: datetime, repos: list[dict]) -> str:
     ano_novo = hoje.year + 1 if hoje.month == 12 else hoje.year
     fmt = lambda s: s.format(ano_novo=ano_novo)
 
@@ -391,9 +456,7 @@ def montar_readme(t: Tema, hoje: date, agora: datetime, repos: list[dict] | None
         "c1": t.c1, "c2": t.c2, "acento": t.acento,
         "gradiente": ",".join(f"{o}:{c}" for o, c in t.stops()),
         "gradiente_inverso": ",".join(f"{o}:{c}" for o, c in rev),
-        "cabecalho": t.cabecalho,
         "animacao": t.animacao,
-        "descricao_q": q(fmt(t.descricao)),
         "linhas_q": ";".join(q(l) for l in linhas),
         "boot_q": ";".join(q(l) for l in boot),
         "tema_badge": q(f"{t.emoji} {t.nome}"),
@@ -403,11 +466,14 @@ def montar_readme(t: Tema, hoje: date, agora: datetime, repos: list[dict] | None
         "proxima_data": proxima_txt,
         "trofeu": t.trofeu,
         "perfil3d": t.perfil3d,
-        "repos_recentes": bloco_repos(repos or []),
+        "repos_recentes": bloco_repos(repos),
         "citacao": esc(citacao),
         "autor": esc(autor),
         "atualizado_em": f"{agora:%d/%m/%Y às %H:%M} (horário de Brasília)",
     }
+
+    valores["portfolio"] = PORTFOLIO
+    valores["banner_alt"] = esc(f"{NOME}: {fmt(t.descricao)}")
 
     def trocar(m: re.Match) -> str:
         return str(valores[m.group(1)])
@@ -423,8 +489,9 @@ def escrever_saida(t: Tema) -> None:
     if not destino:
         return
     claro, escuro = "ebedf0", "161b22"
-    niveis = (0.3, 0.55, 0.8, 1.0)
-    dots = lambda vazio: ",".join(["#" + vazio] + ["#" + misturar(vazio, t.c1, f) for f in niveis])
+    niveis = (0.45, 0.65, 0.85, 1.0)
+    cheio = legivel(t.c1)
+    dots = lambda vazio: ",".join(["#" + vazio] + ["#" + misturar(vazio, cheio, f) for f in niveis])
     with open(destino, "a", encoding="utf-8") as f:
         f.write(f"tema={t.chave}\n")
         f.write(f"nome={t.nome}\n")
@@ -444,7 +511,7 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--tema", help="força um tema pela chave (ex.: natal, halloween, padrao)")
     p.add_argument("--data", help="simula a data de hoje (AAAA-MM-DD)")
-    p.add_argument("--offline", action="store_true", help="não acessa a API; mantém os SVGs atuais")
+    p.add_argument("--offline", action="store_true", help="não acessa a API; usa os dados do cache")
     p.add_argument("--listar", action="store_true", help="lista o calendário de temas do ano")
     args = p.parse_args()
 
@@ -464,19 +531,35 @@ def main() -> int:
         tema = tema_do_dia(hoje)
     print(f"Tema: {tema.emoji} {tema.nome} ({tema.chave})")
 
-    repos = None
+    ano_novo = hoje.year + 1 if hoje.month == 12 else hoje.year
+    subtitulo = tema.descricao.format(ano_novo=ano_novo).replace(" | ", " · ")
+    ASSETS.mkdir(exist_ok=True)
+    (ASSETS / "banner.svg").write_text(banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS), encoding="utf-8")
+
+    # Os dados coletados ficam em cache: se a API falhar, os cards são
+    # redesenhados no tema do dia com os números da última coleta.
+    cache = ASSETS / "dados.json"
+    dados = json.loads(cache.read_text(encoding="utf-8")) if cache.exists() else None
     if not args.offline:
         try:
             dados = coletar(hoje)
         except (urllib.error.URLError, KeyError, ValueError, TimeoutError) as erro:
-            # Sem dados novos: o README é refeito, mas os SVGs antigos ficam.
             print(f"Aviso: não foi possível coletar os dados ({erro}).", file=sys.stderr)
         else:
-            repos = dados["repos"]
-            ASSETS.mkdir(exist_ok=True)
-            (ASSETS / "stats.svg").write_text(card_stats(tema, dados["stats"]), encoding="utf-8")
-            (ASSETS / "linguagens.svg").write_text(card_linguagens(tema, dados["linguagens"]), encoding="utf-8")
-            (ASSETS / "atividade.svg").write_text(card_atividade(tema, dados["dias"], hoje), encoding="utf-8")
+            cache.write_text(json.dumps(dados, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+    repos = dados["repos"] if dados else []
+    pasta = ASSETS / "repos"
+    pasta.mkdir(exist_ok=True)
+    for antigo in pasta.glob("*.svg"):
+        antigo.unlink()
+    for i, r in enumerate(repos):
+        (pasta / f"{i + 1}.svg").write_text(card_repo(tema, r, hoje), encoding="utf-8")
+    if dados:
+        dias = {date.fromisoformat(d): n for d, n in dados["dias"].items()}
+        (ASSETS / "stats.svg").write_text(card_stats(tema, dados["stats"]), encoding="utf-8")
+        (ASSETS / "linguagens.svg").write_text(card_linguagens(tema, dados["linguagens"]), encoding="utf-8")
+        (ASSETS / "atividade.svg").write_text(card_atividade(tema, dias, hoje), encoding="utf-8")
 
     (RAIZ / "README.md").write_text(montar_readme(tema, hoje, agora, repos), encoding="utf-8")
     escrever_saida(tema)

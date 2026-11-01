@@ -4,35 +4,33 @@
   Temas e datas comemorativas ficam em .github/scripts/temas.py.
 -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7e22ce,100:ef4444&height=210&section=header&text=Guilherme%20Batistela&fontSize=44&fontColor=ffffff&fontAlignY=35&animation=twinkling&desc=Offensive%20Security%20%7C%20Red%20Team%20%7C%20Web%20Dev&descAlignY=58&descSize=18&descColor=E2E8F0" width="100%" alt="Banner: Guilherme Batistela" />
+  <img src="assets/banner.svg" width="100%" alt="Guilherme Batistela: Offensive Security | Red Team | Web Dev" />
 
   <a href="https://git.io/typing-svg">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=a855f7&center=true&vCenter=true&width=650&height=45&lines=%3E_%20%20Offensive%20Security%20Enthusiast;%3E_%20%20Future%20Red%20Teamer%20%F0%9F%8E%AF;%3E_%20%20Web%20Development%20%26%20Low-Level%20Coding;%3E_%20%20Focus%3A%20Pentesting%20%26%20Security%20Research" alt="Offensive Security Enthusiast, Future Red Teamer, Web Development & Low-Level Coding" />
   </a>
 
   <p>
+    <a href="https://www.linkedin.com/in/guilherme-batistela-machado/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+    <a href="https://gbm-mkt.netlify.app"><img src="https://img.shields.io/badge/Portf%C3%B3lio-7e22ce?style=for-the-badge&logo=netlify&logoColor=white" alt="Portfólio" /></a>
+    <a href="https://mypersonallinks.netlify.app"><img src="https://img.shields.io/badge/Links-ef4444?style=for-the-badge&logo=linktree&logoColor=white" alt="Central de links" /></a>
+    <a href="https://instagram.com/gbm_clicks"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" /></a>
+  </p>
+  <p>
+    <img src="https://komarev.com/ghpvc/?username=GuiiBM&style=flat-square&color=7e22ce&label=visualiza%C3%A7%C3%B5es" alt="Visualizações do perfil" />
+    <img src="https://img.shields.io/github/followers/GuiiBM?style=flat-square&color=ef4444&logo=github&label=seguidores&labelColor=0d1117" alt="Seguidores" />
     <img src="https://img.shields.io/static/v1?label=tema&message=%E2%9A%A1%20Cyberpunk&color=7e22ce&labelColor=0d1117&style=flat-square" alt="Tema do dia" />
     <img src="https://img.shields.io/static/v1?label=atualizado&message=01%2F11%2F2026&color=ef4444&labelColor=0d1117&style=flat-square" alt="Data da última atualização" />
   </p>
-  <sub><i>Tema padrão ativo. O perfil muda de cor sozinho em datas comemorativas.</i></sub><br />
-  <sub>⏳ Próxima data no radar: ✊🏿 <b>Dia da Consciência Negra</b> em 19 dias (20/nov)</sub>
-</div>
 
-<br />
-
-<div align="center">
-  <a href="https://www.linkedin.com/in/guilherme-batistela-machado/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>
-  <a href="https://mypersonallinks.netlify.app" target="_blank">
-    <img src="https://img.shields.io/badge/Portf%C3%B3lio_%26_Projetos-7e22ce?style=for-the-badge&logo=netlify&logoColor=white" alt="Portfólio" />
-  </a>
-  <a href="https://instagram.com/gbm_clicks" target="_blank">
-    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" />
-  </a>
-  <br />
-  <img src="https://komarev.com/ghpvc/?username=GuiiBM&style=for-the-badge&color=7e22ce&label=PROFILE+VIEWS" alt="Visualizações do perfil" />
-  <img src="https://img.shields.io/github/followers/GuiiBM?style=for-the-badge&color=ef4444&logo=github&label=FOLLOWERS&logoColor=white" alt="Seguidores" />
+  <table>
+    <tr>
+      <td align="center">
+        <sub><b>⚡ Cyberpunk</b> · <i>Tema padrão ativo. O perfil muda de cor sozinho em datas comemorativas.</i></sub><br />
+        <sub>⏳ Próxima data no radar: ✊🏿 <b>Dia da Consciência Negra</b> em 19 dias (20/nov)</sub>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <br />
@@ -51,10 +49,12 @@
 ```json
 {
   "nome": "Guilherme Batistela Machado",
+  "formacao": "Análise e Desenvolvimento de Sistemas @ FATEC",
   "foco_carreira": "Segurança da Informação / Red Team",
-  "stack_desenvolvimento": ["Python", "C++", "C", "PHP", "JavaScript"],
+  "stack_desenvolvimento": ["Python", "C++", "C", "PHP", "JavaScript", "Bash"],
   "domínios": ["Segurança Ofensiva", "Desenvolvimento Web", "Automação & Scripts"],
-  "status": "Estudante & Pesquisador de Segurança",
+  "daily_driver": "Linux Mint",
+  "local": "Ubatuba, SP, Brasil",
   "hobby": "Fotografia (@gbm_clicks)"
 }
 ```
@@ -62,7 +62,8 @@
 > **Diretório Operacional:**
 > - 🎯 **Alvo**: Dominar técnicas de Segurança Ofensiva (Red Team), análise de vulnerabilidades e exploração web.
 > - ⚡ **Mentalidade**: Entender como os sistemas são construídos (C, C++, PHP, JS, Python) para entender exatamente como quebrá-los e blindá-los.
-> - 🌐 **Central de Links**: Agrupei todas as minhas plataformas e projetos em um único hub: [mypersonallinks.netlify.app](https://mypersonallinks.netlify.app).
+> - 🤖 **Automação**: Scripts em Python e Bash para tirar do caminho todo trabalho repetitivo.
+> - 🌐 **Onde me achar**: portfólio em [gbm-mkt.netlify.app](https://gbm-mkt.netlify.app) e todos os links em [mypersonallinks.netlify.app](https://mypersonallinks.netlify.app).
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:7e22ce,100:ef4444&height=3&section=header" width="100%" alt="" />
 
@@ -72,84 +73,42 @@
   <img src="https://skillicons.dev/icons?i=python,cpp,c,php,js,html,css,mysql&theme=dark&perline=8" alt="Python, C++, C, PHP, JavaScript, HTML, CSS, MySQL" />
   <br />
   <img src="https://skillicons.dev/icons?i=linux,kali,bash,git,github,vscode,netlify&theme=dark&perline=8" alt="Linux, Kali Linux, Bash, Git, GitHub, VS Code, Netlify" />
-</div>
-
-<br />
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Red_Team_Operations-7e22ce?style=for-the-badge&logo=kalilinux&logoColor=white" alt="Red Team" />
-  <img src="https://img.shields.io/badge/Web_Application_Security-ef4444?style=for-the-badge&logo=burpsuite&logoColor=white" alt="Web Application Security" />
+  <br /><br />
+  <img src="https://img.shields.io/badge/Red_Team-7e22ce?style=for-the-badge&logo=kalilinux&logoColor=white" alt="Red Team" />
+  <img src="https://img.shields.io/badge/Web_App_Security-ef4444?style=for-the-badge&logo=burpsuite&logoColor=white" alt="Web Application Security" />
   <img src="https://img.shields.io/badge/Network_Recon-a855f7?style=for-the-badge&logo=wireguard&logoColor=white" alt="Network Recon" />
-  <img src="https://img.shields.io/badge/Traffic_Analysis-7e22ce?style=for-the-badge&logo=wireshark&logoColor=white" alt="Traffic Analysis" />
-  <img src="https://img.shields.io/badge/Security_Research-ef4444?style=for-the-badge&logo=hackthebox&logoColor=white" alt="Security Research" />
+  <br />
+  <img src="https://img.shields.io/badge/Traffic_Analysis-ef4444?style=for-the-badge&logo=wireshark&logoColor=white" alt="Traffic Analysis" />
+  <img src="https://img.shields.io/badge/OSINT-a855f7?style=for-the-badge&logo=searxng&logoColor=white" alt="OSINT" />
+  <img src="https://img.shields.io/badge/Automa%C3%A7%C3%A3o-7e22ce?style=for-the-badge&logo=gnubash&logoColor=white" alt="Automação" />
 </div>
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:7e22ce,100:ef4444&height=3&section=header" width="100%" alt="" />
 
-### 🚀 `[0x03] // Projetos & Portfólio`
+### 🚀 `[0x03] // Projetos`
 
-<table width="100%">
-  <tr>
-    <td align="center">
-      <h3>🌐 Hub de Projetos & Links Pessoais</h3>
-      <p>Plataforma centralizada onde organizo meus projetos em desenvolvimento, redes e portfólio de segurança da informação.</p>
-      <p><code>HTML</code> &nbsp; <code>CSS</code> &nbsp; <code>JavaScript</code> &nbsp; <code>Netlify</code></p>
-      <a href="https://mypersonallinks.netlify.app" target="_blank">
-        <img src="https://img.shields.io/badge/%E2%9A%A1_Acessar_Plataforma-7e22ce?style=for-the-badge" alt="Acessar a plataforma" />
-      </a>
-    </td>
-  </tr>
-</table>
+<div align="center">
+  <a href="https://github.com/GuiiBM/Verto-Multi-purpose-Media-Security-Processing-Suite"><img src="assets/repos/1.svg" width="49%" alt="Verto-Multi-purpose-Media-Security-Processing-Suite: Processamento 100% local. Dados sensíveis nunca saem da máquina do usuário." /></a>
+  <a href="https://github.com/GuiiBM/MyPersonalLinks"><img src="assets/repos/2.svg" width="49%" alt="MyPersonalLinks: repositório" /></a>
+  <a href="https://github.com/GuiiBM/CalcularPassagens"><img src="assets/repos/3.svg" width="49%" alt="CalcularPassagens: repositório" /></a>
+  <a href="https://github.com/GuiiBM/MundoAgape"><img src="assets/repos/4.svg" width="49%" alt="MundoAgape: repositório" /></a>
+  <a href="https://github.com/GuiiBM/tcc"><img src="assets/repos/5.svg" width="49%" alt="tcc: Meu tcc" /></a>
+  <a href="https://github.com/GuiiBM/reguladorfinanceiro"><img src="assets/repos/6.svg" width="49%" alt="reguladorfinanceiro: Aplicação web de monitoramento de mercado financeiro em tempo real (atraso de 15 min), com compra/venda de ações e FIIs, carteira, recomendações, análise técnica e dividendos." /></a>
+</div>
 
-#### 🗂️ Repositórios recentes <sub><sup>(atualizado automaticamente)</sup></sub>
-
-<table width="100%">
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/GuiiBM/Verto-Multi-purpose-Media-Security-Processing-Suite"><b>Verto-Multi-purpose-Media-Security-Processing-Suite</b></a><br />
-      <sub><i>Sem descrição.</i></sub><br />
-      <sub><code>Python</code> · atualizado em 28/10/2026</sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/GuiiBM/MyPersonalLinks"><b>MyPersonalLinks</b></a><br />
-      <sub><i>Sem descrição.</i></sub><br />
-      <sub><code>HTML</code> · atualizado em 07/10/2026</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/GuiiBM/CalcularPassagens"><b>CalcularPassagens</b></a><br />
-      <sub><i>Sem descrição.</i></sub><br />
-      <sub><code>HTML</code> · atualizado em 30/09/2026</sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/GuiiBM/MundoAgape"><b>MundoAgape</b></a><br />
-      <sub><i>Sem descrição.</i></sub><br />
-      <sub><code>CSS</code> · atualizado em 30/09/2026</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/GuiiBM/tcc"><b>tcc</b></a><br />
-      <sub>Meu tcc</sub><br />
-      <sub><code>PHP</code> · atualizado em 23/09/2026</sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/GuiiBM/reguladorfinanceiro"><b>reguladorfinanceiro</b></a><br />
-      <sub><i>Sem descrição.</i></sub><br />
-      <sub><code>HTML</code> · atualizado em 02/09/2026</sub>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <a href="https://gbm-mkt.netlify.app"><img src="https://img.shields.io/badge/%E2%9A%A1_Ver_portf%C3%B3lio_completo-7e22ce?style=for-the-badge" alt="Ver portfólio completo" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories"><img src="https://img.shields.io/badge/Todos_os_reposit%C3%B3rios-0d1117?style=for-the-badge&logo=github&logoColor=white" alt="Todos os repositórios" /></a>
+</p>
+<p align="center"><sub>Os cards acima mostram os repositórios com commits mais recentes e são atualizados todos os dias.</sub></p>
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:7e22ce,100:ef4444&height=3&section=header" width="100%" alt="" />
 
 ### 📊 `[0x04] // Métricas de Código`
 
 <div align="center">
-  <img src="assets/stats.svg" height="190" alt="Estatísticas do GitHub" />
-  <img src="assets/linguagens.svg" height="190" alt="Linguagens mais usadas" />
-  <br /><br />
+  <img src="assets/stats.svg" width="57%" alt="Estatísticas do GitHub" />
+  <img src="assets/linguagens.svg" width="40.5%" alt="Linguagens mais usadas" />
   <img src="assets/atividade.svg" width="100%" alt="Gráfico de atividade dos últimos 30 dias" />
 </div>
 
@@ -174,7 +133,7 @@
 ### 🏆 `[0x07] // Conquistas no GitHub`
 
 <div align="center">
-  <img src="https://github-profile-trophies.vercel.app/?username=GuiiBM&theme=dracula&column=4&margin-w=10&margin-h=10&no-bg=true&no-frame=true" alt="Troféus do GitHub" />
+  <img src="https://github-profile-trophies.vercel.app/?username=GuiiBM&theme=dracula&column=-1&rank=-%3F&margin-w=12&margin-h=12&no-bg=true&no-frame=true" alt="Troféus do GitHub" />
 </div>
 
 <br />
@@ -183,5 +142,5 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ef4444,100:7e22ce&height=110&section=footer&animation=twinkling" width="100%" alt="" />
   <p><code>"Security is not a product, but a process."</code></p>
   <p><sub>(Bruce Schneier)</sub></p>
-  <sub>Atualizado em 01/11/2026 às 12:28 (horário de Brasília) · tema <b>⚡ Cyberpunk</b></sub>
+  <sub>Atualizado em 01/11/2026 às 12:40 (horário de Brasília) · tema <b>⚡ Cyberpunk</b></sub>
 </div>

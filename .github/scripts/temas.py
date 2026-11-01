@@ -36,6 +36,17 @@ def ultima_sexta(ano: int, mes: int) -> date:
     return d - timedelta(days=(d.weekday() - 4) % 7)
 
 
+def misturar(a: str, b: str, f: float) -> str:
+    ca, cb = (tuple(int(x[i:i + 2], 16) for i in (0, 2, 4)) for x in (a, b))
+    return "".join(f"{round(x + (y - x) * f):02x}" for x, y in zip(ca, cb))
+
+
+def legivel(cor: str) -> str:
+    """Clareia cores escuras demais para aparecer sobre o fundo escuro."""
+    r, g, b = (int(cor[i:i + 2], 16) for i in (0, 2, 4))
+    return misturar(cor, "ffffff", 0.45) if 0.2126 * r + 0.7152 * g + 0.0722 * b < 60 else cor
+
+
 def dia(mes: int, d: int) -> Callable[[int], tuple[date, date]]:
     return lambda ano: (date(ano, mes, d), date(ano, mes, d))
 
@@ -59,8 +70,10 @@ class Tema:
     saudacao: str | None = None  # primeira linha do texto digitado
     trofeu: str = "dracula"
     perfil3d: str = "profile-night-rainbow.svg"
-    cabecalho: str = "waving"
     animacao: str = "twinkling"
+    # Efeito do banner: estrelas, neve, fogos, confete, coracoes,
+    # bandeirinhas, matrix, morcegos ou grade.
+    decoracao: str = "estrelas"
     gradiente: list[tuple[int, str]] = field(default_factory=list)
 
     def periodos(self, ano: int) -> list[tuple[date, date]]:
@@ -90,13 +103,15 @@ TEMAS: list[Tema] = [
     Tema("ano_novo", "Ano Novo", "🎆", 2, periodo(12, 31, 1, 2),
          c1="f59e0b", c2="1e3a8a", acento="fbbf24",
          descricao="Feliz {ano_novo}! | Offensive Security | Red Team",
+         decoracao="fogos",
          faixa="Feliz {ano_novo}! Novo ano, novos desafios e muito código pela frente.",
          saudacao="🎆 Feliz {ano_novo}! Bora pra mais um ano de código",
-         trofeu="radical", cabecalho="waving", animacao="blink",
+         trofeu="radical", animacao="blink",
          gradiente=[(0, "f59e0b"), (55, "b45309"), (100, "1e3a8a")]),
     Tema("protecao_dados", "Dia da Proteção de Dados", "🔐", 3, dia(1, 28),
          c1="0f766e", c2="22d3ee", acento="2dd4bf",
          descricao="Data Privacy Day | Offensive Security | Red Team",
+         decoracao="grade",
          faixa="Dia Internacional da Proteção de Dados: privacidade também é segurança.",
          saudacao="🔐 28/01: Dia Internacional da Proteção de Dados",
          trofeu="nord"),
@@ -104,6 +119,7 @@ TEMAS: list[Tema] = [
          lambda ano: (pascoa(ano) - timedelta(days=51), pascoa(ano) - timedelta(days=46)),
          c1="db2777", c2="facc15", acento="f472b6",
          descricao="Carnaval | Offensive Security | Red Team",
+         decoracao="confete",
          faixa="É Carnaval! Confete, serpentina e commits no ritmo do samba.",
          saudacao="🎭 Carnaval: confete, serpentina e commits",
          trofeu="radical", animacao="blinking",
@@ -111,6 +127,7 @@ TEMAS: list[Tema] = [
     Tema("mulher", "Dia Internacional da Mulher", "💜", 3, dia(3, 8),
          c1="9333ea", c2="f0abfc", acento="c084fc",
          descricao="Dia Internacional da Mulher | Offensive Security",
+         decoracao="coracoes",
          faixa="Dia Internacional da Mulher: viva as mulheres que constroem a tecnologia e a segurança.",
          saudacao="💜 Viva as mulheres na tecnologia e na segurança",
          trofeu="dracula"),
@@ -118,24 +135,28 @@ TEMAS: list[Tema] = [
          lambda ano: (pascoa(ano) - timedelta(days=2), pascoa(ano)),
          c1="92400e", c2="f9a8d4", acento="f59e0b",
          descricao="Feliz Páscoa | Offensive Security | Red Team",
+         decoracao="confete",
          faixa="Feliz Páscoa! Que venham ovos de chocolate e zero bugs em produção.",
          saudacao="🐰 Feliz Páscoa! Caçando ovos (e bugs)",
          trofeu="gruvbox", perfil3d="profile-south-season-animate.svg"),
     Tema("star_wars", "Star Wars Day", "⚔️", 3, dia(5, 4),
          c1="facc15", c2="0f172a", acento="facc15",
          descricao="May the 4th be with you | Offensive Security",
+         decoracao="estrelas",
          faixa="May the 4th be with you. Que a força (e o código limpo) estejam com você.",
          saudacao="⚔️ May the 4th be with you",
          trofeu="darkhub", perfil3d="profile-night-view.svg"),
     Tema("namorados", "Dia dos Namorados", "❤️", 3, dia(6, 12),
          c1="e11d48", c2="f472b6", acento="fb7185",
          descricao="Dia dos Namorados | Offensive Security | Red Team",
+         decoracao="coracoes",
          faixa="Feliz Dia dos Namorados! Hoje o código é escrito com <3.",
          saudacao="❤️ Hoje o código é escrito com <3",
          trofeu="radical"),
     Tema("junina", "Festa Junina", "🌽", 2, periodo(6, 13, 6, 29),
          c1="ea580c", c2="facc15", acento="fb923c",
          descricao="Arraiá do GuiiBM | Offensive Security | Red Team",
+         decoracao="bandeirinhas",
          faixa="Arraiá do GuiiBM! Pamonha, quentão e deploy sem quadrilha de bugs.",
          saudacao="🌽 Arraiá do GuiiBM: olha a cobra! (é mentira)",
          trofeu="gruvbox", perfil3d="profile-south-season-animate.svg",
@@ -143,6 +164,7 @@ TEMAS: list[Tema] = [
     Tema("orgulho", "Orgulho LGBTQIA+", "🏳️‍🌈", 3, dia(6, 28),
          c1="8b5cf6", c2="ef4444", acento="a78bfa",
          descricao="Dia do Orgulho LGBTQIA+ | Offensive Security",
+         decoracao="confete",
          faixa="Dia Internacional do Orgulho LGBTQIA+: tecnologia é feita por todo mundo.",
          saudacao="🏳️‍🌈 Tecnologia é feita por todo mundo",
          trofeu="radical",
@@ -151,12 +173,14 @@ TEMAS: list[Tema] = [
     Tema("sysadmin", "Dia do SysAdmin", "🖥️", 3, lambda ano: (ultima_sexta(ano, 7),) * 2,
          c1="2563eb", c2="22d3ee", acento="60a5fa",
          descricao="SysAdmin Day | Offensive Security | Red Team",
+         decoracao="grade",
          faixa="Dia do Administrador de Sistemas: obrigado a quem mantém tudo de pé.",
          saudacao="🖥️ Feliz Dia do SysAdmin: uptime é amor",
          trofeu="tokyonight"),
     Tema("independencia", "Independência do Brasil", "🇧🇷", 3, dia(9, 7),
          c1="16a34a", c2="facc15", acento="22c55e",
          descricao="7 de Setembro | Offensive Security | Red Team",
+         decoracao="confete",
          faixa="7 de Setembro: Independência do Brasil.",
          saudacao="🇧🇷 7 de Setembro: Independência do Brasil",
          trofeu="onedark", perfil3d="profile-night-green.svg",
@@ -165,18 +189,21 @@ TEMAS: list[Tema] = [
          lambda ano: (date(ano, 1, 1) + timedelta(days=255),) * 2,
          c1="16a34a", c2="052e16", acento="4ade80",
          descricao="Dia do Programador (0x100) | Offensive Security",
+         decoracao="matrix",
          faixa="Feliz Dia do Programador! O 256º dia do ano (0x100) é nosso.",
          saudacao="🧑‍💻 Feliz Dia do Programador! (dia 0x100 do ano)",
          trofeu="matrix", perfil3d="profile-night-green.svg", animacao="blink"),
     Tema("ciberseguranca", "Mês da Cibersegurança", "🛡️", 1, periodo(10, 1, 10, 31),
          c1="0ea5e9", c2="7e22ce", acento="38bdf8",
          descricao="Cybersecurity Awareness Month | Red Team",
+         decoracao="grade",
          faixa="Outubro é o Mês da Conscientização em Cibersegurança. Ative o 2FA!",
          saudacao="🛡️ Outubro: Mês da Conscientização em Cibersegurança",
          trofeu="tokyonight", perfil3d="profile-night-view.svg"),
     Tema("criancas", "Dia das Crianças", "🧸", 3, dia(10, 12),
          c1="f97316", c2="3b82f6", acento="fb923c",
          descricao="Dia das Crianças | Offensive Security | Red Team",
+         decoracao="confete",
          faixa="Feliz Dia das Crianças! Todo hacker começou desmontando alguma coisa.",
          saudacao="🧸 Todo hacker começou desmontando alguma coisa",
          trofeu="radical",
@@ -184,13 +211,15 @@ TEMAS: list[Tema] = [
     Tema("halloween", "Halloween", "🎃", 2, periodo(10, 24, 10, 31),
          c1="f97316", c2="581c87", acento="fb923c",
          descricao="Happy Halloween | Offensive Security | Red Team",
+         decoracao="morcegos",
          faixa="Happy Halloween! Cuidado com os fantasmas na memória (memory leaks).",
          saudacao="🎃 Happy Halloween! Doces ou exploits?",
          trofeu="gruvbox", perfil3d="profile-night-view.svg",
-         cabecalho="venom", animacao="fadeIn"),
+         animacao="fadeIn"),
     Tema("consciencia_negra", "Dia da Consciência Negra", "✊🏿", 3, dia(11, 20),
          c1="ca8a04", c2="15803d", acento="eab308",
          descricao="Dia da Consciência Negra | Offensive Security",
+         decoracao="estrelas",
          faixa="20 de Novembro: Dia Nacional de Zumbi e da Consciência Negra.",
          saudacao="✊🏿 20/11: Dia da Consciência Negra",
          trofeu="gruvbox",
@@ -198,12 +227,14 @@ TEMAS: list[Tema] = [
     Tema("seguranca_info", "Dia da Segurança da Informação", "🛡️", 3, dia(11, 30),
          c1="06b6d4", c2="7e22ce", acento="22d3ee",
          descricao="Computer Security Day | Offensive Security",
+         decoracao="grade",
          faixa="30/11: Dia Internacional da Segurança da Informação. Já trocou aquela senha?",
          saudacao="🛡️ 30/11: Dia Internacional da Segurança da Informação",
          trofeu="tokyonight", perfil3d="profile-night-view.svg"),
     Tema("natal", "Natal", "🎄", 2, periodo(12, 1, 12, 30),
          c1="dc2626", c2="16a34a", acento="f87171",
          descricao="Boas Festas | Offensive Security | Red Team",
+         decoracao="neve",
          faixa="Boas festas! Que o Papai Noel traga muitos commits verdes.",
          saudacao="🎄 Boas festas! Ho-ho-ho, git push",
          trofeu="radical", perfil3d="profile-night-green.svg"),
@@ -214,6 +245,7 @@ if ANIVERSARIO:
         "aniversario", "Aniversário", "🎂", 4, dia(*ANIVERSARIO),
         c1="ec4899", c2="8b5cf6", acento="f472b6",
         descricao="Hoje é meu aniversário! | Offensive Security",
+        decoracao="confete",
         faixa="Hoje é meu aniversário! Mais um ano de vida e de código.",
         saudacao="🎂 Hoje é meu aniversário!",
         trofeu="radical", animacao="blinking",

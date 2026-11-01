@@ -24,7 +24,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from banner import banner
-from temas import PADRAO, TEMAS, Tema, legivel, misturar, proxima_data, tema_do_dia
+from temas import PADRAO, TEMAS, Tema, legivel, misturar, tema_do_dia
 
 USUARIO = "GuiiBM"
 RAIZ = Path(__file__).resolve().parents[2]
@@ -37,6 +37,17 @@ NOME = "Guilherme Batistela"
 COMANDO = "root@guiibm:~$ whoami"
 CHIPS = ["ADS @ FATEC", "Red Team", "Ubatuba · SP", "Linux Mint"]
 PORTFOLIO = "https://gbm-mkt.netlify.app"
+
+# Cabeçalhos das seções (assets/secoes/01.svg, 02.svg...): título e comando.
+SECOES = [
+    ("Sobre Mim", "whoami --verbose"),
+    ("Arsenal Tecnológico", "ls -la ~/arsenal"),
+    ("Projetos", "git log --oneline --recent"),
+    ("Métricas de Código", "gh stats --last-12-months"),
+    ("Atividade em Tempo Real", "tail -f ~/contributions.log"),
+    ("Calendário 3D de Contribuições", "render --isometric --year"),
+    ("Conquistas no GitHub", "cat ~/trophies.txt"),
+]
 
 # Repositórios que não devem aparecer em "Repositórios recentes".
 REPOS_IGNORADOS = {USUARIO}
@@ -74,9 +85,6 @@ CORES_LINGUAGENS = {
     "Dart": "00B4AB", "Go": "00ADD8", "Rust": "dea584", "Hack": "878787",
     "Blade": "f7523f", "Vue": "41b883", "Dockerfile": "384d54",
 }
-
-MESES = ["jan", "fev", "mar", "abr", "mai", "jun",
-         "jul", "ago", "set", "out", "nov", "dez"]
 
 FONTE = "'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 FUNDO, TEXTO, APAGADO = "0d1117", "e2e8f0", "8b949e"
@@ -410,6 +418,49 @@ def card_repo(t: Tema, r: dict, hoje: date) -> str:
     return moldura(t, 460, 150, nome, corpo)
 
 
+def card_secao(t: Tema, numero: int, titulo: str, comando: str) -> str:
+    largura, altura, total = 1000, 72, len(SECOES)
+    mono = "'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"
+    c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
+    pontos = "".join(
+        f'<circle cx="{largura - 30 - (total - 1 - i) * 14}" cy="47" r="4" '
+        + (f'fill="#{acento}"/>' if i == numero - 1 else f'fill="none" stroke="#{APAGADO}" stroke-opacity=".6"/>')
+        for i in range(total))
+    rotulo = f"[0x{numero:02X}] {titulo}"
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{largura}" height="{altura}" viewBox="0 0 {largura} {altura}" role="img" aria-label="{esc(rotulo)}">
+  <title>{esc(rotulo)}</title>
+  <style>
+    .brilho {{ animation: varrer 5s ease-in-out infinite; }}
+    .cursor {{ animation: piscar 1s steps(1) infinite; }}
+    @keyframes varrer {{ from {{ transform: translateX(-300px); }} to {{ transform: translateX({largura + 300}px); }} }}
+    @keyframes piscar {{ 50% {{ opacity: 0; }} }}
+    @media (prefers-reduced-motion: reduce) {{ .brilho, .cursor {{ animation: none; }} .brilho {{ display: none; }} }}
+  </style>
+  <defs>
+    <linearGradient id="lateral" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#{c1}"/><stop offset="100%" stop-color="#{c2}"/></linearGradient>
+    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#{c1}" stop-opacity=".16"/><stop offset="60%" stop-color="#{FUNDO}" stop-opacity="0"/></linearGradient>
+    <linearGradient id="luz" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity="0"/><stop offset="50%" stop-color="#fff" stop-opacity=".06"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="barra"><rect x=".5" y=".5" width="{largura - 1}" height="{altura - 1}" rx="12"/></clipPath>
+  </defs>
+  <g clip-path="url(#barra)">
+    <rect width="{largura}" height="{altura}" fill="#{FUNDO}"/>
+    <rect width="{largura}" height="{altura}" fill="url(#fundo)"/>
+    <rect width="5" height="{altura}" fill="url(#lateral)"/>
+    <rect x="0" width="260" height="{altura}" fill="url(#luz)" class="brilho"/>
+  </g>
+  <rect x=".5" y=".5" width="{largura - 1}" height="{altura - 1}" rx="12" fill="none" stroke="#{c1}" stroke-opacity=".5"/>
+
+  <rect x="26" y="19" width="78" height="34" rx="8" fill="#{c1}" fill-opacity=".16" stroke="#{c1}" stroke-opacity=".75"/>
+  <text x="65" y="41" text-anchor="middle" style="font:700 15px {mono};fill:#{acento}">0x{numero:02X}</text>
+  <text x="124" y="34" style="font:700 22px {FONTE};fill:#ffffff">{esc(titulo)}</text>
+  <text x="124" y="56" style="font:500 12.5px {mono};fill:#{APAGADO}"><tspan fill="#{c2}">$</tspan> {esc(comando)}<tspan class="cursor" fill="#{acento}"> ▌</tspan></text>
+
+  <text x="{largura - 26}" y="30" text-anchor="end" style="font:600 12px {mono};fill:#{APAGADO};letter-spacing:1px">{numero:02d} / {total:02d}</text>
+  {pontos}
+</svg>
+"""
+
+
 # --------------------------------------------------------------------------
 # README
 # --------------------------------------------------------------------------
@@ -437,18 +488,8 @@ def montar_readme(t: Tema, hoje: date, agora: datetime, repos: list[dict]) -> st
     linhas = ([fmt(t.saudacao)] if t.saudacao else []) + LINHAS_DIGITADAS
     boot = ["[OK] Loading kernel modules...",
             "[OK] Establishing encrypted tunnel...",
-            f"[OK] Theme loaded: {t.chave}",
+            "[WARN] Unauthorized access attempt blocked",
             f"[OK] ACCESS GRANTED // WELCOME, {USUARIO}"]
-
-    proxima = proxima_data(hoje)
-    if proxima:
-        prox_tema, inicio = proxima
-        faltam = (inicio - hoje).days
-        proxima_txt = (f"Próxima data no radar: {prox_tema.emoji} <b>{esc(prox_tema.nome)}</b> "
-                       f"em {faltam} dia{'s' if faltam != 1 else ''} "
-                       f"({inicio.day:02d}/{MESES[inicio.month - 1]})")
-    else:
-        proxima_txt = ""
 
     citacao, autor = CITACOES[hoje.toordinal() % len(CITACOES)]
     rev = [(100 - o, c) for o, c in reversed(t.stops())]
@@ -459,11 +500,7 @@ def montar_readme(t: Tema, hoje: date, agora: datetime, repos: list[dict]) -> st
         "animacao": t.animacao,
         "linhas_q": ";".join(q(l) for l in linhas),
         "boot_q": ";".join(q(l) for l in boot),
-        "tema_badge": q(f"{t.emoji} {t.nome}"),
-        "tema_badge_texto": esc(f"{t.emoji} {t.nome}"),
         "data_badge": q(f"{agora:%d/%m/%Y}"),
-        "faixa": esc(fmt(t.faixa)),
-        "proxima_data": proxima_txt,
         "trofeu": t.trofeu,
         "perfil3d": t.perfil3d,
         "repos_recentes": bloco_repos(repos),
@@ -555,6 +592,10 @@ def main() -> int:
         antigo.unlink()
     for i, r in enumerate(repos):
         (pasta / f"{i + 1}.svg").write_text(card_repo(tema, r, hoje), encoding="utf-8")
+    (ASSETS / "secoes").mkdir(exist_ok=True)
+    for i, (titulo, comando) in enumerate(SECOES, 1):
+        (ASSETS / "secoes" / f"{i:02d}.svg").write_text(card_secao(tema, i, titulo, comando), encoding="utf-8")
+
     if dados:
         dias = {date.fromisoformat(d): n for d, n in dados["dias"].items()}
         (ASSETS / "stats.svg").write_text(card_stats(tema, dados["stats"]), encoding="utf-8")

@@ -179,8 +179,6 @@ def banner(t: Tema, hoje: date, nome: str, subtitulo: str, comando: str, chips: 
     cx, cy = 840, 160
     hexagono = " ".join(f"{cx + 62 * math.cos(math.radians(a)):.1f},{cy + 62 * math.sin(math.radians(a)):.1f}"
                         for a in range(-90, 270, 60))
-    tema_txt = f"TEMA · {t.nome.upper()}"
-    tema_w = 38 + 7.6 * len(tema_txt)
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{LARGURA}" height="{ALTURA}" viewBox="0 0 {LARGURA} {ALTURA}" role="img" aria-label="{escape(nome)}: {escape(subtitulo)}">
   <title>{escape(nome)}: {escape(subtitulo)}</title>
@@ -265,11 +263,6 @@ def banner(t: Tema, hoje: date, nome: str, subtitulo: str, comando: str, chips: 
     <polygon points="{hexagono}" fill="#0d1117" stroke="url(#grad)" stroke-width="3"/>
     <text x="{cx}" y="{cy + 12}" text-anchor="middle" style="font:800 34px {FONTE};letter-spacing:1px" fill="url(#nome)">GBM</text>
 
-    <g class="surge" style="animation-delay:1.3s">
-      <rect x="{LARGURA - 24 - tema_w:.0f}" y="22" width="{tema_w:.0f}" height="26" rx="13" fill="#0d1117" fill-opacity=".7" stroke="#{acento}" stroke-opacity=".6"/>
-      <circle cx="{LARGURA - 24 - tema_w + 14:.0f}" cy="35" r="4" fill="#{acento}" class="cursor"/>
-      <text x="{LARGURA - 24 - tema_w + 26:.0f}" y="39.5" style="font:700 11.5px {MONO};fill:#e2e8f0;letter-spacing:1px">{escape(tema_txt)}</text>
-    </g>
     <rect y="{ALTURA - 3}" width="{LARGURA}" height="3" fill="url(#grad)"/>
   </g>
   <rect x=".5" y=".5" width="{LARGURA - 1}" height="{ALTURA - 1}" rx="16" fill="none" stroke="#{c1}" stroke-opacity=".45"/>

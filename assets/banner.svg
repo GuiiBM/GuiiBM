@@ -81,11 +81,6 @@
     <polygon points="840.0,98.0 893.7,129.0 893.7,191.0 840.0,222.0 786.3,191.0 786.3,129.0" fill="#0d1117" stroke="url(#grad)" stroke-width="3"/>
     <text x="840" y="172" text-anchor="middle" style="font:800 34px 'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:1px" fill="url(#nome)">GBM</text>
 
-    <g class="surge" style="animation-delay:1.3s">
-      <rect x="816" y="22" width="160" height="26" rx="13" fill="#0d1117" fill-opacity=".7" stroke="#a855f7" stroke-opacity=".6"/>
-      <circle cx="830" cy="35" r="4" fill="#a855f7" class="cursor"/>
-      <text x="842" y="39.5" style="font:700 11.5px 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;fill:#e2e8f0;letter-spacing:1px">TEMA · CYBERPUNK</text>
-    </g>
     <rect y="327" width="1000" height="3" fill="url(#grad)"/>
   </g>
   <rect x=".5" y=".5" width="999" height="329" rx="16" fill="none" stroke="#7e22ce" stroke-opacity=".45"/>

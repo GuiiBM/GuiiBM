@@ -1,0 +1,77 @@
+name: Perfil dinâmico
+
+on:
+  schedule:
+    - cron: "5 3 * * *"   # todo dia às 00:05 (horário de Brasília)
+  workflow_dispatch:        # permite rodar manualmente pela aba Actions
+    inputs:
+      tema:
+        description: "Forçar um tema (ex.: natal, halloween, padrao). Vazio = tema do dia"
+        required: false
+        default: ""
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/readme/**"
+      - ".github/scripts/**"
+      - ".github/workflows/perfil-dinamico.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: perfil-dinamico
+  cancel-in-progress: false
+
+jobs:
+  readme:
+    runs-on: ubuntu-latest
+    outputs:
+      cobra: ${{ steps.gerar.outputs.cobra }}
+      pontos_claro: ${{ steps.gerar.outputs.pontos_claro }}
+      pontos_escuro: ${{ steps.gerar.outputs.pontos_escuro }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Gerar README e cards no tema do dia
+        id: gerar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TEMA: ${{ inputs.tema }}
+        run: python .github/scripts/perfil.py ${TEMA:+--tema "$TEMA"}
+
+      - name: Commit & Push
+        env:
+          NOME_TEMA: ${{ steps.gerar.outputs.nome }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md assets
+          git commit -m "Atualiza README (tema: $NOME_TEMA)" || exit 0
+          git pull --rebase
+          git push
+
+  cobrinha:
+    needs: readme
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gerar os SVGs da cobrinha com as cores do tema
+        uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-snake.svg?color_snake=${{ needs.readme.outputs.cobra }}&color_dots=${{ needs.readme.outputs.pontos_claro }}
+            dist/github-snake-dark.svg?palette=github-dark&color_snake=${{ needs.readme.outputs.cobra }}&color_dots=${{ needs.readme.outputs.pontos_escuro }}
+
+      - name: Publicar os SVGs na branch "output"
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

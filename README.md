@@ -1,12 +1,21 @@
-<!-- Para ativar os widgets dinâmicos (cobra + gráfico 3D), veja o arquivo SETUP.md deste repositório. -->
+<!--
+  ⚠️ Este README é gerado automaticamente todos os dias pelo workflow "Perfil dinâmico".
+  Para editar o conteúdo, altere .github/readme/template.md (e não o README.md).
+  Temas e datas comemorativas ficam em .github/scripts/temas.py.
+-->
 <div align="center">
-  <!-- Banner Topo Cyberpunk (gradiente roxo -> vermelho + estrelas em movimento) -->
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7e22ce,100:ef4444&height=200&section=header&text=Guilherme%20Batistela&fontSize=42&fontColor=ffffff&fontAlignY=35&animation=twinkling&desc=Offensive%20Security%20%7C%20Red%20Team%20%7C%20Web%20Dev&descAlignY=58&descSize=18&descColor=E2E8F0" width="100%" alt="Header Banner" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7e22ce,100:ef4444&height=210&section=header&text=Guilherme%20Batistela&fontSize=44&fontColor=ffffff&fontAlignY=35&animation=twinkling&desc=Offensive%20Security%20%7C%20Red%20Team%20%7C%20Web%20Dev&descAlignY=58&descSize=18&descColor=E2E8F0" width="100%" alt="Banner: Guilherme Batistela" />
 
-  <!-- Typing SVG Animação -->
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=A855F7&center=true&vCenter=true&width=650&height=45&lines=%3E_++Offensive+Security+Enthusiast;%3E_++Future+Red+Teamer+%F0%9F%8E%AF;%3E_++Web+Development+%26+Low-Level+Coding;%3E_++Focus%3A+Pentesting+%26+Security+Research" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=a855f7&center=true&vCenter=true&width=650&height=45&lines=%3E_%20%20Offensive%20Security%20Enthusiast;%3E_%20%20Future%20Red%20Teamer%20%F0%9F%8E%AF;%3E_%20%20Web%20Development%20%26%20Low-Level%20Coding;%3E_%20%20Focus%3A%20Pentesting%20%26%20Security%20Research" alt="Offensive Security Enthusiast, Future Red Teamer, Web Development & Low-Level Coding" />
   </a>
+
+  <p>
+    <img src="https://img.shields.io/static/v1?label=tema&message=%E2%9A%A1%20Cyberpunk&color=7e22ce&labelColor=0d1117&style=flat-square" alt="Tema do dia" />
+    <img src="https://img.shields.io/static/v1?label=atualizado&message=01%2F11%2F2026&color=ef4444&labelColor=0d1117&style=flat-square" alt="Data da última atualização" />
+  </p>
+  <sub><i>Tema padrão ativo. O perfil muda de cor sozinho em datas comemorativas.</i></sub><br />
+  <sub>⏳ Próxima data no radar: ✊🏿 <b>Dia da Consciência Negra</b> em 19 dias (20/nov)</sub>
 </div>
 
 <br />
@@ -16,25 +25,21 @@
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   <a href="https://mypersonallinks.netlify.app" target="_blank">
-    <img src="https://img.shields.io/badge/Portf%C3%B3lio_%26_Projetos-A855F7?style=for-the-badge&logo=netlify&logoColor=white" alt="Portfolio" />
+    <img src="https://img.shields.io/badge/Portf%C3%B3lio_%26_Projetos-7e22ce?style=for-the-badge&logo=netlify&logoColor=white" alt="Portfólio" />
   </a>
   <a href="https://instagram.com/gbm_clicks" target="_blank">
     <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" />
   </a>
-</div>
-
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=GuiiBM&style=for-the-badge&color=7e22ce&label=PROFILE+VIEWS" alt="Profile Views" />
-  <img src="https://img.shields.io/github/followers/GuiiBM?style=for-the-badge&color=EF4444&logo=github&label=FOLLOWERS&logoColor=white" alt="Followers" />
+  <br />
+  <img src="https://komarev.com/ghpvc/?username=GuiiBM&style=for-the-badge&color=7e22ce&label=PROFILE+VIEWS" alt="Visualizações do perfil" />
+  <img src="https://img.shields.io/github/followers/GuiiBM?style=for-the-badge&color=ef4444&logo=github&label=FOLLOWERS&logoColor=white" alt="Seguidores" />
 </div>
 
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=14&duration=2200&pause=400&color=EF4444&center=true&vCenter=true&width=600&height=90&lines=%5BOK%5D+Loading+kernel+modules...;%5BOK%5D+Establishing+encrypted+tunnel...;%5BWARN%5D+Unauthorized+access+attempt+blocked;%5BOK%5D+ACCESS+GRANTED+%2F%2F+WELCOME%2C+GuiiBM" alt="Boot Sequence" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=14&duration=2200&pause=400&color=ef4444&center=true&vCenter=true&width=600&height=90&lines=%5BOK%5D%20Loading%20kernel%20modules...;%5BOK%5D%20Establishing%20encrypted%20tunnel...;%5BOK%5D%20Theme%20loaded%3A%20padrao;%5BOK%5D%20ACCESS%20GRANTED%20%2F%2F%20WELCOME%2C%20GuiiBM" alt="Sequência de boot" />
 </div>
-
----
 
 ### 🥷 `[0x01] // Sobre Mim`
 
@@ -59,135 +64,124 @@
 > - ⚡ **Mentalidade**: Entender como os sistemas são construídos (C, C++, PHP, JS, Python) para entender exatamente como quebrá-los e blindá-los.
 > - 🌐 **Central de Links**: Agrupei todas as minhas plataformas e projetos em um único hub: [mypersonallinks.netlify.app](https://mypersonallinks.netlify.app).
 
----
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:7e22ce,100:ef4444&height=3&section=header" width="100%" alt="" />
 
 ### 🛠️ `[0x02] // Arsenal Tecnológico`
 
-#### 💻 Linguagens de Programação & Web
-<p>
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white" alt="C++" />
-  <img src="https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=black" alt="C" />
-  <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
-</p>
-
-#### 🔴 Foco & Especialidades em CyberSec
-<p>
-  <img src="https://img.shields.io/badge/Red_Team_Operations-EF4444?style=for-the-badge&logo=kalilinux&logoColor=white" alt="Red Team" />
-  <img src="https://img.shields.io/badge/Web_Application_Security-8B5CF6?style=for-the-badge&logo=burpsuite&logoColor=white" alt="Web Security" />
-  <img src="https://img.shields.io/badge/Network_Recon-A855F7?style=for-the-badge" alt="Network Recon" />
-  <img src="https://img.shields.io/badge/Traffic_Analysis-EF4444?style=for-the-badge&logo=wireshark&logoColor=white" alt="Wireshark" />
-  <img src="https://img.shields.io/badge/Linux_Environment-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
-  <img src="https://img.shields.io/badge/Git_&_GitHub-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
-</p>
-
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=soft&color=0:7e22ce,100:ef4444&height=8&animation=twinkling&section=header" width="100%" alt="divider" />
+  <img src="https://skillicons.dev/icons?i=python,cpp,c,php,js,html,css,mysql&theme=dark&perline=8" alt="Python, C++, C, PHP, JavaScript, HTML, CSS, MySQL" />
+  <br />
+  <img src="https://skillicons.dev/icons?i=linux,kali,bash,git,github,vscode,netlify&theme=dark&perline=8" alt="Linux, Kali Linux, Bash, Git, GitHub, VS Code, Netlify" />
 </div>
 
----
+<br />
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Red_Team_Operations-7e22ce?style=for-the-badge&logo=kalilinux&logoColor=white" alt="Red Team" />
+  <img src="https://img.shields.io/badge/Web_Application_Security-ef4444?style=for-the-badge&logo=burpsuite&logoColor=white" alt="Web Application Security" />
+  <img src="https://img.shields.io/badge/Network_Recon-a855f7?style=for-the-badge&logo=wireguard&logoColor=white" alt="Network Recon" />
+  <img src="https://img.shields.io/badge/Traffic_Analysis-7e22ce?style=for-the-badge&logo=wireshark&logoColor=white" alt="Traffic Analysis" />
+  <img src="https://img.shields.io/badge/Security_Research-ef4444?style=for-the-badge&logo=hackthebox&logoColor=white" alt="Security Research" />
+</div>
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:7e22ce,100:ef4444&height=3&section=header" width="100%" alt="" />
 
 ### 🚀 `[0x03] // Projetos & Portfólio`
 
 <table width="100%">
   <tr>
-    <td width="100%" valign="top">
-      <h3 align="center">🌐 Hub de Projetos & Links Pessoais</h3>
-      <p align="center">
-        Plataforma centralizada onde organizo meus projetos em desenvolvimento, redes e portfólio de segurança da informação.
-      </p>
-      <p align="center">
-        <code>HTML</code> &nbsp; <code>CSS</code> &nbsp; <code>JavaScript</code> &nbsp; <code>Netlify</code>
-      </p>
-      <div align="center">
-        <a href="https://mypersonallinks.netlify.app" target="_blank">
-          <img src="https://img.shields.io/badge/%E2%9A%A1_Acessar_Plataforma-A855F7?style=for-the-badge" alt="Acessar Projetos" />
-        </a>
-      </div>
+    <td align="center">
+      <h3>🌐 Hub de Projetos & Links Pessoais</h3>
+      <p>Plataforma centralizada onde organizo meus projetos em desenvolvimento, redes e portfólio de segurança da informação.</p>
+      <p><code>HTML</code> &nbsp; <code>CSS</code> &nbsp; <code>JavaScript</code> &nbsp; <code>Netlify</code></p>
+      <a href="https://mypersonallinks.netlify.app" target="_blank">
+        <img src="https://img.shields.io/badge/%E2%9A%A1_Acessar_Plataforma-7e22ce?style=for-the-badge" alt="Acessar a plataforma" />
+      </a>
     </td>
   </tr>
 </table>
 
----
+#### 🗂️ Repositórios recentes <sub><sup>(atualizado automaticamente)</sup></sub>
 
-### 🐍 `[0x04] // Atividade em Tempo Real`
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/GuiiBM/Verto-Multi-purpose-Media-Security-Processing-Suite"><b>Verto-Multi-purpose-Media-Security-Processing-Suite</b></a><br />
+      <sub><i>Sem descrição.</i></sub><br />
+      <sub><code>Python</code> · atualizado em 28/10/2026</sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/GuiiBM/MyPersonalLinks"><b>MyPersonalLinks</b></a><br />
+      <sub><i>Sem descrição.</i></sub><br />
+      <sub><code>HTML</code> · atualizado em 07/10/2026</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/GuiiBM/CalcularPassagens"><b>CalcularPassagens</b></a><br />
+      <sub><i>Sem descrição.</i></sub><br />
+      <sub><code>HTML</code> · atualizado em 30/09/2026</sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/GuiiBM/MundoAgape"><b>MundoAgape</b></a><br />
+      <sub><i>Sem descrição.</i></sub><br />
+      <sub><code>CSS</code> · atualizado em 30/09/2026</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/GuiiBM/tcc"><b>tcc</b></a><br />
+      <sub>Meu tcc</sub><br />
+      <sub><code>PHP</code> · atualizado em 23/09/2026</sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/GuiiBM/reguladorfinanceiro"><b>reguladorfinanceiro</b></a><br />
+      <sub><i>Sem descrição.</i></sub><br />
+      <sub><code>HTML</code> · atualizado em 02/09/2026</sub>
+    </td>
+  </tr>
+</table>
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:7e22ce,100:ef4444&height=3&section=header" width="100%" alt="" />
+
+### 📊 `[0x04] // Métricas de Código`
+
+<div align="center">
+  <img src="assets/stats.svg" height="190" alt="Estatísticas do GitHub" />
+  <img src="assets/linguagens.svg" height="190" alt="Linguagens mais usadas" />
+  <br /><br />
+  <img src="assets/atividade.svg" width="100%" alt="Gráfico de atividade dos últimos 30 dias" />
+</div>
+
+### 🐍 `[0x05] // Atividade em Tempo Real`
 
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/github-snake-dark.svg" />
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/github-snake.svg" />
-    <img alt="Snake comendo o gráfico de contribuições" src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/github-snake.svg" width="100%" />
+    <img alt="Cobrinha comendo o gráfico de contribuições" src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/github-snake.svg" width="100%" />
   </picture>
   <p><i>Consumindo, célula por célula, cada dia de contribuição.</i></p>
 </div>
 
----
-
-### 📅 `[0x05] // Calendário 3D de Contribuições`
+### 📅 `[0x06] // Calendário 3D de Contribuições`
 
 <div align="center">
   <img src="profile-3d-contrib/profile-night-rainbow.svg" alt="Gráfico 3D de contribuições" width="100%" />
   <p><i>O histórico inteiro de commits, em perspectiva isométrica.</i></p>
 </div>
 
----
-
-### 🏆 `[0x06] // Conquistas no GitHub`
+### 🏆 `[0x07] // Conquistas no GitHub`
 
 <div align="center">
-  <img src="https://github-profile-trophies.vercel.app/?username=GuiiBM&theme=synthwave&column=4&margin-w=10&margin-h=10&no-bg=true" alt="GitHub Trophies" />
-</div>
-
----
-
-### 📊 `[0x07] // Métricas de Código`
-
-<div align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=GuiiBM&show_icons=true&theme=synthwave&title_color=a855f7&text_color=e2e8f0&icon_color=ef4444&bg_color=0d1117&border_color=8b5cf6&hide_border=false" alt="Estatísticas do GitHub" />
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=GuiiBM&layout=compact&theme=synthwave&title_color=a855f7&text_color=e2e8f0&icon_color=ef4444&bg_color=0d1117&border_color=8b5cf6&hide_border=false" alt="Linguagens mais usadas" />
+  <img src="https://github-profile-trophies.vercel.app/?username=GuiiBM&theme=dracula&column=4&margin-w=10&margin-h=10&no-bg=true&no-frame=true" alt="Troféus do GitHub" />
 </div>
 
 <br />
 
 <div align="center">
-  <img height="165em" src="https://streak-stats.demolab.com/?user=GuiiBM&theme=dark&background=0D1117&border=8B5CF6&stroke=8B5CF6&ring=A855F7&fire=EF4444&currStreakNum=A855F7&sideNums=E2E8F0&currStreakLabel=EF4444&sideLabels=E2E8F0&dates=888888" alt="GitHub Streak" />
-</div>
-
-<br />
-
-#### 📈 Gráfico Temporal de Atividades
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=GuiiBM&theme=react-dark&bg_color=0d1117&color=a855f7&line=ef4444&point=a855f7&area=true&area_color=7e22ce&hide_border=false&border_color=8b5cf6" alt="Gráfico de Atividades" />
-</div>
-
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=soft&color=0:ef4444,100:7e22ce&height=8&animation=twinkling&section=header" width="100%" alt="divider" />
-</div>
-
----
-
-### 🌐 `[0x08] // Conexões & Redes`
-
-<div align="center">
-  <a href="https://www.linkedin.com/in/guilherme-batistela-machado/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>
-  <a href="https://instagram.com/gbm_clicks" target="_blank">
-    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" />
-  </a>
-  <a href="https://mypersonallinks.netlify.app" target="_blank">
-    <img src="https://img.shields.io/badge/Personal_Links-A855F7?style=for-the-badge&logo=netlify&logoColor=white" alt="Personal Links" />
-  </a>
-</div>
-
-<br />
-
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ef4444,100:7e22ce&height=100&section=footer&animation=twinkling" alt="Footer" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ef4444,100:7e22ce&height=110&section=footer&animation=twinkling" width="100%" alt="" />
   <p><code>"Security is not a product, but a process."</code></p>
   <p><sub>(Bruce Schneier)</sub></p>
-  <sub>Desenvolvido para <b>Guilherme Batistela Machado</b></sub>
+  <sub>Atualizado em 01/11/2026 às 12:15 (horário de Brasília) · tema <b>⚡ Cyberpunk</b></sub>
 </div>

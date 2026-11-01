@@ -147,17 +147,10 @@ def _grade(rng, t):
             + f'<rect x="0" y="0" width="{LARGURA}" height="2" fill="#{legivel(t.acento)}" opacity=".5" class="varre"/>')
 
 
-def _emblema(cx: int, cy: int, hexagono: str, foto: str | None) -> str:
-    if not foto:
-        return (f'<polygon points="{hexagono}" fill="#0d1117" stroke="url(#grad)" stroke-width="3"/>'
-                f'<text x="{cx}" y="{cy + 12}" text-anchor="middle" style="font:800 34px {FONTE};letter-spacing:1px" '
-                f'fill="url(#nome)">GBM</text>')
-    r = 68
-    return (f'<clipPath id="foto"><circle cx="{cx}" cy="{cy}" r="{r}"/></clipPath>'
-            f'<circle cx="{cx}" cy="{cy}" r="{r + 4}" fill="#0d1117"/>'
-            f'<image href="{foto}" x="{cx - r}" y="{cy - r}" width="{2 * r}" height="{2 * r}" '
-            f'preserveAspectRatio="xMidYMid slice" clip-path="url(#foto)"/>'
-            f'<circle cx="{cx}" cy="{cy}" r="{r + 1.5}" fill="none" stroke="url(#grad)" stroke-width="3"/>')
+def _emblema(cx: int, cy: int, hexagono: str) -> str:
+    return (f'<polygon points="{hexagono}" fill="#0d1117" stroke="url(#grad)" stroke-width="3"/>'
+            f'<text x="{cx}" y="{cy + 12}" text-anchor="middle" style="font:800 34px {FONTE};letter-spacing:1px" '
+            f'fill="url(#nome)">GBM</text>')
 
 
 DECORACOES = {
@@ -184,9 +177,7 @@ def _chips(rotulos: list[str], x: float, y: float, cores: list[str]) -> str:
     return "".join(itens)
 
 
-def banner(t: Tema, hoje: date, nome: str, subtitulo: str, comando: str, chips: list[str],
-           foto: str | None = None) -> str:
-    """`foto` é um data URI; sem ele, o emblema mostra o monograma GBM."""
+def banner(t: Tema, hoje: date, nome: str, subtitulo: str, comando: str, chips: list[str]) -> str:
     rng = random.Random(f"{hoje.isoformat()}-{t.chave}")
     c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
     decoracao = DECORACOES.get(t.decoracao, _estrelas)(rng, t)
@@ -275,7 +266,7 @@ def banner(t: Tema, hoje: date, nome: str, subtitulo: str, comando: str, chips: 
       <circle cx="{cx}" cy="{cy}" r="82" fill="none" stroke="#{c2}" stroke-width="1" stroke-dasharray="40 14" opacity=".7"/>
       <circle cx="{cx}" cy="{cy - 82}" r="3.5" fill="#{c2}"/>
     </g>
-    {_emblema(cx, cy, hexagono, foto)}
+    {_emblema(cx, cy, hexagono)}
 
     <rect y="{ALTURA - 3}" width="{LARGURA}" height="3" fill="url(#grad)"/>
   </g>

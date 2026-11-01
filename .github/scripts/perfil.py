@@ -16,8 +16,6 @@ Actions evita o limite de requisições e libera o calendário via GraphQL.
 """
 
 import argparse
-import base64
-import io
 import html
 import json
 import os
@@ -31,7 +29,7 @@ from pathlib import Path
 
 import curriculo
 from banner import banner
-from temas import PADRAO, TEMAS, Tema, legivel, misturar, tema_do_dia
+from temas import PADRAO, TEMAS, Tema, legivel, luminancia, misturar, tema_do_dia
 
 USUARIO = "GuiiBM"
 RAIZ = Path(__file__).resolve().parents[2]
@@ -42,8 +40,6 @@ BRASILIA = timezone(timedelta(hours=-3))
 NOME = "Guilherme Batistela"
 COMANDO = "root@guiibm:~$ whoami"
 CHIPS = ["ADS @ Fatec", "Pesquisador PIBICT", "Red Team", "Linux Mint"]
-# Foto do banner: se existir, este arquivo substitui a foto de perfil do GitHub.
-FOTO_LOCAL = Path(__file__).with_name("foto.jpg")
 
 # Cabeçalhos das seções (assets/secoes/01.svg, 02.svg...): título e comando.
 SECOES = [
@@ -56,6 +52,34 @@ SECOES = [
     ("Atividade em Tempo Real", "tail -f ~/contributions.log"),
     ("Calendário 3D de Contribuições", "render --isometric --year"),
     ("Conquistas no GitHub", "cat ~/trophies.txt"),
+]
+
+# Linhas do texto digitado abaixo do banner (a saudação do tema entra antes).
+DIGITANDO = [
+    ">_  Offensive Security Enthusiast",
+    ">_  Future Red Teamer 🎯",
+    ">_  Web Development & Low-Level Coding",
+    ">_  Focus: Pentesting & Security Research",
+]
+BOOT = [
+    "[OK] Loading kernel modules...",
+    "[OK] Establishing encrypted tunnel...",
+    "[WARN] Unauthorized access attempt blocked",
+    f"[OK] ACCESS GRANTED // WELCOME, {USUARIO}",
+]
+
+# Selos do README (selos/<arquivo>.json, lidos pelo shields.io): mensagem,
+# logo do Simple Icons e qual cor do tema usar.
+SELOS = [
+    ("portfolio", "Portfólio", "netlify", "c1"),
+    ("links", "Links", "linktree", "c2"),
+    ("red_team", "Red Team", "kalilinux", "c1"),
+    ("web_security", "Web App Security", "burpsuite", "c2"),
+    ("network_recon", "Network Recon", "wireguard", "acento"),
+    ("traffic", "Traffic Analysis", "wireshark", "c2"),
+    ("osint", "OSINT", "searxng", "acento"),
+    ("automacao", "Automação", "gnubash", "c1"),
+    ("ver_portfolio", "⚡ Ver portfólio completo", None, "c1"),
 ]
 
 # Quantidade de cards de repositório (o README referencia repos/1.svg a 6.svg).
@@ -168,37 +192,6 @@ def resumo_readme(repo: dict) -> str | None:
     return None
 
 
-def comprimir_foto(bruto: bytes, lado: int = 280) -> bytes | None:
-    """Reduz a foto para JPEG com o Pillow, se ele estiver instalado."""
-    try:
-        from PIL import Image
-    except ImportError:
-        return None
-    imagem = Image.open(io.BytesIO(bruto)).convert("RGB")
-    imagem.thumbnail((lado, lado))
-    saida = io.BytesIO()
-    imagem.save(saida, "JPEG", quality=85, optimize=True)
-    return saida.getvalue()
-
-
-def data_uri_foto(bruto: bytes) -> str:
-    jpeg = comprimir_foto(bruto)
-    if jpeg:
-        return f"data:image/jpeg;base64,{base64.b64encode(jpeg).decode()}"
-    tipo = "image/png" if bruto[:4] == b"\x89PNG" else "image/jpeg"
-    return f"data:{tipo};base64,{base64.b64encode(bruto).decode()}"
-
-
-def avatar() -> str:
-    """Foto de perfil do GitHub como data URI, para embutir no banner."""
-    tamanho = 280
-    try:
-        import PIL  # noqa: F401
-    except ImportError:
-        tamanho = 140  # sem Pillow, baixa menor para o banner não ficar pesado
-    return data_uri_foto(requisitar(f"https://avatars.githubusercontent.com/{USUARIO}?s={tamanho}&v=4"))
-
-
 def sequencias(dias: dict[date, int], hoje: date) -> tuple[int, int]:
     """(sequência atual, maior sequência). Hoje sem commit não quebra a atual."""
     maior = corrente = 0
@@ -213,6 +206,7 @@ def sequencias(dias: dict[date, int], hoje: date) -> tuple[int, int]:
 
 
 def coletar(hoje: date) -> dict:
+    perfil = api(f"/users/{USUARIO}")
     repos = api(f"/users/{USUARIO}/repos?per_page=100&type=owner&sort=pushed")
     proprios = [r for r in repos if not r["fork"]]
 
@@ -234,7 +228,6 @@ def coletar(hoje: date) -> dict:
                    "linguagem": r["language"], "estrelas": r["stargazers_count"],
                    "atualizado": r["pushed_at"][:10]} for r in recentes],
         "linguagens": linguagens,
-        "avatar": avatar(),
         "dias": {d.isoformat(): n for d, n in dias.items()},
         "stats": {
             "contribuicoes": sum(dias.values()),
@@ -245,6 +238,7 @@ def coletar(hoje: date) -> dict:
             "estrelas": sum(r["stargazers_count"] for r in proprios),
             "seq_atual": atual,
             "seq_maior": maior,
+            "seguidores": perfil["followers"],
         },
     }
 
@@ -611,6 +605,55 @@ def card_rodape(t: Tema, hoje: date, agora: datetime) -> str:
 
 
 # --------------------------------------------------------------------------
+# Imagens de serviços externos, recoloridas com o tema
+# --------------------------------------------------------------------------
+
+def visivel(cor: str, alternativa: str) -> str:
+    """Troca cores quase brancas, que somem no modo claro do GitHub."""
+    return legivel(alternativa if luminancia(cor) > 200 else cor)
+
+
+def selo(mensagem: str, cor: str, logo: str | None = None, rotulo: str = "") -> str:
+    dados = {"schemaVersion": 1, "label": rotulo, "message": mensagem,
+             "color": cor, "cacheSeconds": 300}
+    if logo:
+        dados |= {"namedLogo": logo, "logoColor": "0d1117" if luminancia(cor) > 170 else "white"}
+    return json.dumps(dados, ensure_ascii=False) + "\n"
+
+
+def baixar_svg(destino: Path, url: str) -> None:
+    """Baixa um SVG; se o serviço falhar, mantém a versão publicada antes."""
+    anterior = f"https://raw.githubusercontent.com/{USUARIO}/{USUARIO}/output/{destino.name}"
+    for origem in (url, anterior):
+        try:
+            conteudo = requisitar(origem)
+        except (urllib.error.URLError, TimeoutError, OSError):
+            continue
+        if b"<svg" in conteudo[:4000]:
+            destino.write_bytes(conteudo)
+            return
+    print(f"Aviso: não foi possível baixar {destino.name}.", file=sys.stderr)
+
+
+def digitando(linhas: list[str], cor: str, **opcoes) -> str:
+    parametros = {"center": "true", "vCenter": "true", "color": cor, **opcoes, "lines": ";".join(linhas)}
+    return "https://readme-typing-svg.demolab.com/?" + urllib.parse.urlencode(
+        parametros, quote_via=urllib.parse.quote, safe=";")
+
+
+def externos(t: Tema, saida: Path, ano_novo: int) -> None:
+    linhas = ([t.saudacao.format(ano_novo=ano_novo)] if t.saudacao else []) + DIGITANDO
+    baixar_svg(saida / "digitando.svg", digitando(
+        linhas, legivel(t.acento), font="Fira Code", weight=600, size=20, pause=1000, width=650, height=45))
+    baixar_svg(saida / "boot.svg", digitando(
+        BOOT, visivel(t.c2, t.c1), font="JetBrains Mono", weight=500, size=14, duration=2200,
+        pause=400, width=600, height=90))
+    baixar_svg(saida / "trofeus.svg", "https://github-profile-trophies.vercel.app/?" + urllib.parse.urlencode(
+        {"username": USUARIO, "theme": t.trofeu, "column": -1, "rank": "-?", "margin-w": 12,
+         "margin-h": 12, "no-bg": "true", "no-frame": "true"}))
+
+
+# --------------------------------------------------------------------------
 
 def escrever_saida(t: Tema) -> None:
     """Exporta as cores do tema para os próximos passos do workflow."""
@@ -626,6 +669,7 @@ def escrever_saida(t: Tema) -> None:
         f.write(f"nome={t.nome}\n")
         f.write(f"perfil3d={t.perfil3d}\n")
         f.write(f"cobra=#{legivel(t.c2)}\n")
+        f.write(f"cobra_clara=#{visivel(t.c2, t.c1)}\n")
         f.write(f"pontos_claro={dots(claro)}\n")
         f.write(f"pontos_escuro={dots(escuro)}\n")
 
@@ -665,6 +709,7 @@ def main() -> int:
     saida: Path = args.saida
     (saida / "repos").mkdir(parents=True, exist_ok=True)
     (saida / "secoes").mkdir(exist_ok=True)
+    (saida / "selos").mkdir(exist_ok=True)
     gravar = lambda nome, conteudo: (saida / nome).write_text(conteudo, encoding="utf-8")
 
     ano_novo = hoje.year + 1 if hoje.month == 12 else hoje.year
@@ -675,6 +720,10 @@ def main() -> int:
     gravar("trajetoria.svg", card_trajetoria(tema))
     gravar("formacao.svg", card_formacao(tema))
     gravar("premios.svg", card_premios(tema))
+    for arquivo, mensagem, logo, cor in SELOS:
+        gravar(f"selos/{arquivo}.json", selo(mensagem, getattr(tema, cor), logo))
+    if not args.offline:
+        externos(tema, saida, ano_novo)
 
     # Os dados coletados ficam em cache (dados.json, publicado junto com as
     # imagens): se a API falhar, os cards usam os números da última coleta.
@@ -688,11 +737,7 @@ def main() -> int:
         else:
             cache.write_text(json.dumps(dados, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
-    if FOTO_LOCAL.exists():
-        foto = data_uri_foto(FOTO_LOCAL.read_bytes())
-    else:
-        foto = dados.get("avatar") if dados else None
-    gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS, foto))
+    gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS))
 
     repos = dados["repos"] if dados else []
     for i in range(TOTAL_REPOS):
@@ -702,6 +747,9 @@ def main() -> int:
         gravar("stats.svg", card_stats(tema, dados["stats"]))
         gravar("linguagens.svg", card_linguagens(tema, dados["linguagens"]))
         gravar("atividade.svg", card_atividade(tema, dias, hoje))
+        if "seguidores" in dados["stats"]:
+            gravar("selos/seguidores.json", selo(numero(dados["stats"]["seguidores"]),
+                                                 legivel(tema.c2), "github", "seguidores"))
 
     escrever_saida(tema)
     return 0

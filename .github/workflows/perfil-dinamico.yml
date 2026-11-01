@@ -3,16 +3,24 @@ name: Perfil dinâmico
 # Gera as imagens do perfil (banner, cards, cobrinha, gráfico 3D...) e publica
 # tudo na branch "output". Este workflow nunca faz commit na main, então o
 # Sync do VS Code não diverge por causa dele.
+#
+# Escutador: a cada 10 minutos o job "escutar" compara uma assinatura da conta
+# (último evento público, último push em outro repositório, número de
+# repositórios e seguidores, e a data de hoje) com a da última geração. Só
+# quando algo mudou o job "gerar" redesenha o perfil. Assim um dia parado não
+# gera nada, e vários pushes no mesmo dia aparecem minutos depois de cada um.
 
 on:
   schedule:
-    - cron: "5 3 * * *"   # todo dia às 00:05 (horário de Brasília)
+    - cron: "*/10 * * * *"
   workflow_dispatch:        # permite rodar manualmente pela aba Actions
     inputs:
       tema:
         description: "Forçar um tema (ex.: natal, halloween, padrao). Vazio = tema do dia"
         required: false
         default: ""
+  repository_dispatch:      # outro repositório ou webhook pode pedir uma atualização na hora
+    types: [atualizar]
   push:
     branches:
       - main
@@ -23,22 +31,53 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: perfil-dinamico
-  cancel-in-progress: false
-
 jobs:
-  gerar:
+  escutar:
     runs-on: ubuntu-latest
+    outputs:
+      mudou: ${{ steps.verificar.outputs.mudou }}
+      assinatura: ${{ steps.verificar.outputs.assinatura }}
+    steps:
+      - name: Verificar se há novidade na conta
+        id: verificar
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          DONO: ${{ github.repository_owner }}
+          EVENTO: ${{ github.event_name }}
+        run: |
+          dia=$(TZ=America/Sao_Paulo date +%F)
+          evento=$(gh api "users/$DONO/events/public?per_page=1" --jq '.[0].id // ""' || true)
+          # O próprio repositório do perfil fica de fora: a publicação na
+          # branch "output" mexe no pushed_at dele e geraria um laço.
+          push=$(gh api "users/$DONO/repos?sort=pushed&per_page=10" \
+            --jq 'map(select(.name != env.DONO)) | .[0] | "\(.name)@\(.pushed_at)"' || true)
+          conta=$(gh api "users/$DONO" --jq '"\(.public_repos)/\(.followers)"' || true)
+          assinatura="$dia|$evento|$push|$conta"
+          anterior=$(gh api "repos/$REPO/contents/assinatura.txt?ref=output" \
+            -H "Accept: application/vnd.github.raw" 2>/dev/null || true)
+          echo "Atual:    $assinatura"
+          echo "Anterior: $anterior"
+          if [ "$EVENTO" != "schedule" ] || [ "$assinatura" != "$anterior" ]; then
+            echo "mudou=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "mudou=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "assinatura=$assinatura" >> "$GITHUB_OUTPUT"
+
+  gerar:
+    needs: escutar
+    if: needs.escutar.outputs.mudou == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: perfil-dinamico
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: Instalar o Pillow (reduz a foto do banner)
-        run: pip install --quiet pillow
 
       - name: Recuperar os dados da última coleta
         env:
@@ -52,7 +91,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TEMA: ${{ inputs.tema }}
-        run: python .github/scripts/perfil.py --saida dist ${TEMA:+--tema "$TEMA"}
+          ASSINATURA: ${{ needs.escutar.outputs.assinatura }}
+        run: |
+          python .github/scripts/perfil.py --saida dist ${TEMA:+--tema "$TEMA"}
+          printf '%s' "$ASSINATURA" > dist/assinatura.txt
 
       - name: Gerar o gráfico 3D de contribuições
         uses: yoshi389111/github-profile-3d-contrib@0.7.1
@@ -70,7 +112,7 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-snake.svg?color_snake=${{ steps.gerar.outputs.cobra }}&color_dots=${{ steps.gerar.outputs.pontos_claro }}
+            dist/github-snake.svg?color_snake=${{ steps.gerar.outputs.cobra_clara }}&color_dots=${{ steps.gerar.outputs.pontos_claro }}
             dist/github-snake-dark.svg?palette=github-dark&color_snake=${{ steps.gerar.outputs.cobra }}&color_dots=${{ steps.gerar.outputs.pontos_escuro }}
 
       - name: Publicar na branch "output"

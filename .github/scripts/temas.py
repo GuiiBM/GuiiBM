@@ -41,10 +41,14 @@ def misturar(a: str, b: str, f: float) -> str:
     return "".join(f"{round(x + (y - x) * f):02x}" for x, y in zip(ca, cb))
 
 
+def luminancia(cor: str) -> float:
+    r, g, b = (int(cor[i:i + 2], 16) for i in (0, 2, 4))
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
 def legivel(cor: str) -> str:
     """Clareia cores escuras demais para aparecer sobre o fundo escuro."""
-    r, g, b = (int(cor[i:i + 2], 16) for i in (0, 2, 4))
-    return misturar(cor, "ffffff", 0.45) if 0.2126 * r + 0.7152 * g + 0.0722 * b < 60 else cor
+    return misturar(cor, "ffffff", 0.45) if luminancia(cor) < 60 else cor
 
 
 def dia(mes: int, d: int) -> Callable[[int], tuple[date, date]]:
@@ -193,12 +197,13 @@ TEMAS: list[Tema] = [
          trofeu="radical",
          gradiente=[(0, "f97316"), (50, "facc15"), (100, "3b82f6")]),
     Tema("halloween", "Halloween", "🎃", 2, periodo(10, 24, 10, 31),
-         c1="f97316", c2="581c87", acento="fb923c",
+         c1="f97316", c2="fdba74", acento="fb923c",
          descricao="Happy Halloween | Offensive Security | Red Team",
          decoracao="morcegos",
          saudacao="🎃 Happy Halloween! Doces ou exploits?",
-         trofeu="gruvbox", perfil3d="profile-night-view.svg",
-         animacao="fadeIn"),
+         trofeu="dark_lover", perfil3d="profile-night-view.svg",
+         animacao="fadeIn",
+         gradiente=[(0, "c2410c"), (50, "f97316"), (100, "fdba74")]),
     Tema("consciencia_negra", "Dia da Consciência Negra", "✊🏿", 3, dia(11, 20),
          c1="ca8a04", c2="15803d", acento="eab308",
          descricao="Dia da Consciência Negra | Offensive Security",
@@ -213,11 +218,12 @@ TEMAS: list[Tema] = [
          saudacao="🛡️ 30/11: Dia Internacional da Segurança da Informação",
          trofeu="tokyonight", perfil3d="profile-night-view.svg"),
     Tema("natal", "Natal", "🎄", 2, periodo(12, 1, 12, 30),
-         c1="dc2626", c2="16a34a", acento="f87171",
+         c1="dc2626", c2="f8fafc", acento="f87171",
          descricao="Boas Festas | Offensive Security | Red Team",
          decoracao="neve",
          saudacao="🎄 Boas festas! Ho-ho-ho, git push",
-         trofeu="radical", perfil3d="profile-night-green.svg"),
+         trofeu="monokai", perfil3d="profile-night-view.svg",
+         gradiente=[(0, "dc2626"), (50, "f8fafc"), (100, "dc2626")]),
 ]
 
 if ANIVERSARIO:

@@ -1,4 +1,7 @@
-"""Gera o README dinâmico do perfil e os cards SVG em assets/.
+"""Gera as imagens dinâmicas do perfil (banner, cards, cabeçalhos e rodapé).
+
+O README.md é fixo e aponta para essas imagens na branch "output". O workflow
+publica a pasta de saída lá, então nada é commitado na main.
 
 Uso:
     python .github/scripts/perfil.py                   # tema do dia
@@ -6,6 +9,7 @@ Uso:
     python .github/scripts/perfil.py --data 2026-12-25 # simula uma data
     python .github/scripts/perfil.py --offline         # não acessa a API
     python .github/scripts/perfil.py --listar          # calendário de temas
+    python .github/scripts/perfil.py --saida dist      # pasta de saída (padrão)
 
 Usa apenas a biblioteca padrão. GITHUB_TOKEN é opcional localmente, mas no
 Actions evita o limite de requisições e libera o calendário via GraphQL.
@@ -28,15 +32,13 @@ from temas import PADRAO, TEMAS, Tema, legivel, misturar, tema_do_dia
 
 USUARIO = "GuiiBM"
 RAIZ = Path(__file__).resolve().parents[2]
-TEMPLATE = RAIZ / ".github" / "readme" / "template.md"
-ASSETS = RAIZ / "assets"
+SAIDA = RAIZ / "dist"
 BRASILIA = timezone(timedelta(hours=-3))
 
 # Textos do banner do topo.
 NOME = "Guilherme Batistela"
 COMANDO = "root@guiibm:~$ whoami"
 CHIPS = ["ADS @ FATEC", "Red Team", "Ubatuba · SP", "Linux Mint"]
-PORTFOLIO = "https://gbm-mkt.netlify.app"
 
 # Cabeçalhos das seções (assets/secoes/01.svg, 02.svg...): título e comando.
 SECOES = [
@@ -49,6 +51,8 @@ SECOES = [
     ("Conquistas no GitHub", "cat ~/trophies.txt"),
 ]
 
+# Quantidade de cards de repositório (o README referencia repos/1.svg a 6.svg).
+TOTAL_REPOS = 6
 # Repositórios que não devem aparecer em "Repositórios recentes".
 REPOS_IGNORADOS = {USUARIO}
 # Descrições usadas quando o repositório não tem uma no GitHub. Sem as
@@ -56,13 +60,6 @@ REPOS_IGNORADOS = {USUARIO}
 DESCRICOES: dict[str, str] = {
     # "tcc": "Trabalho de conclusão de curso em PHP.",
 }
-
-LINHAS_DIGITADAS = [
-    ">_  Offensive Security Enthusiast",
-    ">_  Future Red Teamer 🎯",
-    ">_  Web Development & Low-Level Coding",
-    ">_  Focus: Pentesting & Security Research",
-]
 
 CITACOES = [
     ("Security is not a product, but a process.", "Bruce Schneier"),
@@ -190,7 +187,7 @@ def coletar(hoje: date) -> dict:
     dias = calendario()
     atual, maior = sequencias(dias, hoje)
     desde = (hoje - timedelta(days=365)).isoformat()
-    recentes = [r for r in proprios if r["name"] not in REPOS_IGNORADOS and not r["archived"]][:6]
+    recentes = [r for r in proprios if r["name"] not in REPOS_IGNORADOS and not r["archived"]][:TOTAL_REPOS]
     for r in recentes:
         r["resumo"] = r["description"] or DESCRICOES.get(r["name"]) or resumo_readme(r)
     return {
@@ -461,61 +458,51 @@ def card_secao(t: Tema, numero: int, titulo: str, comando: str) -> str:
 """
 
 
-# --------------------------------------------------------------------------
-# README
-# --------------------------------------------------------------------------
-
-def q(texto: str) -> str:
-    return urllib.parse.quote(texto, safe="")
+def card_repo_vazio(t: Tema) -> str:
+    corpo = f'  <text x="25" y="70" class="rotulo" style="fill:#{APAGADO}">Espaço reservado para o próximo projeto.</text>'
+    return moldura(t, 460, 150, "Em breve", corpo)
 
 
-def bloco_repos(repos: list[dict]) -> str:
-    if not repos:
-        return (f'<p align="center"><a href="https://github.com/{USUARIO}?tab=repositories">'
-                "Ver todos os repositórios →</a></p>")
-    cards = [
-        f'<a href="{esc(r["url"])}"><img src="assets/repos/{i + 1}.svg" width="49%" '
-        f'alt="{esc(r["nome"])}: {esc(r["resumo"] or "repositório")}" /></a>'
-        for i, r in enumerate(repos)
-    ]
-    return '<div align="center">\n  ' + "\n  ".join(cards) + "\n</div>"
-
-
-def montar_readme(t: Tema, hoje: date, agora: datetime, repos: list[dict]) -> str:
-    ano_novo = hoje.year + 1 if hoje.month == 12 else hoje.year
-    fmt = lambda s: s.format(ano_novo=ano_novo)
-
-    linhas = ([fmt(t.saudacao)] if t.saudacao else []) + LINHAS_DIGITADAS
-    boot = ["[OK] Loading kernel modules...",
-            "[OK] Establishing encrypted tunnel...",
-            "[WARN] Unauthorized access attempt blocked",
-            f"[OK] ACCESS GRANTED // WELCOME, {USUARIO}"]
-
+def card_rodape(t: Tema, hoje: date, agora: datetime) -> str:
     citacao, autor = CITACOES[hoje.toordinal() % len(CITACOES)]
-    rev = [(100 - o, c) for o, c in reversed(t.stops())]
-    valores = {
-        "c1": t.c1, "c2": t.c2, "acento": t.acento,
-        "gradiente": ",".join(f"{o}:{c}" for o, c in t.stops()),
-        "gradiente_inverso": ",".join(f"{o}:{c}" for o, c in rev),
-        "animacao": t.animacao,
-        "linhas_q": ";".join(q(l) for l in linhas),
-        "boot_q": ";".join(q(l) for l in boot),
-        "data_badge": q(f"{agora:%d/%m/%Y}"),
-        "trofeu": t.trofeu,
-        "perfil3d": t.perfil3d,
-        "repos_recentes": bloco_repos(repos),
-        "citacao": esc(citacao),
-        "autor": esc(autor),
-        "atualizado_em": f"{agora:%d/%m/%Y às %H:%M} (horário de Brasília)",
-    }
+    linhas = quebrar(f"“{citacao}”", 80, 3)
+    largura = 1000
+    altura = 150 + 26 * len(linhas)
 
-    valores["portfolio"] = PORTFOLIO
-    valores["banner_alt"] = esc(f"{NOME}: {fmt(t.descricao)}")
+    def onda(base: int, amplitude: int) -> str:
+        pontos = " ".join(f"T{x} {base}" for x in range(500, 2 * largura + 1, 250))
+        return f"M0 0 L0 {base} Q125 {base + amplitude} 250 {base} {pontos} L{2 * largura} 0Z"
 
-    def trocar(m: re.Match) -> str:
-        return str(valores[m.group(1)])
-
-    return re.sub(r"\{\{\s*(\w+)\s*\}\}", trocar, TEMPLATE.read_text(encoding="utf-8"))
+    texto = "".join(
+        f'<text x="{largura / 2}" y="{108 + i * 26}" text-anchor="middle" '
+        f'style="font:italic 500 18px {FONTE};fill:#{TEXTO}">{esc(l)}</text>'
+        for i, l in enumerate(linhas))
+    y = 108 + 26 * len(linhas)
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{largura}" height="{altura}" viewBox="0 0 {largura} {altura}" role="img" aria-label="{esc(citacao)} ({esc(autor)})">
+  <title>{esc(citacao)} ({esc(autor)})</title>
+  <style>
+    .onda {{ animation: correr 9s linear infinite; }}
+    .onda.lenta {{ animation-duration: 15s; }}
+    @keyframes correr {{ to {{ transform: translateX(-500px); }} }}
+    @media (prefers-reduced-motion: reduce) {{ .onda {{ animation: none; }} }}
+  </style>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+      {"".join(f'<stop offset="{o}%" stop-color="#{legivel(c)}"/>' for o, c in t.stops())}
+    </linearGradient>
+    <clipPath id="card"><rect x=".5" y=".5" width="{largura - 1}" height="{altura - 1}" rx="14"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="{largura}" height="{altura}" fill="#{FUNDO}"/>
+    <path d="{onda(46, 26)}" fill="url(#grad)" opacity=".45" class="onda lenta"/>
+    <path d="{onda(34, -22)}" fill="url(#grad)" class="onda"/>
+  </g>
+  <rect x=".5" y=".5" width="{largura - 1}" height="{altura - 1}" rx="14" fill="none" stroke="#{legivel(t.c1)}" stroke-opacity=".45"/>
+  {texto}
+  <text x="{largura / 2}" y="{y + 4}" text-anchor="middle" style="font:600 14px {FONTE};fill:#{legivel(t.acento)}">— {esc(autor)}</text>
+  <text x="{largura / 2}" y="{y + 32}" text-anchor="middle" class="apagado" style="font:12px {FONTE};fill:#{APAGADO}">Atualizado em {agora:%d/%m/%Y às %H:%M} (horário de Brasília)</text>
+</svg>
+"""
 
 
 # --------------------------------------------------------------------------
@@ -532,6 +519,7 @@ def escrever_saida(t: Tema) -> None:
     with open(destino, "a", encoding="utf-8") as f:
         f.write(f"tema={t.chave}\n")
         f.write(f"nome={t.nome}\n")
+        f.write(f"perfil3d={t.perfil3d}\n")
         f.write(f"cobra=#{legivel(t.c2)}\n")
         f.write(f"pontos_claro={dots(claro)}\n")
         f.write(f"pontos_escuro={dots(escuro)}\n")
@@ -550,6 +538,7 @@ def main() -> int:
     p.add_argument("--data", help="simula a data de hoje (AAAA-MM-DD)")
     p.add_argument("--offline", action="store_true", help="não acessa a API; usa os dados do cache")
     p.add_argument("--listar", action="store_true", help="lista o calendário de temas do ano")
+    p.add_argument("--saida", type=Path, default=SAIDA, help="pasta onde as imagens são gravadas")
     args = p.parse_args()
 
     agora = datetime.now(BRASILIA)
@@ -568,14 +557,21 @@ def main() -> int:
         tema = tema_do_dia(hoje)
     print(f"Tema: {tema.emoji} {tema.nome} ({tema.chave})")
 
+    saida: Path = args.saida
+    (saida / "repos").mkdir(parents=True, exist_ok=True)
+    (saida / "secoes").mkdir(exist_ok=True)
+    gravar = lambda nome, conteudo: (saida / nome).write_text(conteudo, encoding="utf-8")
+
     ano_novo = hoje.year + 1 if hoje.month == 12 else hoje.year
     subtitulo = tema.descricao.format(ano_novo=ano_novo).replace(" | ", " · ")
-    ASSETS.mkdir(exist_ok=True)
-    (ASSETS / "banner.svg").write_text(banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS), encoding="utf-8")
+    gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS))
+    gravar("rodape.svg", card_rodape(tema, hoje, agora))
+    for i, (titulo, comando) in enumerate(SECOES, 1):
+        gravar(f"secoes/{i:02d}.svg", card_secao(tema, i, titulo, comando))
 
-    # Os dados coletados ficam em cache: se a API falhar, os cards são
-    # redesenhados no tema do dia com os números da última coleta.
-    cache = ASSETS / "dados.json"
+    # Os dados coletados ficam em cache (dados.json, publicado junto com as
+    # imagens): se a API falhar, os cards usam os números da última coleta.
+    cache = saida / "dados.json"
     dados = json.loads(cache.read_text(encoding="utf-8")) if cache.exists() else None
     if not args.offline:
         try:
@@ -586,23 +582,14 @@ def main() -> int:
             cache.write_text(json.dumps(dados, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     repos = dados["repos"] if dados else []
-    pasta = ASSETS / "repos"
-    pasta.mkdir(exist_ok=True)
-    for antigo in pasta.glob("*.svg"):
-        antigo.unlink()
-    for i, r in enumerate(repos):
-        (pasta / f"{i + 1}.svg").write_text(card_repo(tema, r, hoje), encoding="utf-8")
-    (ASSETS / "secoes").mkdir(exist_ok=True)
-    for i, (titulo, comando) in enumerate(SECOES, 1):
-        (ASSETS / "secoes" / f"{i:02d}.svg").write_text(card_secao(tema, i, titulo, comando), encoding="utf-8")
-
+    for i in range(TOTAL_REPOS):
+        gravar(f"repos/{i + 1}.svg", card_repo(tema, repos[i], hoje) if i < len(repos) else card_repo_vazio(tema))
     if dados:
         dias = {date.fromisoformat(d): n for d, n in dados["dias"].items()}
-        (ASSETS / "stats.svg").write_text(card_stats(tema, dados["stats"]), encoding="utf-8")
-        (ASSETS / "linguagens.svg").write_text(card_linguagens(tema, dados["linguagens"]), encoding="utf-8")
-        (ASSETS / "atividade.svg").write_text(card_atividade(tema, dias, hoje), encoding="utf-8")
+        gravar("stats.svg", card_stats(tema, dados["stats"]))
+        gravar("linguagens.svg", card_linguagens(tema, dados["linguagens"]))
+        gravar("atividade.svg", card_atividade(tema, dias, hoje))
 
-    (RAIZ / "README.md").write_text(montar_readme(tema, hoje, agora, repos), encoding="utf-8")
     escrever_saida(tema)
     return 0
 

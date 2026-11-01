@@ -1,5 +1,9 @@
 name: Perfil dinâmico
 
+# Gera as imagens do perfil (banner, cards, cobrinha, gráfico 3D...) e publica
+# tudo na branch "output". Este workflow nunca faz commit na main, então o
+# Sync do VS Code não diverge por causa dele.
+
 on:
   schedule:
     - cron: "5 3 * * *"   # todo dia às 00:05 (horário de Brasília)
@@ -13,7 +17,6 @@ on:
     branches:
       - main
     paths:
-      - ".github/readme/**"
       - ".github/scripts/**"
       - ".github/workflows/perfil-dinamico.yml"
 
@@ -25,12 +28,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  readme:
+  gerar:
     runs-on: ubuntu-latest
-    outputs:
-      cobra: ${{ steps.gerar.outputs.cobra }}
-      pontos_claro: ${{ steps.gerar.outputs.pontos_claro }}
-      pontos_escuro: ${{ steps.gerar.outputs.pontos_escuro }}
     steps:
       - uses: actions/checkout@v4
 
@@ -38,40 +37,44 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Gerar README e cards no tema do dia
+      - name: Recuperar os dados da última coleta
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir -p dist
+          curl -sfL "https://raw.githubusercontent.com/$REPO/output/dados.json" -o dist/dados.json || rm -f dist/dados.json
+
+      - name: Gerar banner, cards e cabeçalhos no tema do dia
         id: gerar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TEMA: ${{ inputs.tema }}
-        run: python .github/scripts/perfil.py ${TEMA:+--tema "$TEMA"}
+        run: python .github/scripts/perfil.py --saida dist ${TEMA:+--tema "$TEMA"}
 
-      - name: Commit & Push
+      - name: Gerar o gráfico 3D de contribuições
+        uses: yoshi389111/github-profile-3d-contrib@0.7.1
         env:
-          NOME_TEMA: ${{ steps.gerar.outputs.nome }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md assets
-          git commit -m "Atualiza README (tema: $NOME_TEMA)" || exit 0
-          git pull --rebase
-          git push
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
 
-  cobrinha:
-    needs: readme
-    runs-on: ubuntu-latest
-    steps:
-      - name: Gerar os SVGs da cobrinha com as cores do tema
+      - name: Escolher a variação do gráfico 3D do tema
+        env:
+          VARIANTE: ${{ steps.gerar.outputs.perfil3d }}
+        run: cp "profile-3d-contrib/$VARIANTE" dist/perfil-3d.svg
+
+      - name: Gerar a cobrinha com as cores do tema
         uses: Platane/snk@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-snake.svg?color_snake=${{ needs.readme.outputs.cobra }}&color_dots=${{ needs.readme.outputs.pontos_claro }}
-            dist/github-snake-dark.svg?palette=github-dark&color_snake=${{ needs.readme.outputs.cobra }}&color_dots=${{ needs.readme.outputs.pontos_escuro }}
+            dist/github-snake.svg?color_snake=${{ steps.gerar.outputs.cobra }}&color_dots=${{ steps.gerar.outputs.pontos_claro }}
+            dist/github-snake-dark.svg?palette=github-dark&color_snake=${{ steps.gerar.outputs.cobra }}&color_dots=${{ steps.gerar.outputs.pontos_escuro }}
 
-      - name: Publicar os SVGs na branch "output"
+      - name: Publicar na branch "output"
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output
           build_dir: dist
+          jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

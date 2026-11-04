@@ -176,12 +176,12 @@ Tenho histórico de premiações em olimpíadas científicas (medalhista e menç
 Visão simplificada da integração estudada: o e-SUS PEC conversa com a API do WhatsApp por uma camada segura, e falhas de entrega acionam a contingência automatizada.
 
 ```mermaid
-flowchart TD
+flowchart LR
     PEC[("e-SUS PEC")] <-->|agendamentos| INT["Integração segura<br/>APIs RESTful"]
-    INT -->|notificações| META["API do WhatsApp<br/>Meta Business Platform"]
+    INT -->|notificações| META["API do WhatsApp<br/>Meta Business"]
     META --> PAC(["Paciente"])
-    META -.->|falha de comunicação| CONT{"Contingência<br/>automatizada"}
-    CONT -.->|tratamento da exceção| INT
+    INT -.->|falha de comunicação| CONT(["Contingência<br/>automatizada"])
+    CONT -.->|tratamento da exceção| META
 ```
 
 ### 📄 Publicação

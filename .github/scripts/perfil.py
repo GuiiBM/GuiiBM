@@ -625,7 +625,8 @@ def bloco_perfis() -> str:
 
 
 def bloco_emblema() -> str:
-    return "```stl\n" + emblema_stl() + "\n```"
+    return ("<details>\n  <summary><b>🧊 Abrir o emblema GBM em 3D</b> <sub>arraste para girar, role para aproximar</sub></summary>\n\n"
+            "```stl\n" + emblema_stl() + "\n```\n\n</details>")
 
 
 def atualizar_readme(blocos: dict[str, str]) -> None:

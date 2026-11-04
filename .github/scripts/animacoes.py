@@ -364,26 +364,28 @@ def emblema_stl() -> str:
         interno = [(x * .86, y * .86) for x, y in (a, b)]
         partes.append(_prisma([a, b, interno[1], interno[0]], 3, 7))
 
-    def caixa(x, y, l, a):
-        return _prisma([(x, y), (x + l, y), (x + l, y + a), (x, y + a)], 3, 8)
+    relevo = 16  # letras bem altas: a luz do visualizador cria o contraste nas laterais
 
-    h, e = 26, 4  # altura das letras e espessura do traço
+    def caixa(x, y, l, a):
+        return _prisma([(x, y), (x + l, y), (x + l, y + a), (x, y + a)], 3, relevo)
+
+    h, e = 28, 5  # altura das letras e espessura do traço
     base = -h / 2
-    xg, xb, xm = -33, -9, 13
-    l = 20
+    topo = base + h
+    meio = base + h / 2
+    l = 21
+    xg, xb, xm = -36, -11, 14
     partes += [  # G
-        caixa(xg, base, e, h), caixa(xg, base + h - e, l, e), caixa(xg, base, l, e),
-        caixa(xg + l - e, base, e, h / 2), caixa(xg + l / 2, base + h / 2 - e / 2, l / 2, e),
+        caixa(xg, base, e, h), caixa(xg, topo - e, l, e), caixa(xg, base, l, e),
+        caixa(xg + l - e, base, e, h / 2), caixa(xg + l / 2, meio - e / 2, l / 2, e),
     ]
     partes += [  # B
-        caixa(xb, base, e, h), caixa(xb, base, l - 2, e), caixa(xb, base + h - e, l - 2, e),
-        caixa(xb, base + h / 2 - e / 2, l - 2, e), caixa(xb + l - 4, base + e, e, h / 2 - e - e / 2 + 1),
-        caixa(xb + l - 4, base + h / 2 + e / 2 - 1, e, h / 2 - e - e / 2 + 1),
+        caixa(xb, base, e, h), caixa(xb, base, l - 3, e), caixa(xb, topo - e, l - 3, e),
+        caixa(xb, meio - e / 2, l - 3, e), caixa(xb + l - e, base + 2, e, h / 2 - 3), caixa(xb + l - e, meio + 1, e, h / 2 - 3),
     ]
-    topo = base + h
     partes += [  # M
         caixa(xm, base, e, h), caixa(xm + l - e, base, e, h),
-        _prisma([(xm, topo), (xm + l / 2 - e / 2, base + 8), (xm + l / 2 + e / 2, base + 8), (xm + e, topo)], 3, 8),
-        _prisma([(xm + l - e, topo), (xm + l / 2 - e / 2, base + 8), (xm + l / 2 + e / 2, base + 8), (xm + l, topo)], 3, 8),
+        _prisma([(xm, topo), (xm + l / 2 - e / 2, base + 7), (xm + l / 2 + e / 2, base + 7), (xm + e, topo)], 3, relevo),
+        _prisma([(xm + l - e, topo), (xm + l / 2 - e / 2, base + 7), (xm + l / 2 + e / 2, base + 7), (xm + l, topo)], 3, relevo),
     ]
     return "solid gbm\n" + "".join(partes) + "endsolid gbm"

@@ -32,12 +32,15 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import curriculo
+from animacoes import emblema_stl, linha_do_tempo, odometro, radar, relogio, terminal
 from banner import banner
+from estilo import APAGADO, FONTE, FUNDO, TEXTO, esc, moldura, numero
 from temas import PADRAO, TEMAS, Tema, legivel, luminancia, misturar, tema_do_dia
 
 USUARIO = "GuiiBM"
 RAIZ = Path(__file__).resolve().parents[2]
 SAIDA = RAIZ / "dist"
+LINKS = f"https://raw.githubusercontent.com/{USUARIO}/MyPersonalLinks/HEAD/links.json"
 BRASILIA = timezone(timedelta(hours=-3))
 
 # Textos do banner do topo.
@@ -47,7 +50,7 @@ CHIPS = ["ADS @ Fatec", "Pesquisador PIBICT", "Red Team", "Linux Mint"]
 
 # Seções do README: cada uma tem um divisor animado (secoes/01.svg, 02.svg...)
 # que mostra o avanço na página.
-TOTAL_SECOES = 9
+TOTAL_SECOES = 12
 
 # Linhas do texto digitado abaixo do banner (a saudação do tema entra antes).
 DIGITANDO = [
@@ -98,10 +101,13 @@ MEDALHAS = {"ouro": "🥇", "prata": "🎖️", "bronze": "🥉", "marca": "✨"
 TOTAL_REPOS = 6
 # Repositórios que não devem aparecer em "Repositórios recentes".
 REPOS_IGNORADOS = {USUARIO}
-# Descrições usadas quando o repositório não tem uma no GitHub. Sem as duas,
-# vale o primeiro parágrafo do README e, depois, a descrição do index.html.
+# Descrições que têm prioridade sobre a do GitHub. Sem nenhuma das duas, vale o
+# primeiro parágrafo do README e, depois, a descrição do index.html.
 DESCRICOES: dict[str, str] = {
-    # "tcc": "Trabalho de conclusão de curso em PHP.",
+    "Verto-Multi-purpose-Media-Security-Processing-Suite":
+        "Suíte local-first com 40 ferramentas de IA, criptografia, binários e mídia.",
+    "Massive-OSINT-Communication-Framework":
+        "Coleta de dados públicos (OSINT) e automação de comunicação via WhatsApp Web.",
 }
 
 CITACOES = [
@@ -126,9 +132,13 @@ CORES_LINGUAGENS = {
     "Blade": "f7523f", "Vue": "41b883", "Dockerfile": "384d54",
 }
 
-FONTE = "'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-MONO = "'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"
-FUNDO, TEXTO, APAGADO = "0d1117", "e2e8f0", "8b949e"
+# Categorias do links.json (MyPersonalLinks), na ordem em que aparecem no README.
+CATEGORIAS_SITES = {
+    "Pessoal": "🧑‍💻 Projetos pessoais",
+    "Website": "🏢 Sites para empresas e marcas",
+    "Web Data Base": "🗄️ Sites com banco de dados",
+    "Entertainment": "🎮 Entretenimento e utilidades",
+}
 
 
 # --------------------------------------------------------------------------
@@ -216,6 +226,15 @@ def resumo_site(repo: dict) -> str | None:
     return html.unescape(achado["texto"]).strip() or None if achado else None
 
 
+def horas_de_commit() -> list[int]:
+    """Commits públicos mais recentes por hora do dia, no horário de Brasília."""
+    q = urllib.parse.quote(f"author:{USUARIO}")
+    horas = [0] * 24
+    for item in api(f"/search/commits?q={q}&sort=author-date&order=desc&per_page=100")["items"]:
+        horas[datetime.fromisoformat(item["commit"]["author"]["date"]).astimezone(BRASILIA).hour] += 1
+    return horas
+
+
 def sequencias(dias: dict[date, int], hoje: date) -> tuple[int, int]:
     """(sequência atual, maior sequência). Hoje sem commit não quebra a atual."""
     maior = corrente = 0
@@ -244,13 +263,17 @@ def coletar(hoje: date) -> dict:
     dias = calendario()
     atual, maior = sequencias(dias, hoje)
     desde = (hoje - timedelta(days=365)).isoformat()
-    recentes = [r for r in proprios if r["name"] not in REPOS_IGNORADOS and not r["archived"]][:TOTAL_REPOS]
-    for r in recentes:
-        r["resumo"] = r["description"] or DESCRICOES.get(r["name"]) or resumo_readme(r) or resumo_site(r)
+    todos = [r for r in proprios if r["name"] not in REPOS_IGNORADOS]
+    for r in todos:
+        r["resumo"] = DESCRICOES.get(r["name"]) or r["description"] or resumo_readme(r) or resumo_site(r)
+    resumir = lambda r: {"nome": r["name"], "url": r["html_url"], "resumo": r["resumo"],
+                         "linguagem": r["language"], "estrelas": r["stargazers_count"],
+                         "atualizado": r["pushed_at"][:10]}
     return {
-        "repos": [{"nome": r["name"], "url": r["html_url"], "resumo": r["resumo"],
-                   "linguagem": r["language"], "estrelas": r["stargazers_count"],
-                   "atualizado": r["pushed_at"][:10]} for r in recentes],
+        "repos": [resumir(r) for r in todos if not r["archived"]][:TOTAL_REPOS],
+        "todos": [resumir(r) for r in todos],
+        "sites": json.loads(requisitar(LINKS)),
+        "horas": horas_de_commit(),
         "linguagens": linguagens,
         "dias": {d.isoformat(): n for d, n in dias.items()},
         "stats": {
@@ -270,45 +293,6 @@ def coletar(hoje: date) -> dict:
 # --------------------------------------------------------------------------
 # Cards SVG
 # --------------------------------------------------------------------------
-
-def esc(texto) -> str:
-    return html.escape(str(texto), quote=True)
-
-
-def numero(n: int) -> str:
-    return f"{n:,}".replace(",", ".")
-
-
-def estilo_base(t: Tema) -> str:
-    return f"""<style>
-    text {{ font-family: {FONTE}; }}
-    .titulo {{ font-size: 18px; font-weight: 600; fill: #{t.acento}; }}
-    .rotulo {{ font-size: 13.5px; fill: #{TEXTO}; }}
-    .valor {{ font-size: 13.5px; font-weight: 700; fill: #ffffff; }}
-    .apagado {{ font-size: 11.5px; fill: #{APAGADO}; }}
-    .surge {{ animation: surgir .6s ease-out both; }}
-    @keyframes surgir {{ from {{ opacity: 0; transform: translateX(-8px); }} to {{ opacity: 1; transform: none; }} }}
-    @media (prefers-reduced-motion: reduce) {{ .surge, .anima {{ animation: none !important; }} }}
-  </style>"""
-
-
-def moldura(t: Tema, largura: int, altura: int, titulo: str, corpo: str) -> str:
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{largura}" height="{altura}" viewBox="0 0 {largura} {altura}" role="img" aria-label="{esc(titulo)}">
-  <title>{esc(titulo)}</title>
-  {estilo_base(t)}
-  <defs>
-    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#{t.c1}"/><stop offset="100%" stop-color="#{t.c2}"/>
-    </linearGradient>
-    <clipPath id="card"><rect x="0.5" y="0.5" width="{largura - 1}" height="{altura - 1}" rx="10"/></clipPath>
-  </defs>
-  <rect x="0.5" y="0.5" width="{largura - 1}" height="{altura - 1}" rx="10" fill="#{FUNDO}" stroke="#{t.c1}" stroke-opacity="0.6"/>
-  <rect x="0" y="0" width="{largura}" height="4" fill="url(#grad)" clip-path="url(#card)"/>
-  <text x="25" y="38" class="titulo">{esc(titulo)}</text>
-{corpo}
-</svg>
-"""
-
 
 def card_linguagens(t: Tema, linguagens: dict[str, int]) -> str:
     total = sum(linguagens.values()) or 1
@@ -502,13 +486,34 @@ def etiqueta(texto: str) -> str:
 
 def bloco_trajetoria() -> str:
     itens = []
-    for i, (periodo, cargo, instituicao, descricao) in enumerate(curriculo.TRAJETORIA):
+    for i, (periodo, cargo, instituicao, vinculo, atividades) in enumerate(curriculo.EXPERIENCIA):
         aberto = " open" if i == 0 else ""
+        lista = "\n".join(f"    <li>{esc(a)}</li>" for a in atividades)
         itens.append(f"<details{aberto}>\n"
                      f"  <summary>{etiqueta(periodo)} <b>{esc(cargo)}</b> · {esc(instituicao)}</summary>\n"
-                     f"  <p>{esc(descricao)}</p>\n"
+                     f"  <p><sub>{esc(vinculo)}</sub></p>\n"
+                     f"  <ul>\n{lista}\n  </ul>\n"
                      "</details>")
     return "\n".join(itens)
+
+
+def bloco_pesquisa() -> str:
+    itens = []
+    for i, (periodo, titulo, situacao, coordenacao, financiamento, descricao) in enumerate(curriculo.PESQUISA):
+        aberto = " open" if i == 0 else ""
+        itens.append(f"<details{aberto}>\n"
+                     f"  <summary>{etiqueta(periodo)} <b>{esc(titulo)}</b></summary>\n"
+                     f"  <p>{esc(descricao)}</p>\n"
+                     f"  <p><sub><b>Situação:</b> {esc(situacao)} · <b>Coordenação:</b> {esc(coordenacao)} · "
+                     f"<b>Financiamento:</b> {esc(financiamento)}</sub></p>\n"
+                     "</details>")
+    return "\n".join(itens)
+
+
+def bloco_producao() -> str:
+    return tabela(["Produção", "Tipo", "Ano"],
+                  [[f"<b>{esc(titulo)}</b>", esc(tipo), etiqueta(ano)]
+                   for ano, titulo, tipo in curriculo.PRODUCAO_TECNICA])
 
 
 def bloco_formacao() -> str:
@@ -517,11 +522,22 @@ def bloco_formacao() -> str:
                    for periodo, curso, instituicao in curriculo.FORMACAO])
 
 
-def bloco_certificacoes() -> str:
-    linhas = [[esc(nome), esc(instituicao), etiqueta(ano)]
-              for ano, nome, instituicao in curriculo.CERTIFICACOES]
-    return (f"<details>\n  <summary><b>Ver as {len(linhas)} certificações</b></summary>\n\n"
-            + tabela(["Certificação", "Instituição", "Ano"], linhas) + "\n</details>")
+def bloco_cursos() -> str:
+    grupos = []
+    for i, (grupo, cursos) in enumerate(curriculo.CURSOS.items()):
+        horas = sum(h or 0 for *_, h in cursos)
+        total = f" · {horas}h" if horas else ""
+        aberto = " open" if i == 0 else ""
+        linhas = [[esc(nome), esc(instituicao), f"{h}h" if h else "—", etiqueta(ano)]
+                  for ano, nome, instituicao, h in cursos]
+        grupos.append(f"<details{aberto}>\n  <summary><b>{esc(grupo)}</b> <sub>{len(cursos)} cursos{total}</sub></summary>\n\n"
+                      + tabela(["Curso", "Instituição", "Carga", "Ano"], linhas) + "\n</details>")
+    return "\n".join(grupos)
+
+
+def bloco_idiomas() -> str:
+    return tabela(["Idioma", "Compreende", "Fala", "Lê", "Escreve"],
+                  [[f"<b>{esc(idioma)}</b>", *map(esc, niveis)] for idioma, *niveis in curriculo.IDIOMAS])
 
 
 def bloco_premios() -> str:
@@ -530,9 +546,35 @@ def bloco_premios() -> str:
                    for ano, titulo, detalhe, nivel in curriculo.PREMIOS])
 
 
+def bloco_eventos() -> str:
+    linhas = [[esc(evento), f"<code>{esc(tipo)}</code>", etiqueta(ano)] for ano, evento, tipo in curriculo.EVENTOS]
+    return (f"<details>\n  <summary><b>Ver os {len(linhas)} eventos e olimpíadas</b></summary>\n\n"
+            + tabela(["Evento", "Tipo", "Ano"], linhas) + "\n</details>")
+
+
+def bloco_destaques() -> str:
+    cartoes = []
+    for titulo, repo, resumo, stack, site in curriculo.DESTAQUES:
+        pilha = " ".join(f"<code>{esc(s)}</code>" for s in stack)
+        links = [f'<a href="https://github.com/{USUARIO}/{esc(repo)}">Código</a>']
+        if site:
+            links.append(f'<a href="{esc(site)}">Site no ar</a>')
+        cartoes.append(f'<td width="50%" valign="top"><h4>{esc(titulo)}</h4><p>{esc(resumo)}</p>'
+                       f'<p>{pilha}</p><p>{" · ".join(links)}</p></td>')
+    linhas = ["<tr>" + "".join(cartoes[i:i + 2]) + "</tr>" for i in range(0, len(cartoes), 2)]
+    return "<table>\n" + "\n".join(linhas) + "\n</table>"
+
+
 def url_selo(arquivo: str) -> str:
     origem = f"https://raw.githubusercontent.com/{USUARIO}/{USUARIO}/output/selos/{arquivo}.json"
     return "https://img.shields.io/endpoint?" + urllib.parse.urlencode({"url": origem, "style": "flat-square"})
+
+
+def link_linguagem(linguagem: str | None) -> str:
+    if not linguagem:
+        return "—"
+    filtro = urllib.parse.urlencode({"tab": "repositories", "language": linguagem.lower()})
+    return f'<a href="https://github.com/{USUARIO}?{esc(filtro)}"><code>{esc(linguagem)}</code></a>'
 
 
 def bloco_projetos(repos: list[dict]) -> str:
@@ -540,17 +582,50 @@ def bloco_projetos(repos: list[dict]) -> str:
     linhas = []
     for r in repos:
         estrelas = f' <sub>★ {r["estrelas"]}</sub>' if r["estrelas"] else ""
-        linguagem = "—"
-        if r["linguagem"]:
-            filtro = urllib.parse.urlencode({"tab": "repositories", "language": r["linguagem"].lower()})
-            linguagem = f'<a href="https://github.com/{USUARIO}?{esc(filtro)}"><code>{esc(r["linguagem"])}</code></a>'
         linhas.append([
             f'<a href="{esc(r["url"])}"><b>{esc(r["nome"])}</b></a>{estrelas}',
             esc(r["resumo"]) if r["resumo"] else "<sub>Sem descrição por enquanto.</sub>",
-            linguagem,
+            link_linguagem(r["linguagem"]),
             f'<img src="{esc(url_selo("repo-" + r["nome"]))}" alt="Último commit" />',
         ])
     return tabela(["Projeto", "O que é", "Linguagem", "Último commit"], linhas)
+
+
+def bloco_todos(repos: list[dict]) -> str:
+    """Em ordem alfabética, para só mudar quando entra ou sai um repositório."""
+    linhas = [[f'<a href="{esc(r["url"])}"><b>{esc(r["nome"])}</b></a>',
+               esc(r["resumo"]) if r["resumo"] else "<sub>Sem descrição por enquanto.</sub>",
+               link_linguagem(r["linguagem"])]
+              for r in sorted(repos, key=lambda r: r["nome"].lower())]
+    return (f"<details>\n  <summary><b>Ver todos os {len(linhas)} repositórios públicos</b></summary>\n\n"
+            + tabela(["Repositório", "O que é", "Linguagem"], linhas) + "\n</details>")
+
+
+def bloco_sites(sites: list[dict]) -> str:
+    grupos = []
+    for tag, nome in CATEGORIAS_SITES.items():
+        do_grupo = [s for s in sites if s.get("tag") == tag]
+        if not do_grupo:
+            continue
+        linhas = [[f'<a href="{esc(s["url"].strip())}"><b>{esc(s["label"])}</b></a>', esc(s["description"])] for s in do_grupo]
+        aberto = " open" if not grupos else ""
+        grupos.append(f"<details{aberto}>\n  <summary><b>{esc(nome)}</b> <sub>{len(do_grupo)}</sub></summary>\n\n"
+                      + tabela(["Site", "O que é"], linhas) + "\n</details>")
+    return "\n".join(grupos)
+
+
+def bloco_servicos() -> str:
+    return '<p align="center">\n' + "\n".join(f"  <kbd>{esc(s)}</kbd>" for s in curriculo.SERVICOS) + "\n</p>"
+
+
+def bloco_perfis() -> str:
+    return tabela(["Perfil", "Marca", "Trabalho"],
+                  [[f'<a href="https://instagram.com/{esc(p)}"><code>@{esc(p)}</code></a>', esc(nome), esc(trabalho)]
+                   for p, nome, trabalho in curriculo.PERFIS])
+
+
+def bloco_emblema() -> str:
+    return "```stl\n" + emblema_stl() + "\n```"
 
 
 def atualizar_readme(blocos: dict[str, str]) -> None:
@@ -697,13 +772,22 @@ def main() -> int:
 
     gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS))
 
-    blocos = {"trajetoria": bloco_trajetoria(), "formacao": bloco_formacao(),
-              "certificacoes": bloco_certificacoes(), "premios": bloco_premios()}
+    gravar("linha-do-tempo.svg", linha_do_tempo(tema, hoje))
+    blocos = {"trajetoria": bloco_trajetoria(), "pesquisa": bloco_pesquisa(), "producao": bloco_producao(),
+              "formacao": bloco_formacao(), "cursos": bloco_cursos(), "idiomas": bloco_idiomas(),
+              "premios": bloco_premios(), "eventos": bloco_eventos(), "destaques": bloco_destaques(),
+              "servicos": bloco_servicos(), "perfis": bloco_perfis(), "emblema": bloco_emblema()}
     if dados:
         dias = {date.fromisoformat(d): n for d, n in dados["dias"].items()}
         s = dados["stats"]
         gravar("linguagens.svg", card_linguagens(tema, dados["linguagens"]))
         gravar("atividade.svg", card_atividade(tema, dias, hoje))
+        gravar("terminal.svg", terminal(tema, dados, hoje))
+        gravar("odometro.svg", odometro(tema, [
+            (s["contribuicoes"], "", "contribuições em 12 meses"), (s["repos"], "", "repositórios públicos"),
+            (curriculo.PROJETOS_ENTREGUES, "+", "projetos entregues"), (curriculo.total_cursos(), "", "cursos complementares"),
+            (curriculo.total_horas(), "h", "de formação complementar"), (len(curriculo.PREMIOS), "", "prêmios e destaques"),
+        ]))
         gravar("selos/seguidores.json", selo(numero(s["seguidores"]), legivel(tema.c2), "github", "seguidores"))
         for chave, rotulo, cor in METRICAS:
             mensagem = f"{s[chave]} {'dia' if s[chave] == 1 else 'dias'}" if chave in EM_DIAS else numero(s[chave])
@@ -712,6 +796,11 @@ def main() -> int:
             gravar(f"selos/repo-{r['nome']}.json",
                    selo(ha_quanto(date.fromisoformat(r["atualizado"]), hoje), legivel(tema.c1)))
         blocos["projetos"] = bloco_projetos(dados["repos"])
+        if "todos" in dados:
+            gravar("radar.svg", radar(tema, dados["todos"], hoje, CORES_LINGUAGENS))
+            gravar("relogio.svg", relogio(tema, dados["horas"], dias))
+            blocos["todos"] = bloco_todos(dados["todos"])
+            blocos["sites"] = bloco_sites(dados["sites"])
     if args.readme:
         atualizar_readme(blocos)
 

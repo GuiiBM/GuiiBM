@@ -3,7 +3,7 @@ name: Perfil dinâmico
 # Gera as imagens e selos do perfil (banner, gráficos, cobrinha, gráfico 3D...)
 # e publica tudo na branch "output". Na main, o único commit possível é o dos
 # blocos <!-- auto:... --> do README, e só quando o texto deles muda (ordem dos
-# repositórios, descrições ou curriculo.py). Os números não entram nesses
+# repositórios, descrições, links.json ou curriculo.py). Os números não entram nesses
 # blocos: são selos, que mudam sem commit. O .vscode/settings.json deixa o Sync
 # com rebase e autostash para esses commits não atrapalharem.
 #
@@ -155,7 +155,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git commit -m "Atualiza a lista de projetos do README"
+          git commit -m "Atualiza os blocos automáticos do README"
           for tentativa in 1 2 3 4 5; do
             if git pull --rebase --autostash origin main && git push origin HEAD:main; then
               exit 0

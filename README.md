@@ -29,12 +29,12 @@
 </div>
 
 <p align="center">
-  <a href="#0x01-sobre-mim"><kbd>0x01 Sobre</kbd></a>
-  <a href="#0x02-trajetória"><kbd>0x02 Trajetória</kbd></a>
-  <a href="#0x03-pesquisa--publicações"><kbd>0x03 Pesquisa</kbd></a>
-  <a href="#0x04-formação--cursos"><kbd>0x04 Formação</kbd></a>
-  <a href="#0x05-prêmios--eventos"><kbd>0x05 Prêmios</kbd></a>
-  <a href="#0x06-arsenal-tecnológico"><kbd>0x06 Arsenal</kbd></a>
+  <a href="#0x01-o-que-eu-faço"><kbd>0x01 O Que Faço</kbd></a>
+  <a href="#0x02-sobre-mim"><kbd>0x02 Sobre</kbd></a>
+  <a href="#0x03-trajetória"><kbd>0x03 Trajetória</kbd></a>
+  <a href="#0x04-pesquisa--publicações"><kbd>0x04 Pesquisa</kbd></a>
+  <a href="#0x05-formação-cursos--idiomas"><kbd>0x05 Formação</kbd></a>
+  <a href="#0x06-prêmios--eventos"><kbd>0x06 Prêmios</kbd></a>
   <a href="#0x07-projetos"><kbd>0x07 Projetos</kbd></a>
   <a href="#0x08-gbm-marketing-digital"><kbd>0x08 GBM</kbd></a>
   <a href="#0x09-métricas-de-código"><kbd>0x09 Métricas</kbd></a>
@@ -43,20 +43,73 @@
   <a href="#0x0c-conquistas-no-github"><kbd>0x0C Conquistas</kbd></a>
 </p>
 
+<br />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/01.svg" width="100%" alt="" />
+
+## `0x01` O Que Eu Faço
+
+**Desenvolvimento web, automação, integração de APIs e Segurança da Informação**, com experiência prática no setor público e em projetos para empresas.
+
+**Linguagens:** Python · C++ · C · PHP · JavaScript · HTML · CSS · Bash · MySQL
+
+<sub><code>$ ls -la ~/arsenal</code>  ·  clique em uma linguagem para ver os repositórios dela</sub>
+
+<p align="center">
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=python" title="Python"><img src="https://skillicons.dev/icons?i=python&amp;theme=dark" width="48" alt="Python" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=c%2B%2B" title="C++"><img src="https://skillicons.dev/icons?i=cpp&amp;theme=dark" width="48" alt="C++" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=c" title="C"><img src="https://skillicons.dev/icons?i=c&amp;theme=dark" width="48" alt="C" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=php" title="PHP"><img src="https://skillicons.dev/icons?i=php&amp;theme=dark" width="48" alt="PHP" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=javascript" title="JavaScript"><img src="https://skillicons.dev/icons?i=js&amp;theme=dark" width="48" alt="JavaScript" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=html" title="HTML"><img src="https://skillicons.dev/icons?i=html&amp;theme=dark" width="48" alt="HTML" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=css" title="CSS"><img src="https://skillicons.dev/icons?i=css&amp;theme=dark" width="48" alt="CSS" /></a>
+  <a href="https://www.mysql.com" title="MySQL"><img src="https://skillicons.dev/icons?i=mysql&amp;theme=dark" width="48" alt="MySQL" /></a>
+  <br />
+  <a href="https://linuxmint.com" title="Linux"><img src="https://skillicons.dev/icons?i=linux&amp;theme=dark" width="48" alt="Linux" /></a>
+  <a href="https://www.kali.org" title="Kali Linux"><img src="https://skillicons.dev/icons?i=kali&amp;theme=dark" width="48" alt="Kali Linux" /></a>
+  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=shell" title="Bash"><img src="https://skillicons.dev/icons?i=bash&amp;theme=dark" width="48" alt="Bash" /></a>
+  <a href="https://git-scm.com" title="Git"><img src="https://skillicons.dev/icons?i=git&amp;theme=dark" width="48" alt="Git" /></a>
+  <a href="https://github.com/GuiiBM" title="GitHub"><img src="https://skillicons.dev/icons?i=github&amp;theme=dark" width="48" alt="GitHub" /></a>
+  <a href="https://code.visualstudio.com" title="VS Code"><img src="https://skillicons.dev/icons?i=vscode&amp;theme=dark" width="48" alt="VS Code" /></a>
+  <a href="https://gbm-mkt.netlify.app" title="Netlify"><img src="https://skillicons.dev/icons?i=netlify&amp;theme=dark" width="48" alt="Netlify" /></a>
+</p>
+
 <div align="center">
-  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/boot.svg" alt="Sequência de boot" />
+  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fred_team.json&style=for-the-badge" alt="Red Team" />
+  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fweb_security.json&style=for-the-badge" alt="Web Application Security" />
+  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fnetwork_recon.json&style=for-the-badge" alt="Network Recon" />
+  <br />
+  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Ftraffic.json&style=for-the-badge" alt="Traffic Analysis" />
+  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fosint.json&style=for-the-badge" alt="OSINT" />
+  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fautomacao.json&style=for-the-badge" alt="Automação" />
 </div>
+
+### 🧰 O que eu faço, na prática
+
+| Área | Na prática |
+| --- | --- |
+| 🛡️ **Segurança** | AES-256 e esteganografia no Verto, coleta OSINT, requisitos de segurança e privacidade na pesquisa, cursos da Cisco, USP e CEETEPS |
+| 🌐 **Web** | PHP, JavaScript, Python com Flask, Framer e Netlify, em mais de 30 projetos entregues |
+| 🔌 **APIs e integração** | e-SUS PEC com a API do WhatsApp, APIs RESTful e arquitetura orientada a serviços |
+| 🤖 **Automação e IA** | Python e Bash, Selenium, Demucs, rembg e faster-whisper |
+| 🖧 **Infraestrutura** | Suporte técnico, roteadores, switches, cabeamento estruturado, inventário e manuais de uso na FUNDART |
+| 📋 **Contratação pública** | ETP, Termo de Referência e avaliação de Prova de Conceito para software SaaS |
+| 🛰️ **Eletrônica** | Seis módulos do Ubatubasat, somando 540h de eletrônica e programação |
+| 📐 **Lógica e matemática** | Quatro edições do PIC-OBMEP: combinatória, teoria dos números e geometria |
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/odometro.svg" width="100%" alt="Em números: contribuições, repositórios, projetos entregues, cursos, horas de formação e prêmios" />
 </div>
 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/boot.svg" alt="Sequência de boot" />
+</div>
+
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/01.svg" width="100%" alt="" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/02.svg" width="100%" alt="" />
 
-## `0x01` Sobre Mim
+## `0x02` Sobre Mim
 
-Graduando em **Análise e Desenvolvimento de Sistemas** na Fatec, bolsista de Iniciação Científica e Tecnológica (**PIBICT-CEETEPS**) e **Técnico em Informática**. Atuo com desenvolvimento web, suporte e consultoria em TI, com experiência prática no setor público em soluções de automação e na elaboração de Estudos Técnicos Preliminares (ETP), Termos de Referência (TR) e avaliação de Prova de Conceito (PoC) para contratação de software SaaS.
+Graduando em **Análise e Desenvolvimento de Sistemas** na Fatec, bolsista de Iniciação Científica e Tecnológica (**PIBICT-CEETEPS**) e **Técnico em Informática**, formado no Ensino Médio Integrado. Atuo com desenvolvimento web, suporte e consultoria em TI, com experiência prática no setor público em soluções de automação e na elaboração de Estudos Técnicos Preliminares (ETP), Termos de Referência (TR) e avaliação de Prova de Conceito (PoC) para contratação de software SaaS.
 
 Tenho histórico de premiações em olimpíadas científicas (medalhista e menções honrosas na OBMEP), fui bolsista do PIC-OBMEP (IMPA) e integro um projeto de pesquisa sobre a modernização e a integração de sistemas na Atenção Primária à Saúde via APIs.
 
@@ -78,7 +131,7 @@ Tenho histórico de premiações em olimpíadas científicas (medalhista e menç
 {
   "nome": "Guilherme Batistela Machado",
   "graduacao": "Análise e Desenvolvimento de Sistemas @ Fatec São Sebastião",
-  "tecnico": "Técnico em Informática",
+  "ensino_medio": "Integrado ao Técnico em Informática",
   "pesquisa": "PIBICT-CEETEPS: integração segura do e-SUS PEC via API Meta",
   "foco_carreira": "Segurança da Informação / Red Team",
   "stack_desenvolvimento": ["Python", "C++", "C", "PHP", "JavaScript", "Bash"],
@@ -99,9 +152,9 @@ Tenho histórico de premiações em olimpíadas científicas (medalhista e menç
 </details>
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/02.svg" width="100%" alt="" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/03.svg" width="100%" alt="" />
 
-## `0x02` Trajetória
+## `0x03` Trajetória
 
 <sub><code>$ cat ~/trajetoria.log</code></sub>
 
@@ -114,65 +167,78 @@ Comecei pelo hardware. No curso Ubatubasat, na EM Pres. Tancredo de Almeida Neve
 <p><kbd>2021 a 2025</kbd> <b>A matemática como treino de raciocínio</b><br />
 Em 2021 veio a Medalha de Bronze na 16ª OBMEP. De 2022 a 2025, participei de quatro edições seguidas do PIC-OBMEP, no IMPA, com bolsa do CNPq, estudando análise combinatória, teoria dos números e geometria. No caminho, somei três Menções Honrosas na OBMEP e uma na Olimpíada Mandacaru.</p>
 
-<p><kbd>2023 a 2025</kbd> <b>Do curso técnico ao primeiro trabalho</b><br />
-Enquanto cursava o Técnico em Informática junto com o Ensino Médio, entrei como estagiário de TI na FUNDART. Lá cuidei de suporte, redes e infraestrutura, criei um sistema próprio para a Biblioteca Municipal e ajudei a preparar a contratação do sistema definitivo em nuvem.</p>
+<p><kbd>2023 a 2025</kbd> <b>Do ensino técnico ao primeiro trabalho</b><br />
+Enquanto cursava o Ensino Médio Integrado ao Técnico em Informática, entrei como estagiário de TI na FUNDART. Lá cuidei de suporte, redes e infraestrutura, criei um sistema próprio para a Biblioteca Municipal e ajudei a preparar a contratação do sistema definitivo em nuvem.</p>
 
 <p><kbd>Desde 2026</kbd> <b>Fatec, pesquisa e comunidade</b><br />
 Entrei em Análise e Desenvolvimento de Sistemas na Fatec São Sebastião e passei a unir código e impacto público: pesquisa em integração segura na saúde, extensão em inclusão digital e o 1º lugar na 1ª Litoral Game Jam. Tudo isso com o foco na Segurança da Informação como direção de carreira.</p>
 <!-- /auto:historia -->
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/linha-do-tempo.svg" width="100%" alt="Linha do tempo de 2019 até hoje: Ubatubasat, PIC-OBMEP, Técnico em Informática, estágio na FUNDART, ADS na Fatec, pesquisa PIBICT e extensão em inclusão digital, com as medalhas de cada ano" />
+  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/linha-do-tempo.svg" width="100%" alt="Linha do tempo de 2019 até hoje: Ubatubasat, PIC-OBMEP, Ensino Médio Integrado ao Técnico em Informática, estágio na FUNDART, ADS na Fatec, pesquisa PIBICT e extensão em inclusão digital, com as medalhas de cada ano" />
 </div>
 
 ### 💼 Experiências
 
-<sub>Clique em cada item para abrir.</sub>
-
 <!-- auto:trajetoria -->
-<details open>
-  <summary><kbd>Desde 2026</kbd> <b>Bolsista de Pesquisa e Desenvolvimento (PIBICT)</b> · Fatec São Sebastião · CEETEPS</summary>
-  <p>Trabalho na ligação entre o sistema de saúde e o WhatsApp, para que agendamentos e avisos cheguem a quem precisa, mesmo quando a comunicação falha.</p>
-  <ul>
-    <li>Investigação, modelagem e implementação de integrações seguras de agendamento e notificação com o e-SUS PEC, usando a API do WhatsApp (Meta Business Platform).</li>
-    <li>Mecanismos automatizados de contingência para falhas de comunicação, tratamento de exceções em tempo real e resiliência na entrega de mensagens críticas de saúde.</li>
-    <li>Arquitetura orientada a serviços, consumo de APIs RESTful e análise de requisitos de segurança de dados e privacidade em sistemas públicos de saúde.</li>
-  </ul>
-</details>
-<details>
-  <summary><kbd>Desde 2026</kbd> <b>Projeto de Inclusão Digital para a Comunidade</b> · CEETEPS (extensão)</summary>
-  <p>Levo informática básica e ferramentas digitais para quem está começando, ajudando a desenvolver competências tecnológicas na comunidade.</p>
-  <ul>
-    <li>Apoio à gestão e ao planejamento pedagógico do curso.</li>
-    <li>Divulgação e marketing das turmas.</li>
-    <li>Monitoria presencial em sala de aula.</li>
-  </ul>
-</details>
-<details>
-  <summary><kbd>2024 a 2025</kbd> <b>Estagiário Técnico em Informática</b> · FUNDART · Fundação de Arte e Cultura de Ubatuba</summary>
-  <p>Foi a minha escola de TI na prática: do chamado de suporte à infraestrutura, e do código ao processo de contratação pública.</p>
-  <ul>
-    <li>Suporte técnico presencial e remoto: formatação e manutenção de computadores, softwares corporativos, e-mails institucionais, redes e impressoras.</li>
-    <li>Diagnóstico e manutenção de hardware, roteadores, switches e cabeamento estruturado.</li>
-    <li>Inventário de hardware e software e manuais de uso para os funcionários.</li>
-    <li>Desenvolvimento de um sistema próprio de suporte transitório para o controle da Biblioteca Municipal.</li>
-    <li>Levantamento de requisitos, ETP, Termo de Referência e avaliação de Prova de Conceito para contratar e migrar o sistema definitivo em nuvem (SaaS).</li>
-  </ul>
-</details>
-<details>
-  <summary><kbd>2022 a 2025</kbd> <b>Iniciação Científica Júnior (PIC-OBMEP)</b> · IMPA · CNPq</summary>
-  <p>Quatro edições seguidas de estudo aprofundado, a partir do desempenho na olimpíada de matemática.</p>
-  <ul>
-    <li>Participação consecutiva nas edições 16, 17, 18 e 19 do programa, com bolsa do CNPq.</li>
-    <li>Matemática avançada, raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.</li>
-  </ul>
-</details>
+<table>
+  <tr><td>
+    <h3>Bolsista de Pesquisa e Desenvolvimento (PIBICT)</h3>
+    <p><kbd>Desde 2026</kbd> <b>Fatec São Sebastião · CEETEPS</b></p>
+    <p>Trabalho na ligação entre o sistema de saúde e o WhatsApp, para que agendamentos e avisos cheguem a quem precisa, mesmo quando a comunicação falha.</p>
+    <ul>
+      <li>Investigação, modelagem e implementação de integrações seguras de agendamento e notificação com o e-SUS PEC, usando a API do WhatsApp (Meta Business Platform).</li>
+      <li>Mecanismos automatizados de contingência para falhas de comunicação, tratamento de exceções em tempo real e resiliência na entrega de mensagens críticas de saúde.</li>
+      <li>Arquitetura orientada a serviços, consumo de APIs RESTful e análise de requisitos de segurança de dados e privacidade em sistemas públicos de saúde.</li>
+    </ul>
+  </td></tr>
+</table>
+
+<table>
+  <tr><td>
+    <h3>Projeto de Inclusão Digital para a Comunidade</h3>
+    <p><kbd>Desde 2026</kbd> <b>CEETEPS (extensão)</b></p>
+    <p>Levo informática básica e ferramentas digitais para quem está começando, ajudando a desenvolver competências tecnológicas na comunidade.</p>
+    <ul>
+      <li>Apoio à gestão e ao planejamento pedagógico do curso.</li>
+      <li>Divulgação e marketing das turmas.</li>
+      <li>Monitoria presencial em sala de aula.</li>
+    </ul>
+  </td></tr>
+</table>
+
+<table>
+  <tr><td>
+    <h3>Estagiário Técnico em Informática</h3>
+    <p><kbd>2024 a 2025</kbd> <b>FUNDART · Fundação de Arte e Cultura de Ubatuba</b></p>
+    <p>Foi a minha escola de TI na prática: do chamado de suporte à infraestrutura, e do código ao processo de contratação pública.</p>
+    <ul>
+      <li>Suporte técnico presencial e remoto: formatação e manutenção de computadores, softwares corporativos, e-mails institucionais, redes e impressoras.</li>
+      <li>Diagnóstico e manutenção de hardware, roteadores, switches e cabeamento estruturado.</li>
+      <li>Inventário de hardware e software e manuais de uso para os funcionários.</li>
+      <li>Desenvolvimento de um sistema próprio de suporte transitório para o controle da Biblioteca Municipal.</li>
+      <li>Levantamento de requisitos, ETP, Termo de Referência e avaliação de Prova de Conceito para contratar e migrar o sistema definitivo em nuvem (SaaS).</li>
+    </ul>
+  </td></tr>
+</table>
+
+<table>
+  <tr><td>
+    <h3>Iniciação Científica Júnior (PIC-OBMEP)</h3>
+    <p><kbd>2022 a 2025</kbd> <b>IMPA · CNPq</b></p>
+    <p>Quatro edições seguidas de estudo aprofundado, a partir do desempenho na olimpíada de matemática, com bolsa de Iniciação Científica Júnior do CNPq.</p>
+    <ul>
+      <li>Participação consecutiva nas edições 16, 17, 18 e 19 do programa, com bolsa do CNPq.</li>
+      <li>Matemática avançada, raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.</li>
+    </ul>
+  </td></tr>
+</table>
 <!-- /auto:trajetoria -->
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/03.svg" width="100%" alt="" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/04.svg" width="100%" alt="" />
 
-## `0x03` Pesquisa & Publicações
+## `0x04` Pesquisa & Publicações
 
 <sub><code>$ grep -r 'e-SUS PEC' ~/pesquisa</code></sub>
 
@@ -181,40 +247,22 @@ O que estudo, explicado sem jargão.
 ### 🔬 Os projetos
 
 <!-- auto:pesquisa -->
-<h4>Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião</h4>
-<p><i>Integração segura ao e-SUS PEC via API Meta e mecanismos de contingência automatizados.</i></p>
-<dl>
-  <dt><b>O que é</b></dt>
-  <dd>Uma pesquisa sobre como tornar mais ágeis os agendamentos e os fluxos de atendimento na Atenção Primária à Saúde de São Sebastião, conectando o e-SUS PEC, o Prontuário Eletrônico do Cidadão, à API do WhatsApp da plataforma Meta Business.</dd>
-  <dt><b>Como funciona</b></dt>
-  <dd>O sistema de saúde e a API conversam por uma camada de integração segura, baseada em APIs RESTful e em uma arquitetura orientada a serviços, que leva agendamentos e notificações até o paciente.</dd>
-  <dt><b>Quando algo falha</b></dt>
-  <dd>Mensagens de saúde são críticas e não podem se perder em silêncio. Por isso, mecanismos automatizados de contingência tratam as exceções em tempo real e dão resiliência à entrega.</dd>
-  <dt><b>Onde entra a segurança</b></dt>
-  <dd>Por lidar com dados de saúde em um sistema público, o projeto analisa os requisitos de segurança de dados e de privacidade como parte da própria integração.</dd>
-</dl>
-<h4>Programa de Iniciação Científica Júnior: PIC/OBMEP</h4>
-<p><i>Programa do IMPA, com apoio do CNPq, para quem se destaca na OBMEP.</i></p>
-<dl>
-  <dt><b>O que é</b></dt>
-  <dd>Um programa de desenvolvimento de aptidões em matemática avançada, do qual participei com bolsa do CNPq.</dd>
-  <dt><b>O que estudei</b></dt>
-  <dd>Raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.</dd>
-</dl>
+<table>
+  <tr><td colspan="2"><h3>🏥 Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião</h3><p><i>Integração segura ao e-SUS PEC via API Meta e mecanismos de contingência automatizados.</i></p></td></tr>
+  <tr><td><b>O que é</b></td><td>Uma pesquisa sobre como tornar mais ágeis os agendamentos e os fluxos de atendimento na Atenção Primária à Saúde de São Sebastião, conectando o e-SUS PEC, o Prontuário Eletrônico do Cidadão, à API do WhatsApp da plataforma Meta Business.</td></tr>
+  <tr><td><b>Como funciona</b></td><td>O sistema de saúde e a API conversam por uma camada de integração segura, baseada em APIs RESTful e em uma arquitetura orientada a serviços, que leva agendamentos e notificações até o paciente.</td></tr>
+  <tr><td><b>Quando algo falha</b></td><td>Mensagens de saúde são críticas e não podem se perder em silêncio. Por isso, mecanismos automatizados de contingência tratam as exceções em tempo real e dão resiliência à entrega.</td></tr>
+  <tr><td><b>Onde entra a segurança</b></td><td>Por lidar com dados de saúde em um sistema público, o projeto analisa os requisitos de segurança de dados e de privacidade como parte da própria integração.</td></tr>
+</table>
+
+<br />
+
+<table>
+  <tr><td colspan="2"><h3>📐 Programa de Iniciação Científica Júnior: PIC/OBMEP</h3><p><i>Programa do IMPA, com apoio do CNPq, para quem se destaca na OBMEP.</i></p></td></tr>
+  <tr><td><b>O que é</b></td><td>Um programa de desenvolvimento de aptidões em matemática avançada, do qual participei com bolsa do CNPq.</td></tr>
+  <tr><td><b>O que estudei</b></td><td>Raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.</td></tr>
+</table>
 <!-- /auto:pesquisa -->
-
-### 🧭 O fluxo da integração, em um desenho
-
-Falhas de comunicação acionam a contingência automatizada, e a mensagem continua seu caminho até o paciente.
-
-```mermaid
-flowchart LR
-    PEC[("e-SUS PEC")] <-->|agendamentos| INT["Integração segura<br/>APIs RESTful"]
-    INT -->|notificações| META["API do WhatsApp<br/>Meta Business"]
-    META --> PAC(["Paciente"])
-    INT -.->|falha de comunicação| CONT(["Contingência<br/>automatizada"])
-    CONT -.->|tratamento da exceção| META
-```
 
 ### 📄 Publicação
 
@@ -239,24 +287,36 @@ Os trabalhos técnicos registrados no meu Lattes.
 <sub>Tudo com fonte no <a href="http://lattes.cnpq.br/9693803343170549">Currículo Lattes</a> e no <a href="https://orcid.org/0009-0007-4614-9029">ORCID</a>.</sub>
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/04.svg" width="100%" alt="" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/05.svg" width="100%" alt="" />
 
-## `0x04` Formação & Cursos
+## `0x05` Formação, Cursos & Idiomas
 
 <sub><code>$ ls ~/certificados</code></sub>
 
 ### 🎓 Formação acadêmica
 
-Vim do técnico para a graduação: primeiro o Técnico em Informática, junto com o Ensino Médio, e depois Análise e Desenvolvimento de Sistemas na Fatec.
+Primeiro o Ensino Médio Integrado ao Técnico em Informática, e depois a graduação em Análise e Desenvolvimento de Sistemas na Fatec.
 
 <!-- auto:formacao -->
 <table>
   <tr><th align="left">Curso</th><th align="left">Instituição</th><th align="left">Período</th></tr>
   <tr><td><b>Análise e Desenvolvimento de Sistemas (graduação)</b></td><td>Fatec São Sebastião · CEETEPS</td><td><kbd>Desde 2026</kbd></td></tr>
-  <tr><td><b>Técnico em Informática</b></td><td>EM Pres. Tancredo de Almeida Neves</td><td><kbd>2023 a 2025</kbd></td></tr>
-  <tr><td><b>Ensino Médio</b></td><td>EM Pres. Tancredo de Almeida Neves</td><td><kbd>2023 a 2025</kbd></td></tr>
+  <tr><td><b>Ensino Médio Integrado ao Técnico em Informática</b></td><td>EM Pres. Tancredo de Almeida Neves</td><td><kbd>2023 a 2025</kbd></td></tr>
 </table>
 <!-- /auto:formacao -->
+
+### 🌐 Idiomas
+
+Sou certificado pelo CCAA no nível B1 de inglês e tenho a certificação de proficiência em Aviation English Level 3.
+
+<!-- auto:idiomas -->
+<table>
+  <tr><th align="left">Idioma</th><th align="left">Nível</th><th align="left">Comprovação</th></tr>
+  <tr><td><b>Português</b></td><td>Nativo</td><td>Língua materna</td></tr>
+  <tr><td><b>Inglês</b></td><td>Intermediário (B1)</td><td>Certificado pelo CCAA · 152h · 2024 a 2025</td></tr>
+  <tr><td><b>Inglês aeronáutico</b></td><td>Aviation English Level 3</td><td>STP TRAINAIR PLUS OACI · ANAC · 2026</td></tr>
+</table>
+<!-- /auto:idiomas -->
 
 ### 📜 Formação complementar
 
@@ -300,33 +360,12 @@ Os cursos que escolhi fazer por fora, ligados ao que quero construir na carreira
   <tr><td>Módulo 1: Eletrônica Básica</td><td>EM Pres. Tancredo de Almeida Neves</td><td>90h</td><td><kbd>2019</kbd></td></tr>
 </table>
 </details>
-<details>
-  <summary><b>🌐 Inglês</b> <sub>1 curso · 152h</sub></summary>
-  <p>O idioma da documentação e da comunidade técnica, estudado até o nível intermediário.</p>
-
-<table>
-  <tr><th align="left">Curso</th><th align="left">Instituição</th><th align="left">Carga</th><th align="left">Ano</th></tr>
-  <tr><td>Inglês: nível intermediário (B1)</td><td>CCAA</td><td>152h</td><td><kbd>2024 a 2025</kbd></td></tr>
-</table>
-</details>
 <!-- /auto:cursos -->
 
-### 🌐 Idiomas
-
-Português é minha língua nativa, e leio e compreendo bem o inglês. Também tenho a certificação de proficiência em Aviation English Level 3.
-
-<!-- auto:idiomas -->
-<table>
-  <tr><th align="left">Idioma</th><th align="left">Compreende</th><th align="left">Fala</th><th align="left">Lê</th><th align="left">Escreve</th></tr>
-  <tr><td><b>Português</b></td><td>Bem</td><td>Bem</td><td>Bem</td><td>Bem</td></tr>
-  <tr><td><b>Inglês</b></td><td>Bem</td><td>Razoavelmente</td><td>Bem</td><td>Razoavelmente</td></tr>
-</table>
-<!-- /auto:idiomas -->
-
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/05.svg" width="100%" alt="" />
+<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/06.svg" width="100%" alt="" />
 
-## `0x05` Prêmios & Eventos
+## `0x06` Prêmios & Eventos
 
 <sub><code>$ cat ~/premios.txt</code></sub>
 
@@ -377,55 +416,6 @@ Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, 
 <!-- /auto:eventos -->
 
 <br />
-<img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/06.svg" width="100%" alt="" />
-
-## `0x06` Arsenal Tecnológico
-
-<sub><code>$ ls -la ~/arsenal</code>  ·  clique em uma linguagem para ver os repositórios dela</sub>
-
-<p align="center">
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=python" title="Python"><img src="https://skillicons.dev/icons?i=python&amp;theme=dark" width="48" alt="Python" /></a>
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=c%2B%2B" title="C++"><img src="https://skillicons.dev/icons?i=cpp&amp;theme=dark" width="48" alt="C++" /></a>
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=c" title="C"><img src="https://skillicons.dev/icons?i=c&amp;theme=dark" width="48" alt="C" /></a>
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=php" title="PHP"><img src="https://skillicons.dev/icons?i=php&amp;theme=dark" width="48" alt="PHP" /></a>
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=javascript" title="JavaScript"><img src="https://skillicons.dev/icons?i=js&amp;theme=dark" width="48" alt="JavaScript" /></a>
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=html" title="HTML"><img src="https://skillicons.dev/icons?i=html&amp;theme=dark" width="48" alt="HTML" /></a>
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=css" title="CSS"><img src="https://skillicons.dev/icons?i=css&amp;theme=dark" width="48" alt="CSS" /></a>
-  <a href="https://www.mysql.com" title="MySQL"><img src="https://skillicons.dev/icons?i=mysql&amp;theme=dark" width="48" alt="MySQL" /></a>
-  <br />
-  <a href="https://linuxmint.com" title="Linux"><img src="https://skillicons.dev/icons?i=linux&amp;theme=dark" width="48" alt="Linux" /></a>
-  <a href="https://www.kali.org" title="Kali Linux"><img src="https://skillicons.dev/icons?i=kali&amp;theme=dark" width="48" alt="Kali Linux" /></a>
-  <a href="https://github.com/GuiiBM?tab=repositories&amp;language=shell" title="Bash"><img src="https://skillicons.dev/icons?i=bash&amp;theme=dark" width="48" alt="Bash" /></a>
-  <a href="https://git-scm.com" title="Git"><img src="https://skillicons.dev/icons?i=git&amp;theme=dark" width="48" alt="Git" /></a>
-  <a href="https://github.com/GuiiBM" title="GitHub"><img src="https://skillicons.dev/icons?i=github&amp;theme=dark" width="48" alt="GitHub" /></a>
-  <a href="https://code.visualstudio.com" title="VS Code"><img src="https://skillicons.dev/icons?i=vscode&amp;theme=dark" width="48" alt="VS Code" /></a>
-  <a href="https://gbm-mkt.netlify.app" title="Netlify"><img src="https://skillicons.dev/icons?i=netlify&amp;theme=dark" width="48" alt="Netlify" /></a>
-</p>
-
-<div align="center">
-  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fred_team.json&style=for-the-badge" alt="Red Team" />
-  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fweb_security.json&style=for-the-badge" alt="Web Application Security" />
-  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fnetwork_recon.json&style=for-the-badge" alt="Network Recon" />
-  <br />
-  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Ftraffic.json&style=for-the-badge" alt="Traffic Analysis" />
-  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fosint.json&style=for-the-badge" alt="OSINT" />
-  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Fautomacao.json&style=for-the-badge" alt="Automação" />
-</div>
-
-### 🧰 Onde cada coisa já foi usada
-
-| Área | Na prática |
-| --- | --- |
-| 🛡️ **Segurança** | AES-256 e esteganografia no Verto, coleta OSINT, requisitos de segurança e privacidade na pesquisa, cursos da Cisco, USP e CEETEPS |
-| 🌐 **Web** | PHP, JavaScript, Python com Flask, Framer e Netlify, em mais de 30 projetos entregues |
-| 🔌 **APIs e integração** | e-SUS PEC com a API do WhatsApp, APIs RESTful e arquitetura orientada a serviços |
-| 🤖 **Automação e IA** | Python e Bash, Selenium, Demucs, rembg e faster-whisper |
-| 🖧 **Infraestrutura** | Suporte técnico, roteadores, switches, cabeamento estruturado, inventário e manuais de uso na FUNDART |
-| 📋 **Contratação pública** | ETP, Termo de Referência e avaliação de Prova de Conceito para software SaaS |
-| 🛰️ **Eletrônica** | Seis módulos do Ubatubasat, somando 540h de eletrônica e programação |
-| 📐 **Lógica e matemática** | Quatro edições do PIC-OBMEP: combinatória, teoria dos números e geometria |
-
-<br />
 <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/07.svg" width="100%" alt="" />
 
 ## `0x07` Projetos
@@ -437,7 +427,7 @@ Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, 
 <!-- auto:destaques -->
 <table>
 <tr><td width="50%" valign="top"><h4>Verto</h4><p>Suíte local-first com 40 ferramentas de IA, criptografia, binários e mídia. Os dados sensíveis ficam na máquina do usuário.</p><p><code>Python</code> <code>Flask</code> <code>Demucs</code> <code>rembg</code> <code>faster-whisper</code> <code>AES-256</code> <code>yt-dlp</code></p><p><a href="https://github.com/GuiiBM/Verto-Multi-purpose-Media-Security-Processing-Suite">Código</a></p></td><td width="50%" valign="top"><h4>Massive OSINT Framework</h4><p>Coleta de dados públicos (OSINT) em múltiplas fontes e automação de comunicação via WhatsApp Web.</p><p><code>Python</code> <code>Selenium</code> <code>BeautifulSoup4</code> <code>Pandas</code> <code>Pillow</code></p><p><a href="https://github.com/GuiiBM/Massive-OSINT-Communication-Framework">Código</a></p></td></tr>
-<tr><td width="50%" valign="top"><h4>Ressonance</h4><p>Plataforma de música com um algoritmo diferente, com APIs REST e player próprio.</p><p><code>PHP</code> <code>JavaScript</code> <code>APIs REST</code></p><p><a href="https://github.com/GuiiBM/Ressonance">Código</a> · <a href="https://ressonance.hyperphp.com/">Site no ar</a></p></td><td width="50%" valign="top"><h4>Regulador Financeiro</h4><p>Monitoramento de mercado com atraso de 15 min: ações e FIIs, carteira, recomendações, análise técnica e dividendos.</p><p><code>Python</code> <code>Flask</code> <code>SQLite</code> <code>yfinance</code> <code>pandas</code> <code>APScheduler</code></p><p><a href="https://github.com/GuiiBM/reguladorfinanceiro">Código</a></p></td></tr>
+<tr><td width="50%" valign="top"><h4>Ressonance</h4><p>Meu TCC: plataforma de música com um algoritmo diferente, com artistas, álbuns, playlists, podcasts, recomendações e login social.</p><p><code>PHP</code> <code>JavaScript</code> <code>CSS</code> <code>OAuth</code></p><p><a href="https://github.com/GuiiBM/tcc">Código</a> · <a href="https://ressonance.hyperphp.com/">Site no ar</a></p></td><td width="50%" valign="top"><h4>Regulador Financeiro</h4><p>Monitoramento de mercado com atraso de 15 min: ações e FIIs, carteira, recomendações, análise técnica e dividendos.</p><p><code>Python</code> <code>Flask</code> <code>SQLite</code> <code>yfinance</code> <code>pandas</code> <code>APScheduler</code></p><p><a href="https://github.com/GuiiBM/reguladorfinanceiro">Código</a></p></td></tr>
 <tr><td width="50%" valign="top"><h4>Calcula Passagem</h4><p>Soma as viagens de ônibus entre Ubatuba, Caraguatatuba e São Sebastião e mostra quanto colocar no cartão.</p><p><code>HTML</code> <code>JavaScript</code> <code>Netlify</code></p><p><a href="https://github.com/GuiiBM/CalcularPassagens">Código</a> · <a href="https://calcularpassagens.netlify.app/">Site no ar</a></p></td><td width="50%" valign="top"><h4>Mundo Ágape</h4><p>Site do ministério infantil da Igreja Ágape, com lições, fotos, eventos e recursos em um só lugar.</p><p><code>HTML</code> <code>CSS</code> <code>JavaScript</code></p><p><a href="https://github.com/GuiiBM/MundoAgape">Código</a> · <a href="https://mundoagape.netlify.app/">Site no ar</a></p></td></tr>
 </table>
 <!-- /auto:destaques -->
@@ -453,7 +443,7 @@ Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, 
   <tr><td><a href="https://github.com/GuiiBM/MyPersonalLinks"><b>MyPersonalLinks</b></a></td><td>Projetos, sites e experimentos reunidos num só lugar.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-MyPersonalLinks.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/CalcularPassagens"><b>CalcularPassagens</b></a></td><td>Some suas viagens de ônibus entre Ubatuba, Caraguatatuba e São Sebastião e veja quanto colocar no cartão.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-CalcularPassagens.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/MundoAgape"><b>MundoAgape</b></a></td><td>Ministério infantil da Igreja Ágape. Lições, fotos, eventos e recursos do Mundo Ágape em um só lugar.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=css"><code>CSS</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-MundoAgape.json&amp;style=flat-square" alt="Último commit" /></td></tr>
-  <tr><td><a href="https://github.com/GuiiBM/tcc"><b>tcc</b></a></td><td>Meu tcc</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=php"><code>PHP</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-tcc.json&amp;style=flat-square" alt="Último commit" /></td></tr>
+  <tr><td><a href="https://github.com/GuiiBM/tcc"><b>tcc</b></a></td><td>Ressonance, meu TCC: plataforma de música com um algoritmo diferente.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=php"><code>PHP</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-tcc.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/reguladorfinanceiro"><b>reguladorfinanceiro</b></a></td><td>Aplicação web de monitoramento de mercado financeiro em tempo real (atraso de 15 min), com compra/venda de ações e FIIs, carteira, recomendações, análise técnica e dividendos.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-reguladorfinanceiro.json&amp;style=flat-square" alt="Último commit" /></td></tr>
 </table>
 <!-- /auto:projetos -->
@@ -474,7 +464,7 @@ Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, 
   <tr><td><a href="https://github.com/GuiiBM/Python---Soma-de-Gauus"><b>Python---Soma-de-Gauus</b></a></td><td><sub>Sem descrição por enquanto.</sub></td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=python"><code>Python</code></a></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/reguladorfinanceiro"><b>reguladorfinanceiro</b></a></td><td>Aplicação web de monitoramento de mercado financeiro em tempo real (atraso de 15 min), com compra/venda de ações e FIIs, carteira, recomendações, análise técnica e dividendos.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/Ressonance"><b>Ressonance</b></a></td><td>Uma plataforma de música com um algoritmo diferente</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=php"><code>PHP</code></a></td></tr>
-  <tr><td><a href="https://github.com/GuiiBM/tcc"><b>tcc</b></a></td><td>Meu tcc</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=php"><code>PHP</code></a></td></tr>
+  <tr><td><a href="https://github.com/GuiiBM/tcc"><b>tcc</b></a></td><td>Ressonance, meu TCC: plataforma de música com um algoritmo diferente.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=php"><code>PHP</code></a></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/translatorauto"><b>translatorauto</b></a></td><td>Tradutor de Conversa</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/Verto-Multi-purpose-Media-Security-Processing-Suite"><b>Verto-Multi-purpose-Media-Security-Processing-Suite</b></a></td><td>Suíte local-first com 40 ferramentas de IA, criptografia, binários e mídia.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=python"><code>Python</code></a></td></tr>
 </table>

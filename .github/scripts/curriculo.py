@@ -17,8 +17,8 @@ HISTORIA = [
      "Em 2021 veio a Medalha de Bronze na 16ª OBMEP. De 2022 a 2025, participei de quatro edições seguidas do PIC-OBMEP, "
      "no IMPA, com bolsa do CNPq, estudando análise combinatória, teoria dos números e geometria. No caminho, somei três "
      "Menções Honrosas na OBMEP e uma na Olimpíada Mandacaru."),
-    ("2023 a 2025", "Do curso técnico ao primeiro trabalho",
-     "Enquanto cursava o Técnico em Informática junto com o Ensino Médio, entrei como estagiário de TI na FUNDART. Lá cuidei "
+    ("2023 a 2025", "Do ensino técnico ao primeiro trabalho",
+     "Enquanto cursava o Ensino Médio Integrado ao Técnico em Informática, entrei como estagiário de TI na FUNDART. Lá cuidei "
      "de suporte, redes e infraestrutura, criei um sistema próprio para a Biblioteca Municipal e ajudei a preparar a "
      "contratação do sistema definitivo em nuvem."),
     ("Desde 2026", "Fatec, pesquisa e comunidade",
@@ -50,7 +50,7 @@ EXPERIENCIA = [
          "Levantamento de requisitos, ETP, Termo de Referência e avaliação de Prova de Conceito para contratar e migrar o sistema definitivo em nuvem (SaaS).",
      ]),
     ("2022 a 2025", "Iniciação Científica Júnior (PIC-OBMEP)", "IMPA · CNPq",
-     "Quatro edições seguidas de estudo aprofundado, a partir do desempenho na olimpíada de matemática.", [
+     "Quatro edições seguidas de estudo aprofundado, a partir do desempenho na olimpíada de matemática, com bolsa de Iniciação Científica Júnior do CNPq.", [
          "Participação consecutiva nas edições 16, 17, 18 e 19 do programa, com bolsa do CNPq.",
          "Matemática avançada, raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.",
      ]),
@@ -61,7 +61,7 @@ EXPERIENCIA = [
 LINHA_DO_TEMPO = [
     ("Ubatubasat: eletrônica e programação", 2019, 2025, "formacao"),
     ("PIC-OBMEP · IMPA", 2022, 2026, "pesquisa"),
-    ("Técnico em Informática + Ensino Médio", 2023, 2026, "formacao"),
+    ("Ensino Médio Integrado ao Técnico", 2023, 2026, "formacao"),
     ("Estágio de TI · FUNDART", 2024, 2026, "trabalho"),
     ("ADS · Fatec São Sebastião", 2026, None, "formacao"),
     ("Pesquisa PIBICT · e-SUS PEC + API Meta", 2026, None, "pesquisa"),
@@ -70,7 +70,7 @@ LINHA_DO_TEMPO = [
 
 # (título, resumo, [(pergunta, resposta)])
 PESQUISA = [
-    ("Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião",
+    ("🏥 Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião",
      "Integração segura ao e-SUS PEC via API Meta e mecanismos de contingência automatizados.", [
          ("O que é", "Uma pesquisa sobre como tornar mais ágeis os agendamentos e os fluxos de atendimento na Atenção Primária à Saúde de São Sebastião, "
                      "conectando o e-SUS PEC, o Prontuário Eletrônico do Cidadão, à API do WhatsApp da plataforma Meta Business."),
@@ -81,7 +81,7 @@ PESQUISA = [
          ("Onde entra a segurança", "Por lidar com dados de saúde em um sistema público, o projeto analisa os requisitos de segurança de dados e de privacidade "
                                     "como parte da própria integração."),
      ]),
-    ("Programa de Iniciação Científica Júnior: PIC/OBMEP",
+    ("📐 Programa de Iniciação Científica Júnior: PIC/OBMEP",
      "Programa do IMPA, com apoio do CNPq, para quem se destaca na OBMEP.", [
          ("O que é", "Um programa de desenvolvimento de aptidões em matemática avançada, do qual participei com bolsa do CNPq."),
          ("O que estudei", "Raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas."),
@@ -104,8 +104,7 @@ PRODUCAO_TECNICA = [
 # (período, curso, instituição)
 FORMACAO = [
     ("Desde 2026", "Análise e Desenvolvimento de Sistemas (graduação)", "Fatec São Sebastião · CEETEPS"),
-    ("2023 a 2025", "Técnico em Informática", "EM Pres. Tancredo de Almeida Neves"),
-    ("2023 a 2025", "Ensino Médio", "EM Pres. Tancredo de Almeida Neves"),
+    ("2023 a 2025", "Ensino Médio Integrado ao Técnico em Informática", "EM Pres. Tancredo de Almeida Neves"),
 ]
 
 # Grupo -> (explicação, [(ano, curso, instituição, horas ou None)]). Só entram
@@ -133,16 +132,13 @@ CURSOS = {
         ("2020", "Módulo 2: Eletrônica Básica", "EM Pres. Tancredo de Almeida Neves", 90),
         ("2019", "Módulo 1: Eletrônica Básica", "EM Pres. Tancredo de Almeida Neves", 90),
     ]),
-    "🌐 Inglês": (
-        "O idioma da documentação e da comunidade técnica, estudado até o nível intermediário.", [
-        ("2024 a 2025", "Inglês: nível intermediário (B1)", "CCAA", 152),
-    ]),
 }
 
-# (idioma, compreende, fala, lê, escreve)
+# (idioma, nível, comprovação)
 IDIOMAS = [
-    ("Português", "Bem", "Bem", "Bem", "Bem"),
-    ("Inglês", "Bem", "Razoavelmente", "Bem", "Razoavelmente"),
+    ("Português", "Nativo", "Língua materna"),
+    ("Inglês", "Intermediário (B1)", "Certificado pelo CCAA · 152h · 2024 a 2025"),
+    ("Inglês aeronáutico", "Aviation English Level 3", "STP TRAINAIR PLUS OACI · ANAC · 2026"),
 ]
 
 # (ano, título, detalhe, nível) — nível define a medalha: ouro, prata, bronze ou marca
@@ -183,9 +179,9 @@ DESTAQUES = [
     ("Massive OSINT Framework", "Massive-OSINT-Communication-Framework",
      "Coleta de dados públicos (OSINT) em múltiplas fontes e automação de comunicação via WhatsApp Web.",
      ["Python", "Selenium", "BeautifulSoup4", "Pandas", "Pillow"], None),
-    ("Ressonance", "Ressonance",
-     "Plataforma de música com um algoritmo diferente, com APIs REST e player próprio.",
-     ["PHP", "JavaScript", "APIs REST"], "https://ressonance.hyperphp.com/"),
+    ("Ressonance", "tcc",
+     "Meu TCC: plataforma de música com um algoritmo diferente, com artistas, álbuns, playlists, podcasts, recomendações e login social.",
+     ["PHP", "JavaScript", "CSS", "OAuth"], "https://ressonance.hyperphp.com/"),
     ("Regulador Financeiro", "reguladorfinanceiro",
      "Monitoramento de mercado com atraso de 15 min: ações e FIIs, carteira, recomendações, análise técnica e dividendos.",
      ["Python", "Flask", "SQLite", "yfinance", "pandas", "APScheduler"], None),

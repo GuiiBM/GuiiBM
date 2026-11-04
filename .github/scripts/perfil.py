@@ -104,6 +104,7 @@ REPOS_IGNORADOS = {USUARIO}
 # Descrições que têm prioridade sobre a do GitHub. Sem nenhuma das duas, vale o
 # primeiro parágrafo do README e, depois, a descrição do index.html.
 DESCRICOES: dict[str, str] = {
+    "tcc": "Ressonance, meu TCC: plataforma de música com um algoritmo diferente.",
     "Verto-Multi-purpose-Media-Security-Processing-Suite":
         "Suíte local-first com 40 ferramentas de IA, criptografia, binários e mídia.",
     "Massive-OSINT-Communication-Framework":
@@ -478,24 +479,26 @@ def bloco_historia() -> str:
 
 
 def bloco_trajetoria() -> str:
-    itens = []
-    for i, (periodo, cargo, instituicao, explicacao, atividades) in enumerate(curriculo.EXPERIENCIA):
-        aberto = " open" if i == 0 else ""
-        lista = "\n".join(f"    <li>{esc(a)}</li>" for a in atividades)
-        itens.append(f"<details{aberto}>\n"
-                     f"  <summary>{etiqueta(periodo)} <b>{esc(cargo)}</b> · {esc(instituicao)}</summary>\n"
-                     f"  <p>{esc(explicacao)}</p>\n"
-                     f"  <ul>\n{lista}\n  </ul>\n"
-                     "</details>")
-    return "\n".join(itens)
+    """Cada experiência em um bloco próprio, grande e sempre aberto."""
+    cartoes = []
+    for periodo, cargo, instituicao, explicacao, atividades in curriculo.EXPERIENCIA:
+        lista = "\n".join(f"      <li>{esc(a)}</li>" for a in atividades)
+        cartoes.append("<table>\n  <tr><td>\n"
+                       f"    <h3>{esc(cargo)}</h3>\n"
+                       f"    <p>{etiqueta(periodo)} <b>{esc(instituicao)}</b></p>\n"
+                       f"    <p>{esc(explicacao)}</p>\n"
+                       f"    <ul>\n{lista}\n    </ul>\n"
+                       "  </td></tr>\n</table>")
+    return "\n\n".join(cartoes)
 
 
 def bloco_pesquisa() -> str:
-    blocos = []
+    """Cada projeto em um cartão próprio, com as explicações em linhas."""
+    cartoes = []
     for titulo, resumo, pontos in curriculo.PESQUISA:
-        linhas = "\n".join(f"  <dt><b>{esc(pergunta)}</b></dt>\n  <dd>{esc(resposta)}</dd>" for pergunta, resposta in pontos)
-        blocos.append(f"<h4>{esc(titulo)}</h4>\n<p><i>{esc(resumo)}</i></p>\n<dl>\n{linhas}\n</dl>")
-    return "\n".join(blocos)
+        linhas = "\n".join(f"  <tr><td><b>{esc(pergunta)}</b></td><td>{esc(resposta)}</td></tr>" for pergunta, resposta in pontos)
+        cartoes.append(f'<table>\n  <tr><td colspan="2"><h3>{esc(titulo)}</h3><p><i>{esc(resumo)}</i></p></td></tr>\n{linhas}\n</table>')
+    return "\n\n<br />\n\n".join(cartoes)
 
 
 def bloco_producao() -> str:
@@ -526,8 +529,8 @@ def bloco_cursos() -> str:
 
 
 def bloco_idiomas() -> str:
-    return tabela(["Idioma", "Compreende", "Fala", "Lê", "Escreve"],
-                  [[f"<b>{esc(idioma)}</b>", *map(esc, niveis)] for idioma, *niveis in curriculo.IDIOMAS])
+    return tabela(["Idioma", "Nível", "Comprovação"],
+                  [[f"<b>{esc(idioma)}</b>", esc(nivel), esc(comprovacao)] for idioma, nivel, comprovacao in curriculo.IDIOMAS])
 
 
 def bloco_premios() -> str:

@@ -32,7 +32,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import curriculo
-from animacoes import emblema_stl, linha_do_tempo, odometro, radar, relogio, terminal
+from animacoes import emblema_stl, linha_do_tempo, odometro, radar, terminal
 from banner import banner
 from estilo import APAGADO, FONTE, FUNDO, TEXTO, esc, moldura, numero
 from temas import PADRAO, TEMAS, Tema, legivel, luminancia, misturar, tema_do_dia
@@ -226,15 +226,6 @@ def resumo_site(repo: dict) -> str | None:
     return html.unescape(achado["texto"]).strip() or None if achado else None
 
 
-def horas_de_commit() -> list[int]:
-    """Commits públicos mais recentes por hora do dia, no horário de Brasília."""
-    q = urllib.parse.quote(f"author:{USUARIO}")
-    horas = [0] * 24
-    for item in api(f"/search/commits?q={q}&sort=author-date&order=desc&per_page=100")["items"]:
-        horas[datetime.fromisoformat(item["commit"]["author"]["date"]).astimezone(BRASILIA).hour] += 1
-    return horas
-
-
 def sequencias(dias: dict[date, int], hoje: date) -> tuple[int, int]:
     """(sequência atual, maior sequência). Hoje sem commit não quebra a atual."""
     maior = corrente = 0
@@ -273,7 +264,6 @@ def coletar(hoje: date) -> dict:
         "repos": [resumir(r) for r in todos if not r["archived"]][:TOTAL_REPOS],
         "todos": [resumir(r) for r in todos],
         "sites": json.loads(requisitar(LINKS)),
-        "horas": horas_de_commit(),
         "linguagens": linguagens,
         "dias": {d.isoformat(): n for d, n in dias.items()},
         "stats": {
@@ -329,11 +319,9 @@ def card_divisor(t: Tema, numero: int) -> str:
     c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{largura}" height="{altura}" viewBox="0 0 {largura} {altura}" aria-hidden="true">
   <style>
-    .luz {{ animation: varrer 4s ease-in-out infinite; }}
-    .pulso {{ animation: pulsar 2s ease-in-out infinite; transform-origin: {cheio - 7:.1f}px {meio}px; }}
+    .luz {{ animation: varrer 2.5s ease-in-out both; }}
     @keyframes varrer {{ from {{ transform: translateX(-160px); }} to {{ transform: translateX({cheio:.1f}px); }} }}
-    @keyframes pulsar {{ 50% {{ transform: scale(1.5); opacity: .45; }} }}
-    @media (prefers-reduced-motion: reduce) {{ .luz, .pulso {{ animation: none; }} .luz {{ display: none; }} }}
+    @media (prefers-reduced-motion: reduce) {{ .luz {{ animation: none; display: none; }} }}
   </style>
   <defs>
     <linearGradient id="cheio" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#{c1}"/><stop offset="100%" stop-color="#{c2}"/></linearGradient>
@@ -345,7 +333,7 @@ def card_divisor(t: Tema, numero: int) -> str:
     <rect width="{cheio:.1f}" height="{altura}" fill="url(#cheio)"/>
     <rect width="160" height="{altura}" fill="url(#brilho)" class="luz"/>
   </g>
-  <circle cx="{cheio - 7:.1f}" cy="{meio}" r="4.5" fill="#{acento}" class="pulso"/>
+  <circle cx="{cheio - 7:.1f}" cy="{meio}" r="4.5" fill="#{acento}"/>
 </svg>
 """
 
@@ -484,36 +472,36 @@ def etiqueta(texto: str) -> str:
     return f"<kbd>{esc(texto).replace(' ', chr(0xA0))}</kbd>"
 
 
+def bloco_historia() -> str:
+    return "\n\n".join(f"<p>{etiqueta(periodo)} <b>{esc(titulo)}</b><br />\n{esc(texto)}</p>"
+                        for periodo, titulo, texto in curriculo.HISTORIA)
+
+
 def bloco_trajetoria() -> str:
     itens = []
-    for i, (periodo, cargo, instituicao, vinculo, atividades) in enumerate(curriculo.EXPERIENCIA):
+    for i, (periodo, cargo, instituicao, explicacao, atividades) in enumerate(curriculo.EXPERIENCIA):
         aberto = " open" if i == 0 else ""
         lista = "\n".join(f"    <li>{esc(a)}</li>" for a in atividades)
         itens.append(f"<details{aberto}>\n"
                      f"  <summary>{etiqueta(periodo)} <b>{esc(cargo)}</b> · {esc(instituicao)}</summary>\n"
-                     f"  <p><sub>{esc(vinculo)}</sub></p>\n"
+                     f"  <p>{esc(explicacao)}</p>\n"
                      f"  <ul>\n{lista}\n  </ul>\n"
                      "</details>")
     return "\n".join(itens)
 
 
 def bloco_pesquisa() -> str:
-    itens = []
-    for i, (periodo, titulo, situacao, coordenacao, financiamento, descricao) in enumerate(curriculo.PESQUISA):
-        aberto = " open" if i == 0 else ""
-        itens.append(f"<details{aberto}>\n"
-                     f"  <summary>{etiqueta(periodo)} <b>{esc(titulo)}</b></summary>\n"
-                     f"  <p>{esc(descricao)}</p>\n"
-                     f"  <p><sub><b>Situação:</b> {esc(situacao)} · <b>Coordenação:</b> {esc(coordenacao)} · "
-                     f"<b>Financiamento:</b> {esc(financiamento)}</sub></p>\n"
-                     "</details>")
-    return "\n".join(itens)
+    blocos = []
+    for titulo, resumo, pontos in curriculo.PESQUISA:
+        linhas = "\n".join(f"  <dt><b>{esc(pergunta)}</b></dt>\n  <dd>{esc(resposta)}</dd>" for pergunta, resposta in pontos)
+        blocos.append(f"<h4>{esc(titulo)}</h4>\n<p><i>{esc(resumo)}</i></p>\n<dl>\n{linhas}\n</dl>")
+    return "\n".join(blocos)
 
 
 def bloco_producao() -> str:
-    return tabela(["Produção", "Tipo", "Ano"],
-                  [[f"<b>{esc(titulo)}</b>", esc(tipo), etiqueta(ano)]
-                   for ano, titulo, tipo in curriculo.PRODUCAO_TECNICA])
+    return tabela(["Produção", "O que é", "Ano"],
+                  [[f"<b>{esc(titulo)}</b>", esc(explicacao), etiqueta(ano)]
+                   for ano, titulo, explicacao in curriculo.PRODUCAO_TECNICA])
 
 
 def bloco_formacao() -> str:
@@ -524,13 +512,15 @@ def bloco_formacao() -> str:
 
 def bloco_cursos() -> str:
     grupos = []
-    for i, (grupo, cursos) in enumerate(curriculo.CURSOS.items()):
+    for i, (grupo, (explicacao, cursos)) in enumerate(curriculo.CURSOS.items()):
         horas = sum(h or 0 for *_, h in cursos)
         total = f" · {horas}h" if horas else ""
+        quantos = f"{len(cursos)} cursos" if len(cursos) > 1 else "1 curso"
         aberto = " open" if i == 0 else ""
         linhas = [[esc(nome), esc(instituicao), f"{h}h" if h else "—", etiqueta(ano)]
                   for ano, nome, instituicao, h in cursos]
-        grupos.append(f"<details{aberto}>\n  <summary><b>{esc(grupo)}</b> <sub>{len(cursos)} cursos{total}</sub></summary>\n\n"
+        grupos.append(f"<details{aberto}>\n  <summary><b>{esc(grupo)}</b> <sub>{quantos}{total}</sub></summary>\n"
+                      f"  <p>{esc(explicacao)}</p>\n\n"
                       + tabela(["Curso", "Instituição", "Carga", "Ano"], linhas) + "\n</details>")
     return "\n".join(grupos)
 
@@ -672,7 +662,8 @@ def baixar_svg(destino: Path, url: str) -> None:
 
 
 def digitando(linhas: list[str], cor: str, **opcoes) -> str:
-    parametros = {"center": "true", "vCenter": "true", "color": cor, **opcoes, "lines": ";".join(linhas)}
+    parametros = {"center": "true", "vCenter": "true", "multiline": "true", "repeat": "false", "color": cor,
+                  **opcoes, "lines": ";".join(linhas)}
     return "https://readme-typing-svg.demolab.com/?" + urllib.parse.urlencode(
         parametros, quote_via=urllib.parse.quote, safe=";")
 
@@ -680,10 +671,10 @@ def digitando(linhas: list[str], cor: str, **opcoes) -> str:
 def externos(t: Tema, saida: Path, ano_novo: int) -> None:
     linhas = ([t.saudacao.format(ano_novo=ano_novo)] if t.saudacao else []) + DIGITANDO
     baixar_svg(saida / "digitando.svg", digitando(
-        linhas, legivel(t.acento), font="Fira Code", weight=600, size=20, pause=1000, width=650, height=45))
+        linhas, legivel(t.acento), font="Fira Code", weight=600, size=20, duration=1400, pause=100, width=650, height=34 * len(linhas)))
     baixar_svg(saida / "boot.svg", digitando(
-        BOOT, visivel(t.c2, t.c1), font="JetBrains Mono", weight=500, size=14, duration=2200,
-        pause=400, width=600, height=90))
+        BOOT, visivel(t.c2, t.c1), font="JetBrains Mono", weight=500, size=14, duration=900,
+        pause=100, width=600, height=100))
     for arquivo, tema_trofeu in (("trofeus.svg", t.trofeu), ("trofeus-claro.svg", "flat")):
         baixar_svg(saida / arquivo, "https://github-profile-trophies.vercel.app/?" + urllib.parse.urlencode(
             {"username": USUARIO, "theme": tema_trofeu, "column": -1, "rank": "-?", "margin-w": 12,
@@ -774,7 +765,7 @@ def main() -> int:
     gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS))
 
     gravar("linha-do-tempo.svg", linha_do_tempo(tema, hoje))
-    blocos = {"trajetoria": bloco_trajetoria(), "pesquisa": bloco_pesquisa(), "producao": bloco_producao(),
+    blocos = {"historia": bloco_historia(), "trajetoria": bloco_trajetoria(), "pesquisa": bloco_pesquisa(), "producao": bloco_producao(),
               "formacao": bloco_formacao(), "cursos": bloco_cursos(), "idiomas": bloco_idiomas(),
               "premios": bloco_premios(), "eventos": bloco_eventos(), "destaques": bloco_destaques(),
               "servicos": bloco_servicos(), "perfis": bloco_perfis(), "emblema": bloco_emblema()}
@@ -799,7 +790,6 @@ def main() -> int:
         blocos["projetos"] = bloco_projetos(dados["repos"])
         if "todos" in dados:
             gravar("radar.svg", radar(tema, dados["todos"], hoje, CORES_LINGUAGENS))
-            gravar("relogio.svg", relogio(tema, dados["horas"], dias))
             blocos["todos"] = bloco_todos(dados["todos"])
             blocos["sites"] = bloco_sites(dados["sites"])
     if args.readme:

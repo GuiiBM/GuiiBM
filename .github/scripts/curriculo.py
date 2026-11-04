@@ -8,30 +8,49 @@ Telefone, endereço e e-mail pessoal ficam de fora de propósito: o README é p�
 LATTES = "http://lattes.cnpq.br/9693803343170549"
 ORCID = "https://orcid.org/0009-0007-4614-9029"
 
-# (período, cargo, instituição, vínculo, [atividades])
+# A história contada na seção Trajetória: (período, título, texto)
+HISTORIA = [
+    ("2019 a 2024", "Eletrônica antes de tudo",
+     "Comecei pelo hardware. No curso Ubatubasat, na EM Pres. Tancredo de Almeida Neves, fiz seis módulos em seis anos, "
+     "da eletrônica básica à programação, somando 540 horas. Foi ali que aprendi a olhar para o que existe por baixo do software."),
+    ("2021 a 2025", "A matemática como treino de raciocínio",
+     "Em 2021 veio a Medalha de Bronze na 16ª OBMEP. De 2022 a 2025, participei de quatro edições seguidas do PIC-OBMEP, "
+     "no IMPA, com bolsa do CNPq, estudando análise combinatória, teoria dos números e geometria. No caminho, somei três "
+     "Menções Honrosas na OBMEP e uma na Olimpíada Mandacaru."),
+    ("2023 a 2025", "Do curso técnico ao primeiro trabalho",
+     "Enquanto cursava o Técnico em Informática junto com o Ensino Médio, entrei como estagiário de TI na FUNDART. Lá cuidei "
+     "de suporte, redes e infraestrutura, criei um sistema próprio para a Biblioteca Municipal e ajudei a preparar a "
+     "contratação do sistema definitivo em nuvem."),
+    ("Desde 2026", "Fatec, pesquisa e comunidade",
+     "Entrei em Análise e Desenvolvimento de Sistemas na Fatec São Sebastião e passei a unir código e impacto público: pesquisa "
+     "em integração segura na saúde, extensão em inclusão digital e o 1º lugar na 1ª Litoral Game Jam. Tudo isso com o foco "
+     "na Segurança da Informação como direção de carreira."),
+]
+
+# (período, cargo, instituição, explicação, [atividades])
 EXPERIENCIA = [
-    ("2026 · atual", "Bolsista de Pesquisa e Desenvolvimento (PIBICT)", "Fatec São Sebastião · CEETEPS",
-     "Bolsista · 12h semanais", [
+    ("Desde 2026", "Bolsista de Pesquisa e Desenvolvimento (PIBICT)", "Fatec São Sebastião · CEETEPS",
+     "Trabalho na ligação entre o sistema de saúde e o WhatsApp, para que agendamentos e avisos cheguem a quem precisa, mesmo quando a comunicação falha.", [
          "Investigação, modelagem e implementação de integrações seguras de agendamento e notificação com o e-SUS PEC, usando a API do WhatsApp (Meta Business Platform).",
          "Mecanismos automatizados de contingência para falhas de comunicação, tratamento de exceções em tempo real e resiliência na entrega de mensagens críticas de saúde.",
          "Arquitetura orientada a serviços, consumo de APIs RESTful e análise de requisitos de segurança de dados e privacidade em sistemas públicos de saúde.",
      ]),
-    ("2026 · atual", "Projeto de Inclusão Digital para a Comunidade", "CEETEPS (extensão)",
-     "Bolsista de extensão", [
-         "Ensino de informática básica e ferramentas digitais para a comunidade.",
-         "Apoio à gestão, planejamento pedagógico, divulgação e marketing do curso.",
+    ("Desde 2026", "Projeto de Inclusão Digital para a Comunidade", "CEETEPS (extensão)",
+     "Levo informática básica e ferramentas digitais para quem está começando, ajudando a desenvolver competências tecnológicas na comunidade.", [
+         "Apoio à gestão e ao planejamento pedagógico do curso.",
+         "Divulgação e marketing das turmas.",
          "Monitoria presencial em sala de aula.",
      ]),
-    ("2024 · 2025", "Estagiário Técnico em Informática", "FUNDART · Fundação de Arte e Cultura de Ubatuba",
-     "Estágio · 30h semanais", [
+    ("2024 a 2025", "Estagiário Técnico em Informática", "FUNDART · Fundação de Arte e Cultura de Ubatuba",
+     "Foi a minha escola de TI na prática: do chamado de suporte à infraestrutura, e do código ao processo de contratação pública.", [
          "Suporte técnico presencial e remoto: formatação e manutenção de computadores, softwares corporativos, e-mails institucionais, redes e impressoras.",
          "Diagnóstico e manutenção de hardware, roteadores, switches e cabeamento estruturado.",
          "Inventário de hardware e software e manuais de uso para os funcionários.",
          "Desenvolvimento de um sistema próprio de suporte transitório para o controle da Biblioteca Municipal.",
          "Levantamento de requisitos, ETP, Termo de Referência e avaliação de Prova de Conceito para contratar e migrar o sistema definitivo em nuvem (SaaS).",
      ]),
-    ("2022 · 2025", "Iniciação Científica Júnior (PIC-OBMEP)", "IMPA · CNPq",
-     "Bolsista · 10h semanais", [
+    ("2022 a 2025", "Iniciação Científica Júnior (PIC-OBMEP)", "IMPA · CNPq",
+     "Quatro edições seguidas de estudo aprofundado, a partir do desempenho na olimpíada de matemática.", [
          "Participação consecutiva nas edições 16, 17, 18 e 19 do programa, com bolsa do CNPq.",
          "Matemática avançada, raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.",
      ]),
@@ -49,18 +68,24 @@ LINHA_DO_TEMPO = [
     ("Extensão: Inclusão Digital", 2026, None, "trabalho"),
 ]
 
-# (período, título, situação, coordenação, financiamento, descrição)
+# (título, resumo, [(pergunta, resposta)])
 PESQUISA = [
-    ("2026 · atual",
-     "Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião",
-     "Em andamento", "Douglas Fabiano Lourenço", "PIBICT · CEETEPS",
-     "Integração segura ao e-SUS PEC via API Meta e mecanismos de contingência automatizados, "
-     "para otimizar e automatizar agendamentos e fluxos de atendimento."),
-    ("2022 · 2025",
-     "Programa de Iniciação Científica Júnior: PIC/OBMEP",
-     "Concluído", "Reinaldo Gen Ichiro Arakaki", "Bolsa CNPq",
-     "Desenvolvimento de aptidões em matemática avançada, raciocínio lógico, análise combinatória, "
-     "teoria dos números e geometria, em programa promovido pelo IMPA."),
+    ("Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião",
+     "Integração segura ao e-SUS PEC via API Meta e mecanismos de contingência automatizados.", [
+         ("O que é", "Uma pesquisa sobre como tornar mais ágeis os agendamentos e os fluxos de atendimento na Atenção Primária à Saúde de São Sebastião, "
+                     "conectando o e-SUS PEC, o Prontuário Eletrônico do Cidadão, à API do WhatsApp da plataforma Meta Business."),
+         ("Como funciona", "O sistema de saúde e a API conversam por uma camada de integração segura, baseada em APIs RESTful e em uma arquitetura orientada a serviços, "
+                           "que leva agendamentos e notificações até o paciente."),
+         ("Quando algo falha", "Mensagens de saúde são críticas e não podem se perder em silêncio. Por isso, mecanismos automatizados de contingência "
+                               "tratam as exceções em tempo real e dão resiliência à entrega."),
+         ("Onde entra a segurança", "Por lidar com dados de saúde em um sistema público, o projeto analisa os requisitos de segurança de dados e de privacidade "
+                                    "como parte da própria integração."),
+     ]),
+    ("Programa de Iniciação Científica Júnior: PIC/OBMEP",
+     "Programa do IMPA, com apoio do CNPq, para quem se destaca na OBMEP.", [
+         ("O que é", "Um programa de desenvolvimento de aptidões em matemática avançada, do qual participei com bolsa do CNPq."),
+         ("O que estudei", "Raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas."),
+     ]),
 ]
 
 CITACAO = ("MACHADO, G. B.; LOURENCO, D. F. Modernização da Gestão de Fluxos e Agendamentos na Atenção "
@@ -68,49 +93,50 @@ CITACAO = ("MACHADO, G. B.; LOURENCO, D. F. Modernização da Gestão de Fluxos 
            "Contingência Automatizados. In: Seminário de Inovação, Ciência e Tecnologia do Litoral Norte, "
            "2026, Caraguatatuba. Anais [...]. Caraguatatuba: IFSP Campus Caraguatatuba, 2026.")
 
-# (ano, título, tipo)
+# (ano, título, explicação)
 PRODUCAO_TECNICA = [
-    ("2026", "Rosto a Rosto", "Consultoria de aplicações web"),
-    ("2025", "Infraestrutura web, dashboards financeiros/contábeis e soluções digitais para PMEs", "Consultoria de aplicações web"),
-    ("2025", "Sistema Automatizado de Gestão e Controle de Empréstimos: Biblioteca Municipal (FUNDART)", "Aplicação web, serviço interno"),
-    ("2024", "ETP, Termo de Referência e avaliação de PoC para software de gestão de biblioteca municipal (com M. F. Aranha)", "Trabalho técnico, assessoramento"),
+    ("2026", "Rosto a Rosto", "Jogo apresentado na Game Jam, registrado como consultoria de aplicações web."),
+    ("2025", "Soluções digitais para PMEs", "Consultoria com infraestrutura web, dashboards financeiros e contábeis e outras soluções para pequenas e médias empresas."),
+    ("2025", "Gestão de Empréstimos da Biblioteca Municipal", "Sistema automatizado, de uso interno da FUNDART, para controlar os empréstimos da biblioteca."),
+    ("2024", "ETP, TR e PoC para software de biblioteca", "Assessoramento técnico, com M. F. Aranha, na elaboração do Estudo Técnico Preliminar e do Termo de Referência e na avaliação da Prova de Conceito."),
 ]
 
 # (período, curso, instituição)
 FORMACAO = [
-    ("2026 · atual", "Análise e Desenvolvimento de Sistemas (graduação)", "Fatec São Sebastião · CEETEPS"),
-    ("2023 · 2025", "Técnico em Informática", "EM Pres. Tancredo de Almeida Neves"),
-    ("2023 · 2025", "Ensino Médio", "EM Pres. Tancredo de Almeida Neves"),
+    ("Desde 2026", "Análise e Desenvolvimento de Sistemas (graduação)", "Fatec São Sebastião · CEETEPS"),
+    ("2023 a 2025", "Técnico em Informática", "EM Pres. Tancredo de Almeida Neves"),
+    ("2023 a 2025", "Ensino Médio", "EM Pres. Tancredo de Almeida Neves"),
 ]
 
-# Grupo -> [(ano, curso, instituição, horas ou None)]
+# Grupo -> (explicação, [(ano, curso, instituição, horas ou None)]). Só entram
+# os cursos ligados à área; o restante continua apenas no Lattes.
 CURSOS = {
-    "🛡️ Cibersegurança": [
+    "🛡️ Cibersegurança": (
+        "A base do meu foco em Segurança da Informação: fundamentos, ataques cibernéticos e conscientização, com a Cisco, a USP e o CEETEPS.", [
         ("2026", "Introduction to Information Security (Edital ARI 004/2026)", "CEETEPS", 40),
         ("2026", "Cibersegurança: Segurança da Informação e Ataques Cibernéticos", "USP", 8),
         ("2026", "Introduction to Cybersecurity", "Cisco Networking Academy", None),
         ("2026", "Sensibilização para a Segurança Digital", "Cisco Networking Academy", None),
-        ("2026", "Mundo Conectado: Manual de Sobrevivência", "ENAP", 10),
-    ],
-    "💻 Programação e tecnologia": [
+    ]),
+    "💻 Programação": (
+        "C para entender o que acontece perto da máquina, game jam para entregar com prazo curto e mentoria técnica para crescer na profissão.", [
         ("2026", "Introduction to the C Programming Language (Edital ARI 027/2026)", "CEETEPS", 40),
         ("2026", "Conexão Game Jam 2026", "CEETEPS", 8),
-        ("2026", "Criptomoedas e Blockchain: Fundamentos, Mercado e Primeiros Passos", "USP", 8),
-        ("2026", "The Hour of A.I.", "Code.org", None),
-        ("2025 · 2026", "Tech Mentoring: Mentoria Técnica Profissional", "Vinicius Senger", None),
-    ],
-    "🛰️ Ubatubasat: eletrônica e programação": [
+        ("2025 a 2026", "Tech Mentoring: Mentoria Técnica Profissional", "Vinicius Senger", None),
+    ]),
+    "🛰️ Ubatubasat: eletrônica e programação": (
+        "Seis módulos, um por ano, que me levaram da eletrônica básica à programação.", [
         ("2024", "Módulo 6: Eletrônica e Programação", "EM Pres. Tancredo de Almeida Neves", 90),
         ("2023", "Módulo 5: Eletrônica e Programação", "EM Pres. Tancredo de Almeida Neves", 90),
         ("2022", "Módulo 4: Eletrônica e Programação", "EM Pres. Tancredo de Almeida Neves", 90),
         ("2021", "Módulo 3: Eletrônica e Programação", "EM Pres. Tancredo de Almeida Neves", 90),
         ("2020", "Módulo 2: Eletrônica Básica", "EM Pres. Tancredo de Almeida Neves", 90),
         ("2019", "Módulo 1: Eletrônica Básica", "EM Pres. Tancredo de Almeida Neves", 90),
-    ],
-    "🌐 Idiomas e design": [
-        ("2024 · 2025", "Inglês: nível intermediário (B1)", "CCAA", 152),
-        ("2024", "Fundamentos do Design Gráfico", "Fundação Bradesco", 6),
-    ],
+    ]),
+    "🌐 Inglês": (
+        "O idioma da documentação e da comunidade técnica, estudado até o nível intermediário.", [
+        ("2024 a 2025", "Inglês: nível intermediário (B1)", "CCAA", 152),
+    ]),
 }
 
 # (idioma, compreende, fala, lê, escreve)
@@ -187,8 +213,8 @@ PERFIS = [
 
 
 def total_cursos() -> int:
-    return sum(len(lista) for lista in CURSOS.values())
+    return sum(len(lista) for _, lista in CURSOS.values())
 
 
 def total_horas() -> int:
-    return sum(horas or 0 for lista in CURSOS.values() for *_, horas in lista)
+    return sum(horas or 0 for _, lista in CURSOS.values() for *_, horas in lista)

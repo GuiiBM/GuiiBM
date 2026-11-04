@@ -58,7 +58,7 @@
 
 Graduando em **Análise e Desenvolvimento de Sistemas** na Fatec, bolsista de Iniciação Científica e Tecnológica (**PIBICT-CEETEPS**) e **Técnico em Informática**. Atuo com desenvolvimento web, suporte e consultoria em TI, com experiência prática no setor público em soluções de automação e na elaboração de Estudos Técnicos Preliminares (ETP), Termos de Referência (TR) e avaliação de Prova de Conceito (PoC) para contratação de software SaaS.
 
-Tenho histórico de premiações em olimpíadas científicas (medalhista e menções honrosas na OBMEP), fui bolsista do PIC-OBMEP (IMPA) e hoje integro um projeto de pesquisa focado na modernização e na integração de sistemas na Atenção Primária à Saúde via APIs.
+Tenho histórico de premiações em olimpíadas científicas (medalhista e menções honrosas na OBMEP), fui bolsista do PIC-OBMEP (IMPA) e integro um projeto de pesquisa sobre a modernização e a integração de sistemas na Atenção Primária à Saúde via APIs.
 
 > **Diretório Operacional:**
 > - 🎯 **Alvo**: Dominar técnicas de Segurança Ofensiva (Red Team), análise de vulnerabilidades e exploração web.
@@ -103,16 +103,36 @@ Tenho histórico de premiações em olimpíadas científicas (medalhista e menç
 
 ## `0x02` Trajetória
 
-<sub><code>$ cat ~/trajetoria.log</code>  ·  clique em cada item para abrir</sub>
+<sub><code>$ cat ~/trajetoria.log</code></sub>
+
+### 📖 A história até aqui
+
+<!-- auto:historia -->
+<p><kbd>2019 a 2024</kbd> <b>Eletrônica antes de tudo</b><br />
+Comecei pelo hardware. No curso Ubatubasat, na EM Pres. Tancredo de Almeida Neves, fiz seis módulos em seis anos, da eletrônica básica à programação, somando 540 horas. Foi ali que aprendi a olhar para o que existe por baixo do software.</p>
+
+<p><kbd>2021 a 2025</kbd> <b>A matemática como treino de raciocínio</b><br />
+Em 2021 veio a Medalha de Bronze na 16ª OBMEP. De 2022 a 2025, participei de quatro edições seguidas do PIC-OBMEP, no IMPA, com bolsa do CNPq, estudando análise combinatória, teoria dos números e geometria. No caminho, somei três Menções Honrosas na OBMEP e uma na Olimpíada Mandacaru.</p>
+
+<p><kbd>2023 a 2025</kbd> <b>Do curso técnico ao primeiro trabalho</b><br />
+Enquanto cursava o Técnico em Informática junto com o Ensino Médio, entrei como estagiário de TI na FUNDART. Lá cuidei de suporte, redes e infraestrutura, criei um sistema próprio para a Biblioteca Municipal e ajudei a preparar a contratação do sistema definitivo em nuvem.</p>
+
+<p><kbd>Desde 2026</kbd> <b>Fatec, pesquisa e comunidade</b><br />
+Entrei em Análise e Desenvolvimento de Sistemas na Fatec São Sebastião e passei a unir código e impacto público: pesquisa em integração segura na saúde, extensão em inclusão digital e o 1º lugar na 1ª Litoral Game Jam. Tudo isso com o foco na Segurança da Informação como direção de carreira.</p>
+<!-- /auto:historia -->
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/linha-do-tempo.svg" width="100%" alt="Linha do tempo de 2019 até hoje: Ubatubasat, PIC-OBMEP, Técnico em Informática, estágio na FUNDART, ADS na Fatec, pesquisa PIBICT e extensão em inclusão digital, com as medalhas de cada ano" />
 </div>
 
+### 💼 Experiências
+
+<sub>Clique em cada item para abrir.</sub>
+
 <!-- auto:trajetoria -->
 <details open>
-  <summary><kbd>2026 · atual</kbd> <b>Bolsista de Pesquisa e Desenvolvimento (PIBICT)</b> · Fatec São Sebastião · CEETEPS</summary>
-  <p><sub>Bolsista · 12h semanais</sub></p>
+  <summary><kbd>Desde 2026</kbd> <b>Bolsista de Pesquisa e Desenvolvimento (PIBICT)</b> · Fatec São Sebastião · CEETEPS</summary>
+  <p>Trabalho na ligação entre o sistema de saúde e o WhatsApp, para que agendamentos e avisos cheguem a quem precisa, mesmo quando a comunicação falha.</p>
   <ul>
     <li>Investigação, modelagem e implementação de integrações seguras de agendamento e notificação com o e-SUS PEC, usando a API do WhatsApp (Meta Business Platform).</li>
     <li>Mecanismos automatizados de contingência para falhas de comunicação, tratamento de exceções em tempo real e resiliência na entrega de mensagens críticas de saúde.</li>
@@ -120,17 +140,17 @@ Tenho histórico de premiações em olimpíadas científicas (medalhista e menç
   </ul>
 </details>
 <details>
-  <summary><kbd>2026 · atual</kbd> <b>Projeto de Inclusão Digital para a Comunidade</b> · CEETEPS (extensão)</summary>
-  <p><sub>Bolsista de extensão</sub></p>
+  <summary><kbd>Desde 2026</kbd> <b>Projeto de Inclusão Digital para a Comunidade</b> · CEETEPS (extensão)</summary>
+  <p>Levo informática básica e ferramentas digitais para quem está começando, ajudando a desenvolver competências tecnológicas na comunidade.</p>
   <ul>
-    <li>Ensino de informática básica e ferramentas digitais para a comunidade.</li>
-    <li>Apoio à gestão, planejamento pedagógico, divulgação e marketing do curso.</li>
+    <li>Apoio à gestão e ao planejamento pedagógico do curso.</li>
+    <li>Divulgação e marketing das turmas.</li>
     <li>Monitoria presencial em sala de aula.</li>
   </ul>
 </details>
 <details>
-  <summary><kbd>2024 · 2025</kbd> <b>Estagiário Técnico em Informática</b> · FUNDART · Fundação de Arte e Cultura de Ubatuba</summary>
-  <p><sub>Estágio · 30h semanais</sub></p>
+  <summary><kbd>2024 a 2025</kbd> <b>Estagiário Técnico em Informática</b> · FUNDART · Fundação de Arte e Cultura de Ubatuba</summary>
+  <p>Foi a minha escola de TI na prática: do chamado de suporte à infraestrutura, e do código ao processo de contratação pública.</p>
   <ul>
     <li>Suporte técnico presencial e remoto: formatação e manutenção de computadores, softwares corporativos, e-mails institucionais, redes e impressoras.</li>
     <li>Diagnóstico e manutenção de hardware, roteadores, switches e cabeamento estruturado.</li>
@@ -140,8 +160,8 @@ Tenho histórico de premiações em olimpíadas científicas (medalhista e menç
   </ul>
 </details>
 <details>
-  <summary><kbd>2022 · 2025</kbd> <b>Iniciação Científica Júnior (PIC-OBMEP)</b> · IMPA · CNPq</summary>
-  <p><sub>Bolsista · 10h semanais</sub></p>
+  <summary><kbd>2022 a 2025</kbd> <b>Iniciação Científica Júnior (PIC-OBMEP)</b> · IMPA · CNPq</summary>
+  <p>Quatro edições seguidas de estudo aprofundado, a partir do desempenho na olimpíada de matemática.</p>
   <ul>
     <li>Participação consecutiva nas edições 16, 17, 18 e 19 do programa, com bolsa do CNPq.</li>
     <li>Matemática avançada, raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.</li>
@@ -156,24 +176,36 @@ Tenho histórico de premiações em olimpíadas científicas (medalhista e menç
 
 <sub><code>$ grep -r 'e-SUS PEC' ~/pesquisa</code></sub>
 
-### 🔬 Projetos de pesquisa
+O que estudo, explicado sem jargão.
+
+### 🔬 Os projetos
 
 <!-- auto:pesquisa -->
-<details open>
-  <summary><kbd>2026 · atual</kbd> <b>Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião</b></summary>
-  <p>Integração segura ao e-SUS PEC via API Meta e mecanismos de contingência automatizados, para otimizar e automatizar agendamentos e fluxos de atendimento.</p>
-  <p><sub><b>Situação:</b> Em andamento · <b>Coordenação:</b> Douglas Fabiano Lourenço · <b>Financiamento:</b> PIBICT · CEETEPS</sub></p>
-</details>
-<details>
-  <summary><kbd>2022 · 2025</kbd> <b>Programa de Iniciação Científica Júnior: PIC/OBMEP</b></summary>
-  <p>Desenvolvimento de aptidões em matemática avançada, raciocínio lógico, análise combinatória, teoria dos números e geometria, em programa promovido pelo IMPA.</p>
-  <p><sub><b>Situação:</b> Concluído · <b>Coordenação:</b> Reinaldo Gen Ichiro Arakaki · <b>Financiamento:</b> Bolsa CNPq</sub></p>
-</details>
+<h4>Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião</h4>
+<p><i>Integração segura ao e-SUS PEC via API Meta e mecanismos de contingência automatizados.</i></p>
+<dl>
+  <dt><b>O que é</b></dt>
+  <dd>Uma pesquisa sobre como tornar mais ágeis os agendamentos e os fluxos de atendimento na Atenção Primária à Saúde de São Sebastião, conectando o e-SUS PEC, o Prontuário Eletrônico do Cidadão, à API do WhatsApp da plataforma Meta Business.</dd>
+  <dt><b>Como funciona</b></dt>
+  <dd>O sistema de saúde e a API conversam por uma camada de integração segura, baseada em APIs RESTful e em uma arquitetura orientada a serviços, que leva agendamentos e notificações até o paciente.</dd>
+  <dt><b>Quando algo falha</b></dt>
+  <dd>Mensagens de saúde são críticas e não podem se perder em silêncio. Por isso, mecanismos automatizados de contingência tratam as exceções em tempo real e dão resiliência à entrega.</dd>
+  <dt><b>Onde entra a segurança</b></dt>
+  <dd>Por lidar com dados de saúde em um sistema público, o projeto analisa os requisitos de segurança de dados e de privacidade como parte da própria integração.</dd>
+</dl>
+<h4>Programa de Iniciação Científica Júnior: PIC/OBMEP</h4>
+<p><i>Programa do IMPA, com apoio do CNPq, para quem se destaca na OBMEP.</i></p>
+<dl>
+  <dt><b>O que é</b></dt>
+  <dd>Um programa de desenvolvimento de aptidões em matemática avançada, do qual participei com bolsa do CNPq.</dd>
+  <dt><b>O que estudei</b></dt>
+  <dd>Raciocínio lógico, análise combinatória, teoria dos números, geometria e resolução de problemas.</dd>
+</dl>
 <!-- /auto:pesquisa -->
 
-### 🧭 O fluxo da pesquisa atual
+### 🧭 O fluxo da integração, em um desenho
 
-Visão simplificada da integração estudada: o e-SUS PEC conversa com a API do WhatsApp por uma camada segura, e falhas de entrega acionam a contingência automatizada.
+Falhas de comunicação acionam a contingência automatizada, e a mensagem continua seu caminho até o paciente.
 
 ```mermaid
 flowchart LR
@@ -186,23 +218,25 @@ flowchart LR
 
 ### 📄 Publicação
 
-> MACHADO, G. B.; LOURENCO, D. F. Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião: Integração Segura ao e-SUS PEC via API Meta e Mecanismos de Contingência Automatizados. In: Seminário de Inovação, Ciência e Tecnologia do Litoral Norte, 2026, Caraguatatuba. Anais [...]. Caraguatatuba: IFSP Campus Caraguatatuba, 2026.
+O trabalho virou resumo nos anais do Seminário de Inovação, Ciência e Tecnologia do Litoral Norte e também foi apresentado no evento.
 
-Trabalho também apresentado no **SICLN 2026** (Apresentação de Trabalho/Comunicação).
+> MACHADO, G. B.; LOURENCO, D. F. Modernização da Gestão de Fluxos e Agendamentos na Atenção Primária à Saúde de São Sebastião: Integração Segura ao e-SUS PEC via API Meta e Mecanismos de Contingência Automatizados. In: Seminário de Inovação, Ciência e Tecnologia do Litoral Norte, 2026, Caraguatatuba. Anais [...]. Caraguatatuba: IFSP Campus Caraguatatuba, 2026.
 
 ### 🛠️ Produção técnica
 
+Os trabalhos técnicos registrados no meu Lattes.
+
 <!-- auto:producao -->
 <table>
-  <tr><th align="left">Produção</th><th align="left">Tipo</th><th align="left">Ano</th></tr>
-  <tr><td><b>Rosto a Rosto</b></td><td>Consultoria de aplicações web</td><td><kbd>2026</kbd></td></tr>
-  <tr><td><b>Infraestrutura web, dashboards financeiros/contábeis e soluções digitais para PMEs</b></td><td>Consultoria de aplicações web</td><td><kbd>2025</kbd></td></tr>
-  <tr><td><b>Sistema Automatizado de Gestão e Controle de Empréstimos: Biblioteca Municipal (FUNDART)</b></td><td>Aplicação web, serviço interno</td><td><kbd>2025</kbd></td></tr>
-  <tr><td><b>ETP, Termo de Referência e avaliação de PoC para software de gestão de biblioteca municipal (com M. F. Aranha)</b></td><td>Trabalho técnico, assessoramento</td><td><kbd>2024</kbd></td></tr>
+  <tr><th align="left">Produção</th><th align="left">O que é</th><th align="left">Ano</th></tr>
+  <tr><td><b>Rosto a Rosto</b></td><td>Jogo apresentado na Game Jam, registrado como consultoria de aplicações web.</td><td><kbd>2026</kbd></td></tr>
+  <tr><td><b>Soluções digitais para PMEs</b></td><td>Consultoria com infraestrutura web, dashboards financeiros e contábeis e outras soluções para pequenas e médias empresas.</td><td><kbd>2025</kbd></td></tr>
+  <tr><td><b>Gestão de Empréstimos da Biblioteca Municipal</b></td><td>Sistema automatizado, de uso interno da FUNDART, para controlar os empréstimos da biblioteca.</td><td><kbd>2025</kbd></td></tr>
+  <tr><td><b>ETP, TR e PoC para software de biblioteca</b></td><td>Assessoramento técnico, com M. F. Aranha, na elaboração do Estudo Técnico Preliminar e do Termo de Referência e na avaliação da Prova de Conceito.</td><td><kbd>2024</kbd></td></tr>
 </table>
 <!-- /auto:producao -->
 
-<sub>Tudo isso com fonte no <a href="http://lattes.cnpq.br/9693803343170549">Currículo Lattes</a> e no <a href="https://orcid.org/0009-0007-4614-9029">ORCID</a>.</sub>
+<sub>Tudo com fonte no <a href="http://lattes.cnpq.br/9693803343170549">Currículo Lattes</a> e no <a href="https://orcid.org/0009-0007-4614-9029">ORCID</a>.</sub>
 
 <br />
 <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/secoes/04.svg" width="100%" alt="" />
@@ -213,20 +247,25 @@ Trabalho também apresentado no **SICLN 2026** (Apresentação de Trabalho/Comun
 
 ### 🎓 Formação acadêmica
 
+Vim do técnico para a graduação: primeiro o Técnico em Informática, junto com o Ensino Médio, e depois Análise e Desenvolvimento de Sistemas na Fatec.
+
 <!-- auto:formacao -->
 <table>
   <tr><th align="left">Curso</th><th align="left">Instituição</th><th align="left">Período</th></tr>
-  <tr><td><b>Análise e Desenvolvimento de Sistemas (graduação)</b></td><td>Fatec São Sebastião · CEETEPS</td><td><kbd>2026 · atual</kbd></td></tr>
-  <tr><td><b>Técnico em Informática</b></td><td>EM Pres. Tancredo de Almeida Neves</td><td><kbd>2023 · 2025</kbd></td></tr>
-  <tr><td><b>Ensino Médio</b></td><td>EM Pres. Tancredo de Almeida Neves</td><td><kbd>2023 · 2025</kbd></td></tr>
+  <tr><td><b>Análise e Desenvolvimento de Sistemas (graduação)</b></td><td>Fatec São Sebastião · CEETEPS</td><td><kbd>Desde 2026</kbd></td></tr>
+  <tr><td><b>Técnico em Informática</b></td><td>EM Pres. Tancredo de Almeida Neves</td><td><kbd>2023 a 2025</kbd></td></tr>
+  <tr><td><b>Ensino Médio</b></td><td>EM Pres. Tancredo de Almeida Neves</td><td><kbd>2023 a 2025</kbd></td></tr>
 </table>
 <!-- /auto:formacao -->
 
 ### 📜 Formação complementar
 
+Os cursos que escolhi fazer por fora, ligados ao que quero construir na carreira.
+
 <!-- auto:cursos -->
 <details open>
-  <summary><b>🛡️ Cibersegurança</b> <sub>5 cursos · 58h</sub></summary>
+  <summary><b>🛡️ Cibersegurança</b> <sub>4 cursos · 48h</sub></summary>
+  <p>A base do meu foco em Segurança da Informação: fundamentos, ataques cibernéticos e conscientização, com a Cisco, a USP e o CEETEPS.</p>
 
 <table>
   <tr><th align="left">Curso</th><th align="left">Instituição</th><th align="left">Carga</th><th align="left">Ano</th></tr>
@@ -234,23 +273,22 @@ Trabalho também apresentado no **SICLN 2026** (Apresentação de Trabalho/Comun
   <tr><td>Cibersegurança: Segurança da Informação e Ataques Cibernéticos</td><td>USP</td><td>8h</td><td><kbd>2026</kbd></td></tr>
   <tr><td>Introduction to Cybersecurity</td><td>Cisco Networking Academy</td><td>—</td><td><kbd>2026</kbd></td></tr>
   <tr><td>Sensibilização para a Segurança Digital</td><td>Cisco Networking Academy</td><td>—</td><td><kbd>2026</kbd></td></tr>
-  <tr><td>Mundo Conectado: Manual de Sobrevivência</td><td>ENAP</td><td>10h</td><td><kbd>2026</kbd></td></tr>
 </table>
 </details>
 <details>
-  <summary><b>💻 Programação e tecnologia</b> <sub>5 cursos · 56h</sub></summary>
+  <summary><b>💻 Programação</b> <sub>3 cursos · 48h</sub></summary>
+  <p>C para entender o que acontece perto da máquina, game jam para entregar com prazo curto e mentoria técnica para crescer na profissão.</p>
 
 <table>
   <tr><th align="left">Curso</th><th align="left">Instituição</th><th align="left">Carga</th><th align="left">Ano</th></tr>
   <tr><td>Introduction to the C Programming Language (Edital ARI 027/2026)</td><td>CEETEPS</td><td>40h</td><td><kbd>2026</kbd></td></tr>
   <tr><td>Conexão Game Jam 2026</td><td>CEETEPS</td><td>8h</td><td><kbd>2026</kbd></td></tr>
-  <tr><td>Criptomoedas e Blockchain: Fundamentos, Mercado e Primeiros Passos</td><td>USP</td><td>8h</td><td><kbd>2026</kbd></td></tr>
-  <tr><td>The Hour of A.I.</td><td>Code.org</td><td>—</td><td><kbd>2026</kbd></td></tr>
-  <tr><td>Tech Mentoring: Mentoria Técnica Profissional</td><td>Vinicius Senger</td><td>—</td><td><kbd>2025 · 2026</kbd></td></tr>
+  <tr><td>Tech Mentoring: Mentoria Técnica Profissional</td><td>Vinicius Senger</td><td>—</td><td><kbd>2025 a 2026</kbd></td></tr>
 </table>
 </details>
 <details>
   <summary><b>🛰️ Ubatubasat: eletrônica e programação</b> <sub>6 cursos · 540h</sub></summary>
+  <p>Seis módulos, um por ano, que me levaram da eletrônica básica à programação.</p>
 
 <table>
   <tr><th align="left">Curso</th><th align="left">Instituição</th><th align="left">Carga</th><th align="left">Ano</th></tr>
@@ -263,17 +301,19 @@ Trabalho também apresentado no **SICLN 2026** (Apresentação de Trabalho/Comun
 </table>
 </details>
 <details>
-  <summary><b>🌐 Idiomas e design</b> <sub>2 cursos · 158h</sub></summary>
+  <summary><b>🌐 Inglês</b> <sub>1 curso · 152h</sub></summary>
+  <p>O idioma da documentação e da comunidade técnica, estudado até o nível intermediário.</p>
 
 <table>
   <tr><th align="left">Curso</th><th align="left">Instituição</th><th align="left">Carga</th><th align="left">Ano</th></tr>
-  <tr><td>Inglês: nível intermediário (B1)</td><td>CCAA</td><td>152h</td><td><kbd>2024 · 2025</kbd></td></tr>
-  <tr><td>Fundamentos do Design Gráfico</td><td>Fundação Bradesco</td><td>6h</td><td><kbd>2024</kbd></td></tr>
+  <tr><td>Inglês: nível intermediário (B1)</td><td>CCAA</td><td>152h</td><td><kbd>2024 a 2025</kbd></td></tr>
 </table>
 </details>
 <!-- /auto:cursos -->
 
 ### 🌐 Idiomas
+
+Português é minha língua nativa, e leio e compreendo bem o inglês. Também tenho a certificação de proficiência em Aviation English Level 3.
 
 <!-- auto:idiomas -->
 <table>
@@ -292,6 +332,8 @@ Trabalho também apresentado no **SICLN 2026** (Apresentação de Trabalho/Comun
 
 ### 🏆 Prêmios e destaques
 
+Da matemática à robótica, passando pela aviação e pelos jogos.
+
 <!-- auto:premios -->
 <table>
   <tr><th align="left"></th><th align="left">Prêmio ou destaque</th><th align="left">Onde</th><th align="left">Ano</th></tr>
@@ -309,6 +351,8 @@ Trabalho também apresentado no **SICLN 2026** (Apresentação de Trabalho/Comun
 <!-- /auto:premios -->
 
 ### 🎪 Eventos e olimpíadas
+
+Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, seminário e feira de tecnologia, levando jogos e pesquisa.
 
 <!-- auto:eventos -->
 <details>
@@ -560,7 +604,6 @@ Trabalho também apresentado no **SICLN 2026** (Apresentação de Trabalho/Comun
 <div align="center">
   <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/linguagens.svg" width="100%" alt="Linguagens mais usadas" />
   <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/atividade.svg" width="100%" alt="Gráfico de atividade dos últimos 30 dias" />
-  <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/relogio.svg" width="100%" alt="Relógio de 24 horas com os horários dos commits públicos e contribuições por dia da semana" />
 </div>
 
 <br />

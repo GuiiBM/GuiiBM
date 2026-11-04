@@ -1,8 +1,11 @@
 name: Perfil dinâmico
 
-# Gera as imagens do perfil (banner, cards, cobrinha, gráfico 3D...) e publica
-# tudo na branch "output". Este workflow nunca faz commit na main, então o
-# Sync do VS Code não diverge por causa dele.
+# Gera as imagens e selos do perfil (banner, gráficos, cobrinha, gráfico 3D...)
+# e publica tudo na branch "output". Na main, o único commit possível é o dos
+# blocos <!-- auto:... --> do README, e só quando o texto deles muda (ordem dos
+# repositórios, descrições ou curriculo.py). Os números não entram nesses
+# blocos: são selos, que mudam sem commit. O .vscode/settings.json deixa o Sync
+# com rebase e autostash para esses commits não atrapalharem.
 #
 # Escutador: a cada 10 minutos o job "escutar" compara uma assinatura da conta
 # (último evento público, último push em outro repositório, número de
@@ -86,14 +89,14 @@ jobs:
           mkdir -p dist
           curl -sfL "https://raw.githubusercontent.com/$REPO/output/dados.json" -o dist/dados.json || rm -f dist/dados.json
 
-      - name: Gerar banner, cards e cabeçalhos no tema do dia
+      - name: Gerar imagens, selos e blocos do README no tema do dia
         id: gerar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TEMA: ${{ inputs.tema }}
           ASSINATURA: ${{ needs.escutar.outputs.assinatura }}
         run: |
-          python .github/scripts/perfil.py --saida dist ${TEMA:+--tema "$TEMA"}
+          python .github/scripts/perfil.py --saida dist --readme ${TEMA:+--tema "$TEMA"}
           printf '%s' "$ASSINATURA" > dist/assinatura.txt
 
       - name: Gerar o gráfico 3D de contribuições
@@ -123,3 +126,17 @@ jobs:
           jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commitar os blocos do README, só se o texto mudou
+        if: github.ref == 'refs/heads/main'
+        run: |
+          if git diff --quiet -- README.md; then
+            echo "README sem mudanças: nenhum commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Atualiza a lista de projetos do README"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main

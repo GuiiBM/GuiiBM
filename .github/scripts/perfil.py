@@ -1,13 +1,17 @@
-"""Gera as imagens dinâmicas do perfil (banner, cards, cabeçalhos e rodapé).
+"""Gera o conteúdo dinâmico do perfil: imagens, selos e blocos do README.
 
-O README.md é fixo e aponta para essas imagens na branch "output". O workflow
-publica a pasta de saída lá, então nada é commitado na main.
+Imagens e selos vão para a pasta de saída, que o workflow publica na branch
+"output". O texto do README é editado à mão, exceto os blocos entre os
+marcadores <!-- auto:nome --> e <!-- /auto:nome -->, reescritos com --readme a
+partir de curriculo.py e da lista de repositórios. O workflow só commita na
+main quando o conteúdo de um bloco realmente muda.
 
 Uso:
     python .github/scripts/perfil.py                   # tema do dia
     python .github/scripts/perfil.py --tema natal      # força um tema
     python .github/scripts/perfil.py --data 2026-12-25 # simula uma data
     python .github/scripts/perfil.py --offline         # não acessa a API
+    python .github/scripts/perfil.py --readme          # reescreve os blocos do README
     python .github/scripts/perfil.py --listar          # calendário de temas
     python .github/scripts/perfil.py --saida dist      # pasta de saída (padrão)
 
@@ -41,18 +45,9 @@ NOME = "Guilherme Batistela"
 COMANDO = "root@guiibm:~$ whoami"
 CHIPS = ["ADS @ Fatec", "Pesquisador PIBICT", "Red Team", "Linux Mint"]
 
-# Cabeçalhos das seções (assets/secoes/01.svg, 02.svg...): título e comando.
-SECOES = [
-    ("Sobre Mim", "whoami --verbose"),
-    ("Trajetória", "cat ~/trajetoria.log"),
-    ("Formação & Prêmios", "ls ~/certificados ~/premios"),
-    ("Arsenal Tecnológico", "ls -la ~/arsenal"),
-    ("Projetos", "git log --oneline --recent"),
-    ("Métricas de Código", "gh stats --last-12-months"),
-    ("Atividade em Tempo Real", "tail -f ~/contributions.log"),
-    ("Calendário 3D de Contribuições", "render --isometric --year"),
-    ("Conquistas no GitHub", "cat ~/trophies.txt"),
-]
+# Seções do README: cada uma tem um divisor animado (secoes/01.svg, 02.svg...)
+# que mostra o avanço na página.
+TOTAL_SECOES = 9
 
 # Linhas do texto digitado abaixo do banner (a saudação do tema entra antes).
 DIGITANDO = [
@@ -82,7 +77,24 @@ SELOS = [
     ("ver_portfolio", "⚡ Ver portfólio completo", None, "c1"),
 ]
 
-# Quantidade de cards de repositório (o README referencia repos/1.svg a 6.svg).
+# Números da seção de métricas (selos/<chave>.json): chave em dados["stats"],
+# rótulo e cor do tema. Como selo, o número muda sem nenhum commit na main.
+METRICAS = [
+    ("contribuicoes", "contribuições", "c1"),
+    ("commits", "commits", "c2"),
+    ("prs", "pull requests", "c1"),
+    ("issues", "issues", "c2"),
+    ("repos", "repositórios", "c1"),
+    ("estrelas", "estrelas", "c2"),
+    ("seq_atual", "sequência atual", "c1"),
+    ("seq_maior", "recorde", "c2"),
+]
+EM_DIAS = {"seq_atual", "seq_maior"}
+
+# Medalha de cada nível de prêmio em curriculo.PREMIOS.
+MEDALHAS = {"ouro": "🥇", "prata": "🎖️", "bronze": "🥉", "marca": "✨"}
+
+# Quantidade de linhas da lista de projetos.
 TOTAL_REPOS = 6
 # Repositórios que não devem aparecer em "Repositórios recentes".
 REPOS_IGNORADOS = {USUARIO}
@@ -286,69 +298,60 @@ def moldura(t: Tema, largura: int, altura: int, titulo: str, corpo: str) -> str:
 """
 
 
-def card_stats(t: Tema, s: dict) -> str:
-    itens = [
-        ("Contribuições (12 meses)", s["contribuicoes"]),
-        ("Commits (12 meses)", s["commits"]),
-        ("Pull requests (12 meses)", s["prs"]),
-        ("Issues (12 meses)", s["issues"]),
-        ("Repositórios públicos", s["repos"]),
-        ("Estrelas recebidas", s["estrelas"]),
-    ]
-    linhas = []
-    for i, (rotulo, valor) in enumerate(itens):
-        y = 72 + i * 23
-        cor = legivel(t.c1 if i % 2 == 0 else t.c2)
-        linhas.append(
-            f'  <g class="surge" style="animation-delay:{150 + i * 90}ms">'
-            f'<circle cx="31" cy="{y - 4.5}" r="4" fill="#{cor}"/>'
-            f'<text x="44" y="{y}" class="rotulo">{esc(rotulo)}</text>'
-            f'<text x="300" y="{y}" class="valor" text-anchor="end">{numero(valor)}</text></g>'
-        )
-
-    raio = 44
-    volta = 2 * 3.14159 * raio
-    fracao = min(s["seq_atual"] / s["seq_maior"], 1) if s["seq_maior"] else 0
-    cx, cy = 400, 118
-    anel = f"""  <style>
-    .anel {{ stroke-dasharray: {volta:.1f}; stroke-dashoffset: {volta * (1 - fracao):.1f}; animation: encher 1.2s ease-out .3s both; }}
-    @keyframes encher {{ from {{ stroke-dashoffset: {volta:.1f}; }} }}
-    @media (prefers-reduced-motion: reduce) {{ .anel {{ animation: none; }} }}
-  </style>
-  <circle cx="{cx}" cy="{cy}" r="{raio}" fill="none" stroke="#{t.c1}" stroke-opacity="0.18" stroke-width="7"/>
-  <circle cx="{cx}" cy="{cy}" r="{raio}" fill="none" stroke="url(#grad)" stroke-width="7" stroke-linecap="round" class="anel" transform="rotate(-90 {cx} {cy})"/>
-  <text x="{cx}" y="{cy + 2}" text-anchor="middle" style="font-size:28px;font-weight:700;fill:#{t.acento}">{s["seq_atual"]}</text>
-  <text x="{cx}" y="{cy + 20}" text-anchor="middle" class="apagado">dias seguidos</text>
-  <text x="{cx}" y="{cy + 68}" text-anchor="middle" class="apagado">recorde: {s["seq_maior"]} dias</text>"""
-    return moldura(t, 495, 210, f"Estatísticas de {USUARIO}", "\n".join(linhas) + "\n" + anel)
-
-
 def card_linguagens(t: Tema, linguagens: dict[str, int]) -> str:
     total = sum(linguagens.values()) or 1
     top = [(n, b) for n, b in sorted(linguagens.items(), key=lambda x: -x[1]) if b / total >= 0.001][:6]
     paleta = [legivel(t.c1), legivel(t.c2), t.acento]
     cores = [CORES_LINGUAGENS.get(n, paleta[i % 3]) for i, (n, _) in enumerate(top)]
 
-    largura, x = 300, 25.0
+    largura, x = 850, 25.0
     barras = []
     for (nome, b), cor in zip(top, cores):
         w = largura * b / total
-        barras.append(f'<rect x="{x:.2f}" y="56" width="{max(w, 0.5):.2f}" height="10" fill="#{cor}"/>')
+        barras.append(f'<rect x="{x:.2f}" y="56" width="{max(w, 0.5):.2f}" height="10" fill="#{cor}"><title>{esc(nome)}</title></rect>')
         x += w
     barra = (f'  <clipPath id="barra"><rect x="25" y="56" width="{largura}" height="10" rx="5"/></clipPath>\n'
              f'  <g clip-path="url(#barra)" class="surge">{"".join(barras)}</g>')
 
     legenda = []
     for i, ((nome, b), cor) in enumerate(zip(top, cores)):
-        coluna, linha = divmod(i, 3)
-        lx, ly = 25 + coluna * 160, 104 + linha * 32
+        linha, coluna = divmod(i, 3)
+        lx, ly = 25 + coluna * 295, 100 + linha * 30
         legenda.append(
             f'  <g class="surge" style="animation-delay:{200 + i * 70}ms">'
             f'<circle cx="{lx + 5}" cy="{ly - 4.5}" r="5" fill="#{cor}"/>'
             f'<text x="{lx + 16}" y="{ly}" class="rotulo">{esc(nome)}</text>'
-            f'<text x="{lx + 140}" y="{ly}" class="apagado" text-anchor="end">{100 * b / total:.1f}%</text></g>'
+            f'<text x="{lx + 260}" y="{ly}" class="apagado" text-anchor="end">{100 * b / total:.1f}%</text></g>'
         )
-    return moldura(t, 350, 210, "Linguagens mais usadas", barra + "\n" + "\n".join(legenda))
+    return moldura(t, 900, 100 + 30 * ((len(top) + 2) // 3), "Linguagens mais usadas", barra + "\n" + "\n".join(legenda))
+
+
+def card_divisor(t: Tema, numero: int) -> str:
+    """Linha fina e animada entre as seções: a parte cheia marca o avanço."""
+    largura, altura, meio = 1000, 14, 7
+    cheio = largura * numero / TOTAL_SECOES
+    c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{largura}" height="{altura}" viewBox="0 0 {largura} {altura}" aria-hidden="true">
+  <style>
+    .luz {{ animation: varrer 4s ease-in-out infinite; }}
+    .pulso {{ animation: pulsar 2s ease-in-out infinite; transform-origin: {cheio - 7:.1f}px {meio}px; }}
+    @keyframes varrer {{ from {{ transform: translateX(-160px); }} to {{ transform: translateX({cheio:.1f}px); }} }}
+    @keyframes pulsar {{ 50% {{ transform: scale(1.5); opacity: .45; }} }}
+    @media (prefers-reduced-motion: reduce) {{ .luz, .pulso {{ animation: none; }} .luz {{ display: none; }} }}
+  </style>
+  <defs>
+    <linearGradient id="cheio" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#{c1}"/><stop offset="100%" stop-color="#{c2}"/></linearGradient>
+    <linearGradient id="brilho" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity="0"/><stop offset="50%" stop-color="#fff" stop-opacity=".75"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="parte"><rect y="{meio - 2}" width="{cheio:.1f}" height="4" rx="2"/></clipPath>
+  </defs>
+  <rect y="{meio - 2}" width="{largura}" height="4" rx="2" fill="#{c1}" fill-opacity=".18"/>
+  <g clip-path="url(#parte)">
+    <rect width="{cheio:.1f}" height="{altura}" fill="url(#cheio)"/>
+    <rect width="160" height="{altura}" fill="url(#brilho)" class="luz"/>
+  </g>
+  <circle cx="{cheio - 7:.1f}" cy="{meio}" r="4.5" fill="#{acento}" class="pulso"/>
+</svg>
+"""
 
 
 def card_atividade(t: Tema, dias: dict[date, int], hoje: date) -> str:
@@ -417,149 +420,13 @@ def quebrar(texto: str, largura: int, linhas: int) -> list[str]:
 def ha_quanto(quando: date, hoje: date) -> str:
     dias = (hoje - quando).days
     if dias <= 0:
-        return "atualizado hoje"
+        return "hoje"
     if dias == 1:
-        return "atualizado ontem"
+        return "ontem"
     if dias < 45:
-        return f"atualizado há {dias} dias"
+        return f"há {dias} dias"
     meses = round(dias / 30)
-    return f"atualizado há {meses} meses" if meses < 12 else f"atualizado há {dias // 365} ano(s)"
-
-
-def card_repo(t: Tema, r: dict, hoje: date) -> str:
-    nome = r["nome"] if len(r["nome"]) <= 40 else r["nome"][:39] + "…"
-    resumo = r["resumo"] or "Sem descrição por enquanto. Abra o repositório para ver o código."
-    linhas = quebrar(resumo, 62, 2)
-    texto = "".join(f'<text x="25" y="{70 + i * 20}" class="rotulo" style="fill:#{APAGADO if not r["resumo"] else TEXTO}">'
-                    f"{esc(l)}</text>" for i, l in enumerate(linhas))
-    cor = CORES_LINGUAGENS.get(r["linguagem"] or "", legivel(t.c1))
-    rodape = []
-    x = 25
-    if r["linguagem"]:
-        rodape.append(f'<circle cx="{x + 6}" cy="125.5" r="6" fill="#{cor}"/>'
-                      f'<text x="{x + 18}" y="130" class="apagado" style="font-size:12.5px">{esc(r["linguagem"])}</text>')
-        x += 32 + 7 * len(r["linguagem"])
-    if r["estrelas"]:
-        rodape.append(f'<text x="{x}" y="130" class="apagado" style="font-size:12.5px">★ {r["estrelas"]}</text>')
-    rodape.append(f'<text x="435" y="130" class="apagado" text-anchor="end" style="font-size:12.5px">'
-                  f'{ha_quanto(date.fromisoformat(r["atualizado"]), hoje)}</text>')
-    icone = (f'<path transform="translate(435 22)" fill="#{legivel(t.acento)}" opacity=".45" '
-             'd="M-14 0h10a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2h-11zM2 0h10v13H1a2 2 0 0 0-2 2V3a3 3 0 0 1 3-3z"/>')
-    corpo = f'  <g class="surge">{texto}</g>\n  {"".join(rodape)}\n  {icone}'
-    return moldura(t, 460, 150, nome, corpo)
-
-
-def card_secao(t: Tema, numero: int, titulo: str, comando: str) -> str:
-    largura, altura, total = 1000, 72, len(SECOES)
-    c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
-    pontos = "".join(
-        f'<circle cx="{largura - 30 - (total - 1 - i) * 14}" cy="47" r="4" '
-        + (f'fill="#{acento}"/>' if i == numero - 1 else f'fill="none" stroke="#{APAGADO}" stroke-opacity=".6"/>')
-        for i in range(total))
-    rotulo = f"[0x{numero:02X}] {titulo}"
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{largura}" height="{altura}" viewBox="0 0 {largura} {altura}" role="img" aria-label="{esc(rotulo)}">
-  <title>{esc(rotulo)}</title>
-  <style>
-    .brilho {{ animation: varrer 5s ease-in-out infinite; }}
-    .cursor {{ animation: piscar 1s steps(1) infinite; }}
-    @keyframes varrer {{ from {{ transform: translateX(-300px); }} to {{ transform: translateX({largura + 300}px); }} }}
-    @keyframes piscar {{ 50% {{ opacity: 0; }} }}
-    @media (prefers-reduced-motion: reduce) {{ .brilho, .cursor {{ animation: none; }} .brilho {{ display: none; }} }}
-  </style>
-  <defs>
-    <linearGradient id="lateral" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#{c1}"/><stop offset="100%" stop-color="#{c2}"/></linearGradient>
-    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#{c1}" stop-opacity=".16"/><stop offset="60%" stop-color="#{FUNDO}" stop-opacity="0"/></linearGradient>
-    <linearGradient id="luz" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity="0"/><stop offset="50%" stop-color="#fff" stop-opacity=".06"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
-    <clipPath id="barra"><rect x=".5" y=".5" width="{largura - 1}" height="{altura - 1}" rx="12"/></clipPath>
-  </defs>
-  <g clip-path="url(#barra)">
-    <rect width="{largura}" height="{altura}" fill="#{FUNDO}"/>
-    <rect width="{largura}" height="{altura}" fill="url(#fundo)"/>
-    <rect width="5" height="{altura}" fill="url(#lateral)"/>
-    <rect x="0" width="260" height="{altura}" fill="url(#luz)" class="brilho"/>
-  </g>
-  <rect x=".5" y=".5" width="{largura - 1}" height="{altura - 1}" rx="12" fill="none" stroke="#{c1}" stroke-opacity=".5"/>
-
-  <rect x="26" y="19" width="78" height="34" rx="8" fill="#{c1}" fill-opacity=".16" stroke="#{c1}" stroke-opacity=".75"/>
-  <text x="65" y="41" text-anchor="middle" style="font:700 15px {MONO};fill:#{acento}">0x{numero:02X}</text>
-  <text x="124" y="34" style="font:700 22px {FONTE};fill:#ffffff">{esc(titulo)}</text>
-  <text x="124" y="56" style="font:500 12.5px {MONO};fill:#{APAGADO}"><tspan fill="#{c2}">$</tspan> {esc(comando)}<tspan class="cursor" fill="#{acento}"> ▌</tspan></text>
-
-  <text x="{largura - 26}" y="30" text-anchor="end" style="font:600 12px {MONO};fill:#{APAGADO};letter-spacing:1px">{numero:02d} / {total:02d}</text>
-  {pontos}
-</svg>
-"""
-
-
-def card_trajetoria(t: Tema) -> str:
-    itens, passo = curriculo.TRAJETORIA, 92
-    altura = 70 + passo * len(itens) - 4
-    c1, c2, acento = legivel(t.c1), legivel(t.c2), legivel(t.acento)
-    corpo = [f'  <line x1="150" y1="78" x2="150" y2="{70 + passo * (len(itens) - 1) + 8}" stroke="url(#grad)" stroke-width="2" opacity=".6"/>']
-    for i, (periodo, cargo, instituicao, descricao) in enumerate(itens):
-        y = 70 + i * passo
-        cor = c1 if i % 2 == 0 else c2
-        linhas = "".join(f'<text x="175" y="{y + 54 + k * 17}" class="apagado" style="font-size:12.5px">{esc(l)}</text>'
-                         for k, l in enumerate(quebrar(descricao, 118, 2)))
-        corpo.append(
-            f'  <g class="surge" style="animation-delay:{150 + i * 120}ms">'
-            f'<text x="128" y="{y + 13}" text-anchor="end" style="font:600 12px {MONO};fill:#{acento}">{esc(periodo)}</text>'
-            f'<circle cx="150" cy="{y + 8}" r="9" fill="#{cor}" fill-opacity=".2"/><circle cx="150" cy="{y + 8}" r="5" fill="#{cor}"/>'
-            f'<text x="175" y="{y + 14}" style="font:700 16px {FONTE};fill:#ffffff">{esc(cargo)}</text>'
-            f'<text x="175" y="{y + 33}" style="font:600 13px {FONTE};fill:#{cor}">{esc(instituicao)}</text>'
-            f"{linhas}</g>")
-    return moldura(t, 1000, altura, "Experiência & Pesquisa", "\n".join(corpo))
-
-
-def card_formacao(t: Tema) -> str:
-    c2, acento = legivel(t.c2), legivel(t.acento)
-    subtitulo = lambda x, y, texto: (f'<text x="{x}" y="{y}" style="font:700 11.5px {MONO};fill:#{APAGADO};'
-                                     f'letter-spacing:2px">{esc(texto)}</text>')
-    corpo = [subtitulo(25, 74, "FORMAÇÃO"), subtitulo(520, 74, "CERTIFICAÇÕES")]
-    y = 102
-    for periodo, curso, instituicao in curriculo.FORMACAO:
-        corpo.append(f'<g class="surge"><text x="25" y="{y}" style="font:700 15px {FONTE};fill:#ffffff">{esc(curso)}</text>'
-                     f'<text x="25" y="{y + 20}" class="apagado" style="font-size:12.5px">'
-                     f'<tspan fill="#{acento}">{esc(periodo)}</tspan>  ·  {esc(instituicao)}</text></g>')
-        y += 54
-    corpo.append(subtitulo(25, y + 8, "IDIOMAS"))
-    corpo.append(f'<text x="25" y="{y + 36}" class="rotulo">Português <tspan class="apagado">nativo</tspan>'
-                 f'   ·   Inglês <tspan class="apagado">intermediário (B1)</tspan></text>')
-    for i, (ano, nome, instituicao) in enumerate(curriculo.CERTIFICACOES):
-        cy = 102 + i * 44
-        corpo.append(f'<g class="surge" style="animation-delay:{200 + i * 80}ms">'
-                     f'<rect x="520" y="{cy - 12}" width="3" height="32" rx="1.5" fill="#{c2}"/>'
-                     f'<text x="534" y="{cy}" style="font:600 14px {FONTE};fill:#ffffff">{esc(nome)}</text>'
-                     f'<text x="534" y="{cy + 18}" class="apagado" style="font-size:12px">{esc(instituicao)} · {ano}</text></g>')
-    altura = max(102 + 44 * len(curriculo.CERTIFICACOES), y + 56)
-    corpo.insert(0, f'<line x1="495" y1="62" x2="495" y2="{altura - 24}" stroke="#{APAGADO}" stroke-opacity=".2"/>')
-    return moldura(t, 1000, altura, "Formação & Certificações", "\n  ".join(corpo))
-
-
-def card_premios(t: Tema) -> str:
-    cores = {"ouro": "f5c542", "prata": "c0c7d1", "bronze": "cd7f32", "marca": legivel(t.acento)}
-    itens = []
-    for i, (ano, titulo, detalhe, nivel) in enumerate(curriculo.PREMIOS):
-        linha, coluna = divmod(i, 2)
-        x, y = 25 + coluna * 480, 60 + linha * 74
-        cor = cores[nivel]
-        icone = (f'<path d="M{x + 22} {y + 40} l-7 14 7-4 7 4z M{x + 34} {y + 40} l-7 14 7-4 7 4z" fill="#{cor}" opacity=".7"/>'
-                 f'<circle cx="{x + 28}" cy="{y + 31}" r="14" fill="#{cor}"/>'
-                 f'<circle cx="{x + 28}" cy="{y + 31}" r="9" fill="none" stroke="#{FUNDO}" stroke-opacity=".45" stroke-width="2"/>')
-        itens.append(
-            f'  <g class="surge" style="animation-delay:{150 + i * 70}ms">'
-            f'<rect x="{x}" y="{y}" width="470" height="62" rx="10" fill="#{cor}" fill-opacity=".07" stroke="#{cor}" stroke-opacity=".35"/>'
-            f"{icone}"
-            f'<text x="{x + 56}" y="{y + 27}" style="font:700 14.5px {FONTE};fill:#ffffff">{esc(titulo)}</text>'
-            f'<text x="{x + 56}" y="{y + 46}" class="apagado" style="font-size:12px">{esc(detalhe)}</text>'
-            f'<text x="{x + 456}" y="{y + 27}" text-anchor="end" style="font:600 11.5px {MONO};fill:#{cor}">{esc(ano)}</text></g>')
-    altura = 60 + 74 * ((len(curriculo.PREMIOS) + 1) // 2) + 12
-    return moldura(t, 1000, altura, "Prêmios & Destaques", "\n".join(itens))
-
-
-def card_repo_vazio(t: Tema) -> str:
-    corpo = f'  <text x="25" y="70" class="rotulo" style="fill:#{APAGADO}">Espaço reservado para o próximo projeto.</text>'
-    return moldura(t, 460, 150, "Em breve", corpo)
+    return f"há {meses} meses" if meses < 12 else f"há {dias // 365} ano(s)"
 
 
 def card_rodape(t: Tema, hoje: date, agora: datetime) -> str:
@@ -602,6 +469,87 @@ def card_rodape(t: Tema, hoje: date, agora: datetime) -> str:
   <text x="{largura / 2}" y="{y + 32}" text-anchor="middle" class="apagado" style="font:12px {FONTE};fill:#{APAGADO}">Atualizado em {agora:%d/%m/%Y às %H:%M} (horário de Brasília)</text>
 </svg>
 """
+
+
+# --------------------------------------------------------------------------
+# Blocos de HTML real do README (o GitHub remove CSS e JavaScript, mas mantém
+# tabelas, blocos expansíveis, links e <kbd>)
+# --------------------------------------------------------------------------
+
+def tabela(cabecalho: list[str], linhas: list[list[str]]) -> str:
+    """As células já vêm em HTML; quem chama escapa o que for texto."""
+    topo = "".join(f'<th align="left">{c}</th>' for c in cabecalho)
+    corpo = "\n".join("  <tr>" + "".join(f"<td>{c}</td>" for c in linha) + "</tr>" for linha in linhas)
+    return f"<table>\n  <tr>{topo}</tr>\n{corpo}\n</table>"
+
+
+def etiqueta(texto: str) -> str:
+    """<kbd> com espaços que não quebram, para o período ficar em uma linha só."""
+    return f"<kbd>{esc(texto).replace(' ', chr(0xA0))}</kbd>"
+
+
+def bloco_trajetoria() -> str:
+    itens = []
+    for i, (periodo, cargo, instituicao, descricao) in enumerate(curriculo.TRAJETORIA):
+        aberto = " open" if i == 0 else ""
+        itens.append(f"<details{aberto}>\n"
+                     f"  <summary>{etiqueta(periodo)} <b>{esc(cargo)}</b> · {esc(instituicao)}</summary>\n"
+                     f"  <p>{esc(descricao)}</p>\n"
+                     "</details>")
+    return "\n".join(itens)
+
+
+def bloco_formacao() -> str:
+    return tabela(["Curso", "Instituição", "Período"],
+                  [[f"<b>{esc(curso)}</b>", esc(instituicao), etiqueta(periodo)]
+                   for periodo, curso, instituicao in curriculo.FORMACAO])
+
+
+def bloco_certificacoes() -> str:
+    linhas = [[esc(nome), esc(instituicao), etiqueta(ano)]
+              for ano, nome, instituicao in curriculo.CERTIFICACOES]
+    return (f"<details>\n  <summary><b>Ver as {len(linhas)} certificações</b></summary>\n\n"
+            + tabela(["Certificação", "Instituição", "Ano"], linhas) + "\n</details>")
+
+
+def bloco_premios() -> str:
+    return tabela(["", "Prêmio ou destaque", "Onde", "Ano"],
+                  [[MEDALHAS[nivel], f"<b>{esc(titulo)}</b>", esc(detalhe), etiqueta(ano)]
+                   for ano, titulo, detalhe, nivel in curriculo.PREMIOS])
+
+
+def url_selo(arquivo: str) -> str:
+    origem = f"https://raw.githubusercontent.com/{USUARIO}/{USUARIO}/output/selos/{arquivo}.json"
+    return "https://img.shields.io/endpoint?" + urllib.parse.urlencode({"url": origem, "style": "flat-square"})
+
+
+def bloco_projetos(repos: list[dict]) -> str:
+    """A idade do último commit fica num selo: muda sem precisar de commit na main."""
+    linhas = []
+    for r in repos:
+        estrelas = f' <sub>★ {r["estrelas"]}</sub>' if r["estrelas"] else ""
+        linguagem = "—"
+        if r["linguagem"]:
+            filtro = urllib.parse.urlencode({"tab": "repositories", "language": r["linguagem"].lower()})
+            linguagem = f'<a href="https://github.com/{USUARIO}?{esc(filtro)}"><code>{esc(r["linguagem"])}</code></a>'
+        linhas.append([
+            f'<a href="{esc(r["url"])}"><b>{esc(r["nome"])}</b></a>{estrelas}',
+            esc(r["resumo"]) if r["resumo"] else "<sub>Sem descrição por enquanto.</sub>",
+            linguagem,
+            f'<img src="{esc(url_selo("repo-" + r["nome"]))}" alt="Último commit" />',
+        ])
+    return tabela(["Projeto", "O que é", "Linguagem", "Último commit"], linhas)
+
+
+def atualizar_readme(blocos: dict[str, str]) -> None:
+    caminho = RAIZ / "README.md"
+    texto = caminho.read_text(encoding="utf-8")
+    for nome, conteudo in blocos.items():
+        padrao = re.compile(rf"(<!-- auto:{nome} -->\n).*?(<!-- /auto:{nome} -->)", re.S)
+        texto, trocas = padrao.subn(lambda m: f"{m[1]}{conteudo}\n{m[2]}", texto)
+        if not trocas:
+            print(f"Aviso: marcadores do bloco '{nome}' não encontrados no README.", file=sys.stderr)
+    caminho.write_text(texto, encoding="utf-8")
 
 
 # --------------------------------------------------------------------------
@@ -688,6 +636,7 @@ def main() -> int:
     p.add_argument("--offline", action="store_true", help="não acessa a API; usa os dados do cache")
     p.add_argument("--listar", action="store_true", help="lista o calendário de temas do ano")
     p.add_argument("--saida", type=Path, default=SAIDA, help="pasta onde as imagens são gravadas")
+    p.add_argument("--readme", action="store_true", help="reescreve os blocos automáticos do README.md")
     args = p.parse_args()
 
     agora = datetime.now(BRASILIA)
@@ -707,19 +656,15 @@ def main() -> int:
     print(f"Tema: {tema.emoji} {tema.nome} ({tema.chave})")
 
     saida: Path = args.saida
-    (saida / "repos").mkdir(parents=True, exist_ok=True)
-    (saida / "secoes").mkdir(exist_ok=True)
+    (saida / "secoes").mkdir(parents=True, exist_ok=True)
     (saida / "selos").mkdir(exist_ok=True)
     gravar = lambda nome, conteudo: (saida / nome).write_text(conteudo, encoding="utf-8")
 
     ano_novo = hoje.year + 1 if hoje.month == 12 else hoje.year
     subtitulo = tema.descricao.format(ano_novo=ano_novo).replace(" | ", " · ")
     gravar("rodape.svg", card_rodape(tema, hoje, agora))
-    for i, (titulo, comando) in enumerate(SECOES, 1):
-        gravar(f"secoes/{i:02d}.svg", card_secao(tema, i, titulo, comando))
-    gravar("trajetoria.svg", card_trajetoria(tema))
-    gravar("formacao.svg", card_formacao(tema))
-    gravar("premios.svg", card_premios(tema))
+    for i in range(1, TOTAL_SECOES + 1):
+        gravar(f"secoes/{i:02d}.svg", card_divisor(tema, i))
     for arquivo, mensagem, logo, cor in SELOS:
         gravar(f"selos/{arquivo}.json", selo(mensagem, getattr(tema, cor), logo))
     if not args.offline:
@@ -739,17 +684,23 @@ def main() -> int:
 
     gravar("banner.svg", banner(tema, hoje, NOME, subtitulo, COMANDO, CHIPS))
 
-    repos = dados["repos"] if dados else []
-    for i in range(TOTAL_REPOS):
-        gravar(f"repos/{i + 1}.svg", card_repo(tema, repos[i], hoje) if i < len(repos) else card_repo_vazio(tema))
+    blocos = {"trajetoria": bloco_trajetoria(), "formacao": bloco_formacao(),
+              "certificacoes": bloco_certificacoes(), "premios": bloco_premios()}
     if dados:
         dias = {date.fromisoformat(d): n for d, n in dados["dias"].items()}
-        gravar("stats.svg", card_stats(tema, dados["stats"]))
+        s = dados["stats"]
         gravar("linguagens.svg", card_linguagens(tema, dados["linguagens"]))
         gravar("atividade.svg", card_atividade(tema, dias, hoje))
-        if "seguidores" in dados["stats"]:
-            gravar("selos/seguidores.json", selo(numero(dados["stats"]["seguidores"]),
-                                                 legivel(tema.c2), "github", "seguidores"))
+        gravar("selos/seguidores.json", selo(numero(s["seguidores"]), legivel(tema.c2), "github", "seguidores"))
+        for chave, rotulo, cor in METRICAS:
+            mensagem = f"{s[chave]} {'dia' if s[chave] == 1 else 'dias'}" if chave in EM_DIAS else numero(s[chave])
+            gravar(f"selos/{chave}.json", selo(mensagem, legivel(getattr(tema, cor)), rotulo=rotulo))
+        for r in dados["repos"]:
+            gravar(f"selos/repo-{r['nome']}.json",
+                   selo(ha_quanto(date.fromisoformat(r["atualizado"]), hoje), legivel(tema.c1)))
+        blocos["projetos"] = bloco_projetos(dados["repos"])
+    if args.readme:
+        atualizar_readme(blocos)
 
     escrever_saida(tema)
     return 0

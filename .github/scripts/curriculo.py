@@ -1,7 +1,7 @@
-"""Dados do currículo (Lattes) exibidos nos cards de trajetória e formação.
+"""Dados do currículo (Lattes) exibidos no README, como texto e tabelas.
 
-Edite as listas abaixo quando o Lattes mudar; os cards são redesenhados no
-próximo dia (ou na hora, rodando o workflow pela aba Actions).
+Edite as listas abaixo quando o Lattes mudar: o push dispara o workflow, que
+reescreve os blocos <!-- auto:... --> do README sozinho.
 """
 
 LATTES = "http://lattes.cnpq.br/9693803343170549"
@@ -38,7 +38,7 @@ CERTIFICACOES = [
     ("2025", "Inglês intermediário B1 (152h)", "CCAA"),
 ]
 
-# (ano, título, detalhe, nível) — nível define a cor do ícone: ouro, prata, bronze ou marca
+# (ano, título, detalhe, nível) — nível define a medalha: ouro, prata, bronze ou marca
 PREMIOS = [
     ("2026", "1º lugar na 1ª Litoral Game Jam", "6ª Expo Game Jam · Fatec", "ouro"),
     ("2021", "Medalha de Bronze na OBMEP", "16ª edição · IMPA", "bronze"),

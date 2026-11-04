@@ -7,15 +7,19 @@ name: Perfil dinâmico
 # blocos: são selos, que mudam sem commit. O .vscode/settings.json deixa o Sync
 # com rebase e autostash para esses commits não atrapalharem.
 #
-# Escutador: a cada 10 minutos o job "escutar" compara uma assinatura da conta
-# (último evento público, último push em outro repositório, número de
-# repositórios e seguidores, e a data de hoje) com a da última geração. Só
-# quando algo mudou o job "gerar" redesenha o perfil. Assim um dia parado não
-# gera nada, e vários pushes no mesmo dia aparecem minutos depois de cada um.
+# Escutador: o job "escutar" compara uma assinatura da conta (último evento
+# público, último push em outro repositório, número de repositórios e
+# seguidores, e a data de hoje) com a da última geração. Só quando algo mudou o
+# job "gerar" redesenha o perfil. A assinatura só é gravada quando a publicação
+# dá certo, então uma falha se corrige sozinha na execução seguinte.
+#
+# O agendamento pede uma execução a cada 10 minutos, mas o GitHub atrasa e
+# descarta execuções agendadas: na prática têm sido poucas por dia. Para
+# atualizar na hora, use "Run workflow" na aba Actions.
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "3-59/10 * * * *"
   workflow_dispatch:        # permite rodar manualmente pela aba Actions
     inputs:
       tema:
@@ -118,14 +122,28 @@ jobs:
             dist/github-snake.svg?color_snake=${{ steps.gerar.outputs.cobra_clara }}&color_dots=${{ steps.gerar.outputs.pontos_claro }}
             dist/github-snake-dark.svg?palette=github-dark&color_snake=${{ steps.gerar.outputs.cobra }}&color_dots=${{ steps.gerar.outputs.pontos_escuro }}
 
+      # Publicado antes do commit do README: quando a lista muda, os selos dos
+      # repositórios novos já existem. O GitHub às vezes recusa um push por erro
+      # temporário, por isso as novas tentativas.
       - name: Publicar na branch "output"
-        uses: crazy-max/ghaction-github-pages@v4
-        with:
-          target_branch: output
-          build_dir: dist
-          jekyll: false
+        working-directory: dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          git init -q -b output
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "Publica as imagens e os selos do perfil"
+          for tentativa in 1 2 3 4 5; do
+            if git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}.git" output; then
+              exit 0
+            fi
+            echo "Push recusado (tentativa $tentativa de 5)."
+            sleep $((tentativa * 20))
+          done
+          exit 1
 
       - name: Commitar os blocos do README, só se o texto mudou
         if: github.ref == 'refs/heads/main'
@@ -138,5 +156,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
           git commit -m "Atualiza a lista de projetos do README"
-          git pull --rebase --autostash origin main
-          git push origin HEAD:main
+          for tentativa in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push recusado (tentativa $tentativa de 5)."
+            git rebase --abort 2>/dev/null || true
+            sleep $((tentativa * 20))
+          done
+          exit 1

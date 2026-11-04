@@ -59,10 +59,15 @@
   "nome": "Guilherme Batistela Machado",
   "graduacao": "Análise e Desenvolvimento de Sistemas @ Fatec São Sebastião",
   "tecnico": "Técnico em Informática",
-  "pesquisa": "Bolsista PIBICT-CEETEPS: integração segura do e-SUS PEC via API Meta",
+  "pesquisa": "PIBICT-CEETEPS: integração segura do e-SUS PEC via API Meta",
   "foco_carreira": "Segurança da Informação / Red Team",
   "stack_desenvolvimento": ["Python", "C++", "C", "PHP", "JavaScript", "Bash"],
-  "domínios": ["Segurança Ofensiva", "Desenvolvimento Web", "Automação & Scripts", "Integração de APIs"],
+  "domínios": [
+    "Segurança Ofensiva",
+    "Desenvolvimento Web",
+    "Automação & Scripts",
+    "Integração de APIs"
+  ],
   "idiomas": ["Português (nativo)", "Inglês (B1)"],
   "daily_driver": "Linux Mint",
   "instagram": "@gbm_mkt"
@@ -277,7 +282,12 @@ Graduando em Análise e Desenvolvimento de Sistemas na Fatec, bolsista de Inicia
 <sub><code>$ cat ~/trophies.txt</code></sub>
 
 <div align="center">
-  <a href="https://github.com/GuiiBM?tab=achievements"><img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/trofeus.svg" alt="Troféus do GitHub" /></a>
+  <a href="https://github.com/GuiiBM?tab=achievements">
+    <picture>
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/trofeus-claro.svg" />
+      <img src="https://raw.githubusercontent.com/GuiiBM/GuiiBM/output/trofeus.svg" alt="Troféus do GitHub" />
+    </picture>
+  </a>
 </div>
 
 <br />

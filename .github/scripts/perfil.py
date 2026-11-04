@@ -98,8 +98,8 @@ MEDALHAS = {"ouro": "🥇", "prata": "🎖️", "bronze": "🥉", "marca": "✨"
 TOTAL_REPOS = 6
 # Repositórios que não devem aparecer em "Repositórios recentes".
 REPOS_IGNORADOS = {USUARIO}
-# Descrições usadas quando o repositório não tem uma no GitHub. Sem as
-# duas, o card usa o primeiro parágrafo do README do repositório.
+# Descrições usadas quando o repositório não tem uma no GitHub. Sem as duas,
+# vale o primeiro parágrafo do README e, depois, a descrição do index.html.
 DESCRICOES: dict[str, str] = {
     # "tcc": "Trabalho de conclusão de curso em PHP.",
 }
@@ -204,6 +204,18 @@ def resumo_readme(repo: dict) -> str | None:
     return None
 
 
+def resumo_site(repo: dict) -> str | None:
+    """Descrição (ou título) do index.html, para repositórios de sites sem README."""
+    url = f"https://raw.githubusercontent.com/{USUARIO}/{repo['name']}/HEAD/index.html"
+    try:
+        pagina = requisitar(url).decode("utf-8", "replace")
+    except (urllib.error.URLError, TimeoutError):
+        return None
+    achado = (re.search(r"""<meta[^>]*name=["']description["'][^>]*content=(["'])(?P<texto>.*?)\1""", pagina, re.I | re.S)
+              or re.search(r"<title[^>]*>(?P<texto>.*?)</title>", pagina, re.I | re.S))
+    return html.unescape(achado["texto"]).strip() or None if achado else None
+
+
 def sequencias(dias: dict[date, int], hoje: date) -> tuple[int, int]:
     """(sequência atual, maior sequência). Hoje sem commit não quebra a atual."""
     maior = corrente = 0
@@ -234,7 +246,7 @@ def coletar(hoje: date) -> dict:
     desde = (hoje - timedelta(days=365)).isoformat()
     recentes = [r for r in proprios if r["name"] not in REPOS_IGNORADOS and not r["archived"]][:TOTAL_REPOS]
     for r in recentes:
-        r["resumo"] = r["description"] or DESCRICOES.get(r["name"]) or resumo_readme(r)
+        r["resumo"] = r["description"] or DESCRICOES.get(r["name"]) or resumo_readme(r) or resumo_site(r)
     return {
         "repos": [{"nome": r["name"], "url": r["html_url"], "resumo": r["resumo"],
                    "linguagem": r["language"], "estrelas": r["stargazers_count"],
@@ -596,9 +608,10 @@ def externos(t: Tema, saida: Path, ano_novo: int) -> None:
     baixar_svg(saida / "boot.svg", digitando(
         BOOT, visivel(t.c2, t.c1), font="JetBrains Mono", weight=500, size=14, duration=2200,
         pause=400, width=600, height=90))
-    baixar_svg(saida / "trofeus.svg", "https://github-profile-trophies.vercel.app/?" + urllib.parse.urlencode(
-        {"username": USUARIO, "theme": t.trofeu, "column": -1, "rank": "-?", "margin-w": 12,
-         "margin-h": 12, "no-bg": "true", "no-frame": "true"}))
+    for arquivo, tema_trofeu in (("trofeus.svg", t.trofeu), ("trofeus-claro.svg", "flat")):
+        baixar_svg(saida / arquivo, "https://github-profile-trophies.vercel.app/?" + urllib.parse.urlencode(
+            {"username": USUARIO, "theme": tema_trofeu, "column": -1, "rank": "-?", "margin-w": 12,
+             "margin-h": 12, "no-bg": "true", "no-frame": "true"}))
 
 
 # --------------------------------------------------------------------------

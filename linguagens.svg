@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="160" viewBox="0 0 900 160" role="img" aria-label="Linguagens mais usadas">
+  <title>Linguagens mais usadas</title>
+  <style>
+    text { font-family: 'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .titulo { font-size: 18px; font-weight: 600; fill: #a855f7; }
+    .rotulo { font-size: 13.5px; fill: #e2e8f0; }
+    .valor { font-size: 13.5px; font-weight: 700; fill: #ffffff; }
+    .apagado { font-size: 11.5px; fill: #8b949e; }
+    .surge { animation: surgir .6s ease-out both; }
+    @keyframes surgir { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .surge, .anima { animation: none !important; } }
+  </style>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+    <clipPath id="card"><rect x="0.5" y="0.5" width="899" height="159" rx="10"/></clipPath>
+  </defs>
+  <rect x="0.5" y="0.5" width="899" height="159" rx="10" fill="#0d1117" stroke="#7e22ce" stroke-opacity="0.6"/>
+  <rect x="0" y="0" width="900" height="4" fill="url(#grad)" clip-path="url(#card)"/>
+  <text x="25" y="38" class="titulo">Linguagens mais usadas</text>
+  <clipPath id="barra"><rect x="25" y="56" width="850" height="10" rx="5"/></clipPath>
+  <g clip-path="url(#barra)" class="surge"><rect x="25.00" y="56" width="663.37" height="10" fill="#3572A5"><title>Python</title></rect><rect x="688.37" y="56" width="93.10" height="10" fill="#e34c26"><title>HTML</title></rect><rect x="781.47" y="56" width="40.80" height="10" fill="#f1e05a"><title>JavaScript</title></rect><rect x="822.27" y="56" width="25.78" height="10" fill="#4F5D95"><title>PHP</title></rect><rect x="848.05" y="56" width="25.06" height="10" fill="#663399"><title>CSS</title></rect></g>
+  <g class="surge" style="animation-delay:200ms"><circle cx="30" cy="95.5" r="5" fill="#3572A5"/><text x="41" y="100" class="rotulo">Python</text><text x="285" y="100" class="apagado" text-anchor="end">78.0%</text></g>
+  <g class="surge" style="animation-delay:270ms"><circle cx="325" cy="95.5" r="5" fill="#e34c26"/><text x="336" y="100" class="rotulo">HTML</text><text x="580" y="100" class="apagado" text-anchor="end">11.0%</text></g>
+  <g class="surge" style="animation-delay:340ms"><circle cx="620" cy="95.5" r="5" fill="#f1e05a"/><text x="631" y="100" class="rotulo">JavaScript</text><text x="875" y="100" class="apagado" text-anchor="end">4.8%</text></g>
+  <g class="surge" style="animation-delay:410ms"><circle cx="30" cy="125.5" r="5" fill="#4F5D95"/><text x="41" y="130" class="rotulo">PHP</text><text x="285" y="130" class="apagado" text-anchor="end">3.0%</text></g>
+  <g class="surge" style="animation-delay:480ms"><circle cx="325" cy="125.5" r="5" fill="#663399"/><text x="336" y="130" class="rotulo">CSS</text><text x="580" y="130" class="apagado" text-anchor="end">2.9%</text></g>
+</svg>

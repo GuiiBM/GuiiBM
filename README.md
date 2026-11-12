@@ -439,9 +439,9 @@ Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, 
 <!-- auto:projetos -->
 <table>
   <tr><th align="left">Projeto</th><th align="left">O que é</th><th align="left">Linguagem</th><th align="left">Último commit</th></tr>
+  <tr><td><a href="https://github.com/GuiiBM/MyPersonalLinks"><b>MyPersonalLinks</b></a></td><td>Projetos, sites e experimentos reunidos num só lugar.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-MyPersonalLinks.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/intro-to-c-class-2nd-sem"><b>intro-to-c-class-2nd-sem</b></a></td><td>Links da turma de Introdução à Linguagem C, 2º semestre, com o professor Luciano Carvalho.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-intro-to-c-class-2nd-sem.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/Verto-Multi-purpose-Media-Security-Processing-Suite"><b>Verto-Multi-purpose-Media-Security-Processing-Suite</b></a></td><td>Suíte local-first com 40 ferramentas de IA, criptografia, binários e mídia.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=python"><code>Python</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-Verto-Multi-purpose-Media-Security-Processing-Suite.json&amp;style=flat-square" alt="Último commit" /></td></tr>
-  <tr><td><a href="https://github.com/GuiiBM/MyPersonalLinks"><b>MyPersonalLinks</b></a></td><td>Projetos, sites e experimentos reunidos num só lugar.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-MyPersonalLinks.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/CalcularPassagens"><b>CalcularPassagens</b></a></td><td>Some suas viagens de ônibus entre Ubatuba, Caraguatatuba e São Sebastião e veja quanto colocar no cartão.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=html"><code>HTML</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-CalcularPassagens.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/MundoAgape"><b>MundoAgape</b></a></td><td>Ministério infantil da Igreja Ágape. Lições, fotos, eventos e recursos do Mundo Ágape em um só lugar.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=css"><code>CSS</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-MundoAgape.json&amp;style=flat-square" alt="Último commit" /></td></tr>
   <tr><td><a href="https://github.com/GuiiBM/tcc"><b>tcc</b></a></td><td>Ressonance, meu TCC: plataforma de música com um algoritmo diferente.</td><td><a href="https://github.com/GuiiBM?tab=repositories&amp;language=php"><code>PHP</code></a></td><td><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FGuiiBM%2FGuiiBM%2Foutput%2Fselos%2Frepo-tcc.json&amp;style=flat-square" alt="Último commit" /></td></tr>
@@ -521,10 +521,11 @@ Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, 
 </table>
 </details>
 <details>
-  <summary><b>🏢 Sites para empresas e marcas</b> <sub>5</sub></summary>
+  <summary><b>🏢 Sites para empresas e marcas</b> <sub>6</sub></summary>
 
 <table>
   <tr><th align="left">Site</th><th align="left">O que é</th></tr>
+  <tr><td><a href="https://corretorluizcesar.com.br/"><b>Luiz Cesar Imóveis</b></a></td><td>Website do corretor de imóveis Luiz Cesar, na Praia da Enseada em Ubatuba, com painel para gerenciar os imóveis</td></tr>
   <tr><td><a href="https://juniorgouvea.framer.website/"><b>Reginaldo Gouvea Junior</b></a></td><td>Website voltado para exposição da empresa Junior Gouvea</td></tr>
   <tr><td><a href="https://twbteacherwillians.netlify.app/"><b>TWB Website</b></a></td><td>Website voltado para exposição da empresa Teacher WIllians Batistela</td></tr>
   <tr><td><a href="https://locandaimes.framer.website/"><b>Loc Andaimes Website</b></a></td><td>Website voltado para exposição da empresa Loc Andaimes</td></tr>
@@ -533,22 +534,27 @@ Participo de olimpíadas desde 2021 e, mais recentemente, também de congresso, 
 </table>
 </details>
 <details>
-  <summary><b>🗄️ Sites com banco de dados</b> <sub>2</sub></summary>
+  <summary><b>🗄️ Sites com banco de dados</b> <sub>3</sub></summary>
 
 <table>
   <tr><th align="left">Site</th><th align="left">O que é</th></tr>
   <tr><td><a href="https://integracaoagape.netlify.app/"><b>Planilha Ágape</b></a></td><td>Formulário Simplificado da Igreja Apostólica Ágape com acesso ao Banco de Dados</td></tr>
   <tr><td><a href="https://mundoagape.netlify.app/"><b>Mundo Ágape</b></a></td><td>Website voltado para exposição das fotos do ministério Mundo Ágape</td></tr>
+  <tr><td><a href="https://intro-to-c-class-2nd-sem.netlify.app/"><b>Introdução à C</b></a></td><td>Links da turma de Introdução à Linguagem C do 2º semestre, com o professor Luciano Carvalho</td></tr>
 </table>
 </details>
 <details>
-  <summary><b>🎮 Entretenimento e utilidades</b> <sub>5</sub></summary>
+  <summary><b>🎮 Entretenimento e utilidades</b> <sub>9</sub></summary>
 
 <table>
   <tr><th align="left">Site</th><th align="left">O que é</th></tr>
   <tr><td><a href="https://jogarcaraacara.netlify.app/"><b>Cara a Cara</b></a></td><td>Jogo Cara a Cara Online</td></tr>
+  <tr><td><a href="https://rostoarosto.netlify.app/"><b>Rosto a Rosto</b></a></td><td>Jogo de dedução online feito para a Litoral Game Jam: contra o bot, no mesmo celular ou online</td></tr>
+  <tr><td><a href="https://meualien.netlify.app/"><b>Alienzinho</b></a></td><td>Bichinho virtual filosófico em 3D: cuide de um alien caído na Terra por uma vida inteira</td></tr>
+  <tr><td><a href="https://projetoarkards.netlify.app/"><b>Arkards</b></a></td><td>Jogo de cartas em desenvolvimento</td></tr>
   <tr><td><a href="https://estigmas.netlify.app/"><b>Estigmas</b></a></td><td>Calendário com sugestões de autoaprimoramento</td></tr>
   <tr><td><a href="https://negativeanswer.netlify.app/"><b>Non-Sense Maker &#x27;Não&#x27;</b></a></td><td>Um gerador automático de frases que compõe e dizem &#x27;Não&#x27;</td></tr>
+  <tr><td><a href="https://repbenzadeus.netlify.app/"><b>Benzabets</b></a></td><td>Evento cassino da República Benzadeus (USP Ribeirão Preto), com odds de zoeira sobre os moradores</td></tr>
   <tr><td><a href="https://conversoes.netlify.app/"><b>Conversor</b></a></td><td>Website voltado para conversões de medidas brasileiras e americanas</td></tr>
   <tr><td><a href="https://ohack.netlify.app/"><b>O Hack</b></a></td><td>Site para entretenimento e geração de caracteres aleatórios</td></tr>
 </table>

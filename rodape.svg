@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="202" viewBox="0 0 1000 202" role="img" aria-label="If you think technology can solve your security problems, then you don&#x27;t understand the problems and you don&#x27;t understand the technology. (Bruce Schneier)">
+  <title>If you think technology can solve your security problems, then you don&#x27;t understand the problems and you don&#x27;t understand the technology. (Bruce Schneier)</title>
+  <style>
+    .onda { animation: correr 9s linear infinite; }
+    .onda.lenta { animation-duration: 15s; }
+    @keyframes correr { to { transform: translateX(-500px); } }
+    @media (prefers-reduced-motion: reduce) { .onda { animation: none; } }
+  </style>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+    <clipPath id="card"><rect x=".5" y=".5" width="999" height="201" rx="14"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="1000" height="202" fill="#0d1117"/>
+    <path d="M0 0 L0 46 Q125 72 250 46 T500 46 T750 46 T1000 46 T1250 46 T1500 46 T1750 46 T2000 46 L2000 0Z" fill="url(#grad)" opacity=".45" class="onda lenta"/>
+    <path d="M0 0 L0 34 Q125 12 250 34 T500 34 T750 34 T1000 34 T1250 34 T1500 34 T1750 34 T2000 34 L2000 0Z" fill="url(#grad)" class="onda"/>
+  </g>
+  <rect x=".5" y=".5" width="999" height="201" rx="14" fill="none" stroke="#7e22ce" stroke-opacity=".45"/>
+  <text x="500.0" y="108" text-anchor="middle" style="font:italic 500 18px 'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e2e8f0">“If you think technology can solve your security problems, then you don&#x27;t</text><text x="500.0" y="134" text-anchor="middle" style="font:italic 500 18px 'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#e2e8f0">understand the problems and you don&#x27;t understand the technology.”</text>
+  <text x="500.0" y="164" text-anchor="middle" style="font:600 14px 'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#a855f7">— Bruce Schneier</text>
+  <text x="500.0" y="192" text-anchor="middle" class="apagado" style="font:12px 'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#8b949e">Atualizado em 14/11/2026 às 00:00 (horário de Brasília)</text>
+</svg>

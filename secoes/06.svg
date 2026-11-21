@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="14" viewBox="0 0 1000 14" aria-hidden="true">
+  <style>
+    .luz { animation: varrer 2.5s ease-in-out both; }
+    @keyframes varrer { from { transform: translateX(-160px); } to { transform: translateX(500.0px); } }
+    @media (prefers-reduced-motion: reduce) { .luz { animation: none; display: none; } }
+  </style>
+  <defs>
+    <linearGradient id="cheio" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#ef4444"/></linearGradient>
+    <linearGradient id="brilho" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity="0"/><stop offset="50%" stop-color="#fff" stop-opacity=".75"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="parte"><rect y="5" width="500.0" height="4" rx="2"/></clipPath>
+  </defs>
+  <rect y="5" width="1000" height="4" rx="2" fill="#7e22ce" fill-opacity=".18"/>
+  <g clip-path="url(#parte)">
+    <rect width="500.0" height="14" fill="url(#cheio)"/>
+    <rect width="160" height="14" fill="url(#brilho)" class="luz"/>
+  </g>
+  <circle cx="493.0" cy="7" r="4.5" fill="#a855f7"/>
+</svg>
